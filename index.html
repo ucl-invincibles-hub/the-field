@@ -238,9 +238,8 @@ function nav(id){
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');});
   document.getElementById(id).classList.add('on');
   document.querySelectorAll('.nb').forEach(function(n){n.classList.remove('on');});
-  var m={'sXhome':'ni-home','sXpick':'ni-pick','sXlive':'ni-live','sXmy':'ni-my','sXleagues':'ni-leagues'};
-  var key=id.replace('-','X');
-  if(m[key])document.getElementById(m[key]).classList.add('on');
+  var m={'s-home':'ni-home','s-pick':'ni-pick','s-live':'ni-live','s-my':'ni-my','s-leagues':'ni-leagues'};
+  if(m[id])document.getElementById(m[id]).classList.add('on');
   if(id==='s-my')rmy();
   if(id==='s-live')rlb();
 }
@@ -435,7 +434,7 @@ function rmy(){
   var html='<div class="lbl">Your Squad</div>';
   squad.forEach(function(p,i){
     var iC=cap&&cap.id===p.id,iV=vc&&vc.id===p.id,isR=i>=5;
-    html+='<div class="sl'+(iC?' cap':iV?' vc':'\')+'" onclick="opn(\''+p.id+'\');nav(\'s-pick\')" style="cursor:pointer">';
+    html+='<div class="sl'+(iC?' cap':iV?' vc':'')+'" onclick="opn(\''+p.id+'\');nav(\'s-pick\')" style="cursor:pointer">';
     html+='<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">';
     if(iC)html+='<span class="badge bc">CAP 2x</span>';
     if(iV)html+='<span class="badge bv">VC 1.5x</span>';
