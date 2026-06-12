@@ -1,1 +1,499 @@
-hello
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>The Field — Fantasy Golf</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;min-height:100vh}
+button{cursor:pointer;font-family:inherit}
+input{font-family:inherit;outline:none}
+.scr{display:none;padding-bottom:70px}.scr.on{display:block}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0d150d;border-top:1px solid rgba(255,255,255,0.07);display:flex;z-index:100}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a6b4a;font-size:10px;font-weight:600}
+.nb.on{color:#4ade80}
+.nb span:first-child{font-size:20px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
+.btn-g{background:#1a6b35;color:#fff;border:none;border-radius:10px;font-weight:600;padding:15px;font-size:16px;width:100%;cursor:pointer;font-family:inherit}
+.btn-ghost{background:rgba(255,255,255,0.06);color:#c8d8c8;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-weight:500;padding:13px;font-size:15px;width:100%;cursor:pointer;font-family:inherit}
+.pga{background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.25);border-radius:4px;font-size:10px;font-weight:700;padding:2px 7px}
+.liv{background:rgba(220,38,38,0.15);color:#fca5a5;border:1px solid rgba(220,38,38,0.25);border-radius:4px;font-size:10px;font-weight:700;padding:2px 7px}
+.pr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.pr:last-child{border-bottom:none}
+.pr.in{border-left:2px solid #4ade80}
+.pr.dim{opacity:0.3;cursor:not-allowed;pointer-events:none}
+.fp{padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#6b8c6b;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
+.fp.on{background:#1a6b35;color:#fff;border-color:#1a6b35}
+.tab-row{display:flex;background:rgba(255,255,255,0.04);border-radius:8px;padding:3px;gap:2px}
+.tb{flex:1;padding:7px 0;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b8c6b;font-family:inherit}
+.tb.on{background:#1a6b35;color:#fff}
+.sl{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+.sl.cap{border-color:rgba(74,222,128,0.4);background:rgba(74,222,128,0.05)}
+.sl.vc{border-color:rgba(74,222,128,0.2)}
+.sl.empty{opacity:0.35;justify-content:center}
+.badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px}
+.bc{background:#166534;color:#4ade80}
+.bv{background:rgba(74,222,128,0.15);color:#86efac}
+.br{background:rgba(255,255,255,0.06);color:#6b8c6b}
+.stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center}
+.lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3d5c3d;margin-bottom:10px}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:flex-end;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-top:1px solid rgba(255,255,255,0.1)}
+.row-sc{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.row-sc:last-child{border-bottom:none}
+.loading{text-align:center;padding:40px;color:#4a6b4a;font-size:14px}
+</style>
+</head>
+<body><div id="s-home" class="scr on">
+<div style="padding:36px 24px 28px;text-align:center">
+<div style="width:56px;height:56px;border-radius:14px;background:#1a6b35;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px">⛳</div>
+<div style="font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">The Field</div>
+<div style="font-size:12px;color:#4a6b4a;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px">Fantasy Golf</div>
+<p style="font-size:15px;color:#8aaa8a;line-height:1.65;margin-bottom:28px">Pick 7 golfers across PGA and LIV. Score on every hole. £75m budget. Compete all season.</p>
+<button class="btn-g" onclick="nav('s-pick')" style="margin-bottom:10px">Build Your Team</button>
+<button class="btn-ghost" onclick="nav('s-live')">View Live Scores</button>
+</div>
+<div style="padding:0 20px 24px">
+<div class="lbl">Scoring System</div>
+<div class="card">
+<div class="row-sc"><div><div style="font-size:14px">Major win</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">1.5x multiplier applied</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+37 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Tournament win</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Standard PGA event victory</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+25 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Hole in one</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Ace on any par 3</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+15 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Eagle</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">2 under par on any hole</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+8 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Birdie</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">1 under par - bread and butter</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+3 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Par</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Solid play, no reward or penalty</div></div><span style="font-weight:700;color:#fbbf24;font-size:15px">0 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Bogey</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">1 over par - happens to everyone</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-1 pt</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Double bogey</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">2 over par - a bad hole</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-3 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Triple bogey</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">3 over par - round unravelling</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-5 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Blob</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">4+ over par - a disaster hole</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-8 pts</span></div>
+<div class="row-sc"><div><div style="font-size:14px">Missed cut</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Did not make weekend - LIV bottom 27</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-10 pts</span></div>
+</div>
+</div>
+</div>
+<div id="s-pick" class="scr">
+<div style="padding:14px 16px;background:#0f1a0f;border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:10">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+<div style="font-size:17px;font-weight:700">Pick Your Team</div>
+<div style="text-align:right">
+<div style="font-size:16px;font-weight:700;color:#4ade80" id="bgt">£75.0m</div>
+<div style="font-size:11px;color:#4a6b4a" id="cnt">0 / 7 picked</div>
+</div>
+</div>
+<div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-bottom:10px">
+<div id="bbar" style="height:100%;width:0;background:#1a6b35;border-radius:1px;transition:width .3s"></div>
+</div>
+<div class="tab-row">
+<button class="tb on" id="tb-pl" onclick="pv('pl')">Players</button>
+<button class="tb" id="tb-sq" onclick="pv('sq')">My Squad (0)</button>
+</div>
+</div>
+<div id="vpl">
+<div style="padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06)">
+<input type="text" id="srch" placeholder="Search player..." oninput="rpl()" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:14px;margin-bottom:8px"/>
+<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px">
+<button class="fp on" id="fAll" onclick="sf('All')">All</button>
+<button class="fp" id="fPGA" onclick="sf('PGA')">PGA</button>
+<button class="fp" id="fLIV" onclick="sf('LIV')">LIV</button>
+<button class="fp" id="felite" onclick="sf('elite')">Elite</button>
+<button class="fp" id="fstar" onclick="sf('star')">Star</button>
+<button class="fp" id="fsolid" onclick="sf('solid')">Solid</button>
+<button class="fp" id="fvalue" onclick="sf('value')">Value</button>
+<button class="fp" id="fbudget" onclick="sf('budget')">Budget</button>
+</div>
+</div>
+<div id="plist"><div class="loading">Loading players...</div></div>
+</div>
+<div id="vsq" style="display:none;padding:14px 16px">
+<div class="lbl">Active Players (5)</div>
+<div id="sqact"></div>
+<div class="lbl" style="margin-top:14px">Reserves (2)</div>
+<div id="sqres"></div>
+<div id="sqtip" style="display:none;margin-top:12px;padding:12px 14px;background:rgba(26,107,53,0.15);border:1px solid rgba(26,107,53,0.4);border-radius:10px;font-size:13px;color:#86efac"></div>
+<button id="savebtn" onclick="nav('s-leagues')" style="display:none;margin-top:16px" class="btn-g">Save Team and Join League</button>
+</div>
+</div>
+<div id="s-live" class="scr">
+<div style="padding:16px 20px">
+<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
+<div><div style="font-size:20px;font-weight:700;margin-bottom:3px">Live Scores</div><div style="font-size:12px;color:#4a6b4a">The Players Championship - Round 3</div></div>
+<div style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:5px">
+<div style="width:6px;height:6px;border-radius:50%;background:#4ade80"></div>
+<span style="font-size:11px;color:#4ade80;font-weight:600">LIVE</span>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+<div class="stat"><div style="font-size:22px;font-weight:700;color:#4ade80">-18</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Leader</div></div>
+<div class="stat"><div style="font-size:22px;font-weight:700;color:#4ade80">+247</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Your pts</div></div>
+</div>
+<div class="card">
+<div style="display:grid;grid-template-columns:28px 1fr 44px 44px 50px;gap:4px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase">Pos</span>
+<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase">Player</span>
+<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase;text-align:center">Score</span>
+<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase;text-align:center">Thru</span>
+<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase;text-align:right">Pts</span>
+</div>
+<div id="lbrows"></div>
+</div>
+<p style="text-align:center;margin-top:12px;font-size:12px;color:#3d5c3d">Updated every 2 minutes during play</p>
+</div>
+</div>
+<div id="s-my" class="scr">
+<div style="padding:16px 20px">
+<div style="font-size:20px;font-weight:700;margin-bottom:4px">My Squad</div>
+<div style="font-size:12px;color:#4a6b4a;margin-bottom:16px">Season 2026</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+<div class="stat"><div style="font-size:22px;font-weight:700;color:#4ade80" id="mpts">0</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Total pts</div></div>
+<div class="stat"><div style="font-size:22px;font-weight:700;color:#f0f4f0" id="mbudget">£75m</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Remaining</div></div>
+</div>
+<div id="myc"><p style="color:#4a6b4a;font-size:14px;text-align:center;padding:40px 0">No team yet - <span onclick="nav('s-pick')" style="color:#4ade80;cursor:pointer">pick your squad</span></p></div>
+</div>
+</div>
+<div id="s-leagues" class="scr">
+<div style="padding:16px 20px">
+<div style="font-size:20px;font-weight:700;margin-bottom:4px">Leagues</div>
+<p style="color:#4a6b4a;font-size:13px;margin-bottom:18px">Compete with friends or rank globally</p>
+<div class="tab-row" style="margin-bottom:18px">
+<button class="tb on" id="ltj" onclick="lv('j')">Join League</button>
+<button class="tb" id="ltc" onclick="lv('c')">Create League</button>
+</div>
+<div id="lvj">
+<div class="card" style="padding:16px;margin-bottom:12px">
+<div class="lbl">Enter invite code</div>
+<input type="text" id="lcode" placeholder="e.g. GLD2026" maxlength="6" oninput="this.value=this.value.toUpperCase();ck()" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:22px;font-weight:700;letter-spacing:6px;text-align:center;margin-bottom:14px"/>
+<button id="jbtn" class="btn-ghost" disabled style="opacity:0.4">Join League</button>
+</div>
+<div class="card" style="padding:16px">
+<div class="lbl">Global Leaderboard</div>
+<p style="font-size:13px;color:#8aaa8a;line-height:1.6;margin-bottom:12px">Automatically ranked worldwide when you save your team.</p>
+<button class="btn-ghost">View Global Rankings</button>
+</div>
+</div>
+<div id="lvc" style="display:none">
+<div class="card" style="padding:16px">
+<div class="lbl">League name</div>
+<input type="text" placeholder="e.g. The Office Open" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:15px;margin-bottom:16px"/>
+<div class="lbl">Format</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
+<button id="ffr" onclick="fmt('free')" style="padding:12px;border-radius:8px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Free</button>
+<button id="fpd" onclick="fmt('paid')" style="padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Paid - pot to winner</button>
+</div>
+<div id="fsec" style="display:none;margin-bottom:16px">
+<div style="font-size:12px;color:#4a6b4a;margin-bottom:8px">Entry fee per person</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£5</button>
+<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£10</button>
+<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£20</button>
+<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£50</button>
+</div>
+<p style="font-size:11px;color:#4a6b4a">Winner receives full pot at season end, paid to card used for entry.</p>
+</div>
+<button class="btn-g">Create League</button>
+</div>
+</div>
+</div>
+</div>
+<div class="modal-bg" id="pm" onclick="if(event.target===this)cm()">
+<div class="modal" id="pmc"></div>
+</div>
+<div class="bottom-nav">
+<button class="nb on" id="ni-home" onclick="nav('s-home')"><span>⛳</span>Home</button>
+<button class="nb" id="ni-pick" onclick="nav('s-pick')"><span>👤</span>Team</button>
+<button class="nb" id="ni-live" onclick="nav('s-live')"><span>📡</span>Live</button>
+<button class="nb" id="ni-my" onclick="nav('s-my')"><span>📋</span>My Squad</button>
+<button class="nb" id="ni-leagues" onclick="nav('s-leagues')"><span>🏆</span>Leagues</button>
+</div><script>
+var SURL='https://peekrbzmaocuportertr.supabase.co';
+var SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZWtyYnptYW9jdXBvcnRlcnRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTIzNjgsImV4cCI6MjA5Njc2ODM2OH0.Gimxn5A5UZsgMtwlNi_K7aMTzpvtkilF5g__9JnWoIw';
+var AP=[],squad=[],cap=null,vc=null,filt='All';
+var WKS=[
+  {gw:3,ev:'The Players',type:'signature',pos:'T4',pts:44,bi:15,ea:1,pa:50,bo:5,db:1,bl:0,fi:12},
+  {gw:2,ev:'Sony Open',type:'standard',pos:'Win',pts:72,bi:20,ea:2,pa:44,bo:4,db:0,bl:0,fi:25},
+  {gw:1,ev:'The Sentry',type:'standard',pos:'CUT',pts:-8,bi:5,ea:0,pa:28,bo:8,db:3,bl:0,fi:-10}
+];
+var LB=[
+  {n:'S. Scheffler',t:'PGA',p:1,s:-18,th:14,pts:82},
+  {n:'R. McIlroy',t:'PGA',p:2,s:-16,th:18,pts:71},
+  {n:'J. Rahm',t:'LIV',p:3,s:-14,th:'F',pts:65},
+  {n:'B. DeChambeau',t:'LIV',p:4,s:-13,th:18,pts:59},
+  {n:'T. Fleetwood',t:'PGA',p:5,s:-12,th:16,pts:53},
+  {n:'C. Smith',t:'LIV',p:6,s:-11,th:'F',pts:47},
+  {n:'T. Hatton',t:'LIV',p:7,s:-5,th:12,pts:-3}
+];
+async function loadPlayers(){
+  try{
+    var res=await fetch(SURL+'/rest/v1/players?is_active=eq.true&order=price.desc',{
+      headers:{'apikey':SKEY,'Authorization':'Bearer '+SKEY}
+    });
+    if(!res.ok)throw new Error('HTTP '+res.status);
+    AP=await res.json();
+    rpl();
+  }catch(e){
+    document.getElementById('plist').innerHTML='<div class="loading" style="color:#f87171">Failed to load: '+e.message+'</div>';
+  }
+}
+function nav(id){
+  document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');});
+  document.getElementById(id).classList.add('on');
+  document.querySelectorAll('.nb').forEach(function(n){n.classList.remove('on');});
+  var m={'sXhome':'ni-home','sXpick':'ni-pick','sXlive':'ni-live','sXmy':'ni-my','sXleagues':'ni-leagues'};
+  var key=id.replace('-','X');
+  if(m[key])document.getElementById(m[key]).classList.add('on');
+  if(id==='s-my')rmy();
+  if(id==='s-live')rlb();
+}
+function sf(f){
+  filt=f;
+  document.querySelectorAll('.fp').forEach(function(p){p.classList.remove('on');});
+  var el=document.getElementById('f'+f);
+  if(el)el.classList.add('on');
+  rpl();
+}
+function tourBadge(t){return '<span class="'+(t==='PGA'?'pga':'liv')+'">'+t+'</span>';}
+function rpl(){
+  var srch=document.getElementById('srch')?document.getElementById('srch').value:'';
+  var tiers=['elite','star','solid','value','budget'];
+  var iT=tiers.indexOf(filt)>=0;
+  var spend=0;squad.forEach(function(p){spend+=parseFloat(p.price);});
+  var filtered=AP.filter(function(p){
+    if(filt==='PGA'&&p.tour!=='PGA')return false;
+    if(filt==='LIV'&&p.tour!=='LIV')return false;
+    if(iT&&p.tier!==filt)return false;
+    if(srch&&p.name.toLowerCase().indexOf(srch.toLowerCase())<0)return false;
+    return true;
+  });
+  if(!filtered.length){document.getElementById('plist').innerHTML='<div class="loading">No players found</div>';return;}
+  var html='';
+  filtered.forEach(function(p){
+    var inSq=false;squad.forEach(function(s){if(s.id===p.id)inSq=true;});
+    var cant=!inSq&&(spend+parseFloat(p.price)>75||squad.length>=7);
+    var cls='pr'+(inSq?' in':'')+(cant?' dim':'');
+    var clk=cant?'':'onclick="opn(\''+p.id+'\')"';
+    var maj=p.majors_won>0?p.majors_won+' Major'+(p.majors_won>1?'s':''):'No majors';
+    html+='<div class="'+cls+'" '+clk+'>';
+    html+='<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:7px;margin-bottom:4px">';
+    html+='<span style="font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+p.name+'</span>';
+    if(inSq)html+='<span style="font-size:10px;color:#4ade80;font-weight:700">IN</span>';
+    html+='</div><div style="display:flex;gap:6px;align-items:center">'+tourBadge(p.tour);
+    html+='<span style="font-size:11px;color:#4a6b4a">'+maj+'</span>';
+    html+='<span style="font-size:11px;color:#3d5c3d">'+p.tour_wins+' wins</span>';
+    html+='</div></div><div style="text-align:right;flex-shrink:0">';
+    html+='<div style="font-weight:700;font-size:14px;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</div>';
+    html+='<div style="font-size:11px;color:#4a6b4a;margin-top:1px">'+p.season_avg_points+' pts avg</div>';
+    html+='</div></div>';
+  });
+  document.getElementById('plist').innerHTML=html;
+}
+function opn(id){
+  var p=null;AP.forEach(function(x){if(x.id===id)p=x;});if(!p)return;
+  var inSq=false;squad.forEach(function(s){if(s.id===id)inSq=true;});
+  var spend=0;squad.forEach(function(x){spend+=parseFloat(x.price);});
+  var canAdd=!inSq&&squad.length<7&&spend+parseFloat(p.price)<=75;
+  var isCap=cap&&cap.id===id;var isVC=vc&&vc.id===id;
+  var html='<div style="padding:20px">';
+  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">';
+  html+='<div><div style="font-size:19px;font-weight:700;margin-bottom:5px">'+p.name+'</div>';
+  html+='<div style="display:flex;gap:7px;align-items:center">'+tourBadge(p.tour);
+  html+='<span style="font-size:12px;color:#4a6b4a">Rank #'+p.world_ranking+'</span>';
+  html+='<span style="font-size:12px;color:#3d5c3d">'+(p.nationality||'')+'</span></div></div>';
+  html+='<div style="font-size:20px;font-weight:800;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</div></div>';
+  html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px">';
+  html+='<div class="stat"><div style="font-size:18px;font-weight:700;color:#fbbf24">'+p.majors_won+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:3px">Majors</div></div>';
+  html+='<div class="stat"><div style="font-size:18px;font-weight:700">'+p.tour_wins+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:3px">Tour wins</div></div>';
+  html+='<div class="stat"><div style="font-size:18px;font-weight:700;color:#4ade80">'+p.season_avg_points+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:3px">Avg pts</div></div></div>';
+  html+='<div class="lbl">Weekly Results</div><div class="card" style="margin-bottom:16px">';
+  WKS.forEach(function(w,wi){
+    var pc=w.pts>0?'#4ade80':w.pts<0?'#f87171':'#fbbf24';
+    var pp=w.pts>0?'+'+w.pts:w.pts;
+    var tl=w.type==='signature'?'<span style="color:#fbbf24;font-weight:600">Signature</span>':w.type==='major'?'<span style="color:#fbbf24;font-weight:600">Major</span>':'Standard';
+    var pl=w.pos==='Win'?'<span style="color:#fbbf24">WINNER</span>':w.pos;
+    var bd=wi<WKS.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
+    html+='<div onclick="wb('+wi+')" style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;'+bd+';cursor:pointer">';
+    html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:3px">GW'+w.gw+' - '+w.ev+'</div>';
+    html+='<div style="font-size:11px;color:#4a6b4a">'+tl+' - '+pl+'</div></div>';
+    html+='<div style="text-align:right"><div style="font-size:17px;font-weight:700;color:'+pc+'">'+pp+'</div>';
+    html+='<div style="font-size:10px;color:#4a6b4a;margin-top:2px">pts</div></div></div>';
+  });
+  html+='</div><div style="display:flex;gap:8px;flex-wrap:wrap">';
+  if(canAdd)html+='<button class="btn-g" style="flex:1" onclick="ap(\''+id+'\');cm()">Add to Squad</button>';
+  if(inSq&&!isCap)html+='<button onclick="sc(\''+id+'\');cm()" style="flex:1;padding:14px;border-radius:10px;border:1px solid #1a6b35;background:rgba(26,107,53,.2);color:#4ade80;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Captain</button>';
+  if(inSq&&!isVC&&!isCap)html+='<button onclick="sv(\''+id+'\');cm()" style="flex:1;padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#8aaa8a;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Vice Cap</button>';
+  if(inSq)html+='<button onclick="rp(\''+id+'\');cm()" style="padding:14px 18px;border-radius:10px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:#f87171;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Remove</button>';
+  html+='</div></div>';
+  document.getElementById('pmc').innerHTML=html;
+  document.getElementById('pm').classList.add('open');
+}
+function wb(wi){
+  var w=WKS[wi];
+  var mult=w.type==='major'?1.5:w.type==='signature'?1.25:1;
+  var ep=w.ea*8,bp=w.bi*3,bog=w.bo*-1,db=w.db*-3,bl=(w.bl||0)*-8;
+  var fp=Math.round(w.fi*mult),tot=ep+bp+bog+db+bl+fp;
+  var rows=[
+    {l:'Eagles x'+w.ea,p:ep,c:'#fbbf24',s:w.ea>0},
+    {l:'Birdies x'+w.bi,p:bp,c:'#4ade80',s:w.bi>0},
+    {l:'Pars x'+w.pa,p:0,c:'#4a6b4a',s:true},
+    {l:'Bogeys x'+w.bo,p:bog,c:'#f87171',s:w.bo>0},
+    {l:'Doubles x'+w.db,p:db,c:'#f87171',s:w.db>0},
+    {l:'Blobs x'+(w.bl||0),p:bl,c:'#f87171',s:(w.bl||0)>0},
+    {l:'Finish ('+w.pos+')'+(mult>1?' x'+mult:''),p:fp,c:'#fbbf24',s:true}
+  ];
+  var html='<div style="padding:20px">';
+  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>';
+  html+='<div style="font-size:16px;font-weight:700;margin-bottom:3px">GW'+w.gw+' - '+w.ev+'</div>';
+  var tl=w.type==='signature'?'Signature Event':w.type==='major'?'Major':'Standard';
+  html+='<div style="font-size:12px;color:#4a6b4a;margin-bottom:16px">'+tl+' - Position: '+w.pos+'</div>';
+  html+='<div class="card" style="margin-bottom:16px">';
+  rows.forEach(function(r,ri){
+    if(!r.s)return;
+    var bd=ri<rows.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;'+bd+'">';
+    html+='<span style="font-size:14px;color:#c8d8c8">'+r.l+'</span>';
+    html+='<span style="font-size:15px;font-weight:700;color:'+r.c+'">'+(r.p>0?'+':'')+r.p+' pts</span></div>';
+  });
+  var tc=tot>=0?'#4ade80':'#f87171',tv=tot>=0?'+'+tot:tot;
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 16px;background:rgba(26,107,53,0.15);border-top:1px solid rgba(26,107,53,0.3)">';
+  html+='<span style="font-size:14px;font-weight:700;color:#4ade80">Total</span>';
+  html+='<span style="font-size:18px;font-weight:800;color:'+tc+'">'+tv+' pts</span></div></div>';
+  html+='<button class="btn-ghost" onclick="cm()">Close</button></div>';
+  document.getElementById('pmc').innerHTML=html;
+}
+function cm(){document.getElementById('pm').classList.remove('open');}
+function ap(id){
+  var p=null;AP.forEach(function(x){if(x.id===id)p=x;});if(!p)return;
+  var spend=0;squad.forEach(function(x){spend+=parseFloat(x.price);});
+  var already=false;squad.forEach(function(s){if(s.id===id)already=true;});
+  if(already||spend+parseFloat(p.price)>75||squad.length>=7)return;
+  squad.push(p);
+  if(!cap)cap=p;else if(!vc&&p.id!==cap.id)vc=p;
+  uh();rpl();
+  document.getElementById('tb-sq').textContent='My Squad ('+squad.length+')';
+}
+function rp(id){
+  squad=squad.filter(function(p){return p.id!==id;});
+  if(cap&&cap.id===id)cap=squad.length>0?squad[0]:null;
+  if(vc&&vc.id===id){vc=null;squad.forEach(function(p){if(!vc&&cap&&p.id!==cap.id)vc=p;});}
+  uh();rpl();rsq();
+  document.getElementById('tb-sq').textContent='My Squad ('+squad.length+')';
+}
+function sc(id){AP.forEach(function(x){if(x.id===id)cap=x;});if(vc&&vc.id===id)vc=null;rsq();}
+function sv(id){AP.forEach(function(x){if(x.id===id)vc=x;});if(cap&&cap.id===id)cap=null;rsq();}
+function uh(){
+  var spend=0;squad.forEach(function(p){spend+=parseFloat(p.price);});
+  var left=(75-spend).toFixed(1);
+  document.getElementById('bgt').textContent='£'+left+'m';
+  document.getElementById('bgt').style.color=parseFloat(left)<8?'#f87171':'#4ade80';
+  document.getElementById('cnt').textContent=squad.length+' / 7 picked';
+  document.getElementById('bbar').style.width=(spend/75*100)+'%';
+  document.getElementById('bbar').style.background=parseFloat(left)<8?'#f87171':'#1a6b35';
+}
+function pv(v){
+  document.getElementById('vpl').style.display=v==='pl'?'block':'none';
+  document.getElementById('vsq').style.display=v==='sq'?'block':'none';
+  document.getElementById('tb-pl').classList.toggle('on',v==='pl');
+  document.getElementById('tb-sq').classList.toggle('on',v==='sq');
+  if(v==='sq')rsq();
+}
+function sh(p,lbl,isR){
+  if(!p)return '<div class="sl empty"><span style="font-size:12px;color:#4a6b4a">'+lbl+' - empty</span></div>';
+  var iC=cap&&cap.id===p.id,iV=vc&&vc.id===p.id;
+  var html='<div class="sl'+(iC?' cap':iV?' vc':'')+'">';
+  html+='<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">';
+  if(iC)html+='<span class="badge bc">CAP 2x</span>';
+  if(iV)html+='<span class="badge bv">VC 1.5x</span>';
+  if(isR)html+='<span class="badge br">RES</span>';
+  html+='<span style="font-size:13px;font-weight:600">'+p.name+'</span></div>';
+  html+='<div style="display:flex;gap:6px">'+tourBadge(p.tour);
+  html+='<span style="font-size:12px;font-weight:700;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</span></div></div>';
+  html+='<div style="display:flex;gap:5px">';
+  if(!iC)html+='<button onclick="sc(\''+p.id+'\')" style="font-size:10px;padding:4px 8px;border-radius:5px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;cursor:pointer;font-family:inherit;font-weight:700">C</button>';
+  if(!iV&&!iC)html+='<button onclick="sv(\''+p.id+'\')" style="font-size:10px;padding:4px 8px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#6b8c6b;cursor:pointer;font-family:inherit">VC</button>';
+  html+='<button onclick="rp(\''+p.id+'\')" style="font-size:10px;padding:4px 8px;border-radius:5px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:#f87171;cursor:pointer;font-family:inherit">x</button>';
+  html+='</div></div>';
+  return html;
+}
+function rsq(){
+  var aH='';for(var i=0;i<5;i++)aH+=sh(squad[i],'Active '+(i+1),false);
+  var rH='';for(var i=0;i<2;i++)rH+=sh(squad[i+5],'Reserve '+(i+1),true);
+  document.getElementById('sqact').innerHTML=aH;
+  document.getElementById('sqres').innerHTML=rH;
+  var tip=document.getElementById('sqtip');
+  if(!cap&&squad.length>0){tip.style.display='block';tip.textContent='Tap C on any player to set your captain (2x points)';}
+  else if(cap&&!vc&&squad.length>1){tip.style.display='block';tip.textContent='Tap VC to set your vice captain (1.5x points)';}
+  else tip.style.display='none';
+  document.getElementById('savebtn').style.display=(squad.length===7&&cap&&vc)?'block':'none';
+}
+function rmy(){
+  var spend=0;squad.forEach(function(p){spend+=parseFloat(p.price);});
+  document.getElementById('mbudget').textContent='£'+(75-spend).toFixed(1)+'m';
+  if(!squad.length){
+    document.getElementById('myc').innerHTML='<p style="color:#4a6b4a;font-size:14px;text-align:center;padding:40px 0">No team yet - <span onclick="nav(\'s-pick\')" style="color:#4ade80;cursor:pointer">pick your squad</span></p>';
+    return;
+  }
+  var html='<div class="lbl">Your Squad</div>';
+  squad.forEach(function(p,i){
+    var iC=cap&&cap.id===p.id,iV=vc&&vc.id===p.id,isR=i>=5;
+    html+='<div class="sl'+(iC?' cap':iV?' vc':'\')+'" onclick="opn(\''+p.id+'\');nav(\'s-pick\')" style="cursor:pointer">';
+    html+='<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">';
+    if(iC)html+='<span class="badge bc">CAP 2x</span>';
+    if(iV)html+='<span class="badge bv">VC 1.5x</span>';
+    if(isR)html+='<span class="badge br">RESERVE</span>';
+    html+='<span style="font-size:13px;font-weight:600">'+p.name+'</span></div>';
+    html+='<div style="display:flex;gap:6px">'+tourBadge(p.tour);
+    html+='<span style="font-size:12px;font-weight:700;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</span></div></div>';
+    html+='<span style="font-size:11px;color:#4a6b4a">View</span></div>';
+  });
+  document.getElementById('myc').innerHTML=html;
+}
+function rlb(){
+  var html='';
+  LB.forEach(function(r,i){
+    var pc=r.pts>0?'#4ade80':r.pts<0?'#f87171':'#fbbf24';
+    var pv=r.pts>0?'+'+r.pts:r.pts;
+    var bd=i<LB.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
+    html+='<div style="display:grid;grid-template-columns:28px 1fr 44px 44px 50px;gap:4px;padding:11px 14px;'+bd+';align-items:center">';
+    html+='<span style="font-size:13px;font-weight:600;color:#3d5c3d">'+r.p+'</span>';
+    html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">'+r.n+'</div>'+tourBadge(r.t)+'</div>';
+    html+='<span style="text-align:center;font-size:14px;font-weight:700;color:#f0f4f0">'+r.s+'</span>';
+    html+='<span style="text-align:center;font-size:13px;color:#4a6b4a">'+r.th+'</span>';
+    html+='<span style="text-align:right;font-size:13px;font-weight:700;color:'+pc+'">'+pv+'</span>';
+    html+='</div>';
+  });
+  document.getElementById('lbrows').innerHTML=html;
+}
+function lv(v){
+  document.getElementById('lvj').style.display=v==='j'?'block':'none';
+  document.getElementById('lvc').style.display=v==='c'?'block':'none';
+  document.getElementById('ltj').classList.toggle('on',v==='j');
+  document.getElementById('ltc').classList.toggle('on',v==='c');
+}
+function fmt(t){
+  var ip=t==='paid';
+  document.getElementById('ffr').style.cssText='padding:12px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;border:1px solid '+(ip?'rgba(255,255,255,.1)':'#1a6b35')+';background:'+(ip?'rgba(255,255,255,.04)':'rgba(26,107,53,.15)')+';color:'+(ip?'#6b8c6b':'#4ade80');
+  document.getElementById('fpd').style.cssText='padding:12px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;border:1px solid '+(ip?'#1a6b35':'rgba(255,255,255,.1)')+';background:'+(ip?'rgba(26,107,53,.15)':'rgba(255,255,255,.04)')+';color:'+(ip?'#4ade80':'#6b8c6b');
+  document.getElementById('fsec').style.display=ip?'block':'none';
+}
+function fa(btn){
+  document.querySelectorAll('#fsec button').forEach(function(b){
+    b.style.border='1px solid rgba(255,255,255,.1)';
+    b.style.background='rgba(255,255,255,.04)';
+    b.style.color='#6b8c6b';
+  });
+  btn.style.border='1px solid #1a6b35';
+  btn.style.background='rgba(26,107,53,.15)';
+  btn.style.color='#4ade80';
+}
+function ck(){
+  var v=document.getElementById('lcode')?document.getElementById('lcode').value:'';
+  var btn=document.getElementById('jbtn');
+  btn.disabled=v.length!==6;btn.style.opacity=v.length===6?'1':'0.4';
+  if(v.length===6){btn.style.background='#1a6b35';btn.style.color='#fff';btn.style.border='none';}
+  else{btn.style.background='rgba(255,255,255,0.06)';btn.style.color='#c8d8c8';btn.style.border='1px solid rgba(255,255,255,0.1)';}
+}
+loadPlayers();
+rlb();
+</script>
+</body>
+</html>
