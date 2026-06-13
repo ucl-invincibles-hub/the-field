@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"><!-- v13jun-nav-fix -->
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>The Field — Fantasy Golf</title>
 <style>
+
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
 button{cursor:pointer;font-family:inherit}
 input{font-family:inherit;outline:none}
-.scr{display:none;padding-bottom:70px}.scr.on{display:block}
-.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0d150d;border-top:1px solid rgba(255,255,255,0.07);display:flex;z-index:100}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a6b4a;font-size:10px;font-weight:600}
+.scr{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}.scr.on{display:block}
+.bottom-nav{display:flex;background:#111d11;border-top:2px solid #2a5a2a;flex-shrink:0;z-index:100}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a8a5a;font-size:10px;font-weight:700;letter-spacing:0.3px}
 .nb.on{color:#4ade80}
 .nb span:first-child{font-size:20px}
 .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
@@ -28,186 +29,998 @@ input{font-family:inherit;outline:none}
 .tab-row{display:flex;background:rgba(255,255,255,0.04);border-radius:8px;padding:3px;gap:2px}
 .tb{flex:1;padding:7px 0;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b8c6b;font-family:inherit}
 .tb.on{background:#1a6b35;color:#fff}
-.sl{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:10px;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
-.sl.cap{border-color:rgba(74,222,128,0.4);background:rgba(74,222,128,0.05)}
-.sl.vc{border-color:rgba(74,222,128,0.2)}
-.sl.empty{opacity:0.35;justify-content:center}
-.badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px}
-.bc{background:#166534;color:#4ade80}
-.bv{background:rgba(74,222,128,0.15);color:#86efac}
-.br{background:rgba(255,255,255,0.06);color:#6b8c6b}
-.stat{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px;text-align:center}
-.lbl{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3d5c3d;margin-bottom:10px}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:flex-end;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-top:1px solid rgba(255,255,255,0.1)}
 .row-sc{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.05)}
 .row-sc:last-child{border-bottom:none}
 .loading{text-align:center;padding:40px;color:#4a6b4a;font-size:14px}
+.lbl-pill{display:inline-block;border-radius:3px;padding:3px 8px;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.stat-b{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:8px;text-align:center}
+.chips-bar{display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 10px;gap:6px}
+.chip{flex:1;padding:8px 4px;text-align:center;border-radius:8px;background:#0d1a0d;border:1px solid #1a3a1a;cursor:pointer;font-size:8px;font-weight:700;color:#4a7a4a;line-height:1.5}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:flex-end;justify-content:center}
+#rules-modal{z-index:210}
+.modal-bg.open{display:flex}
+.modal{background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-top:1px solid rgba(255,255,255,0.1)}
+.pts-g{background:#0a2a0a;border:1px solid #1a3a1a;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#4ade80}
+.pts-r{background:#2a0a0a;border:1px solid #3a1a1a;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#f87171}
+.pts-0{background:#0a0f0a;border:1px solid #182818;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#fbbf24}
+/* Auth modal */
+.auth-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.auth-modal.open{display:flex}
+.auth-box{background:#162016;border-radius:16px;width:100%;max-width:360px;padding:28px;border:1px solid rgba(255,255,255,0.1)}
+.auth-input{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:15px;margin-bottom:12px}
+/* News ticker */
+.news-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.news-item:last-child{border-bottom:none}
+/* Rules modal */
+.rules-slider{display:flex;width:300%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.rules-slide{width:33.33%;flex-shrink:0;padding:20px}
+
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+button{cursor:pointer;font-family:inherit}
+input{font-family:inherit;outline:none}
+.scr{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}.scr.on{display:block}
+.bottom-nav{display:flex;background:#111d11;border-top:2px solid #2a5a2a;flex-shrink:0;z-index:100}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a8a5a;font-size:10px;font-weight:700;letter-spacing:0.3px}
+.nb.on{color:#4ade80}
+.nb span:first-child{font-size:20px}
+.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
+.btn-g{background:#1a6b35;color:#fff;border:none;border-radius:10px;font-weight:600;padding:15px;font-size:16px;width:100%;cursor:pointer;font-family:inherit}
+.btn-ghost{background:rgba(255,255,255,0.06);color:#c8d8c8;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-weight:500;padding:13px;font-size:15px;width:100%;cursor:pointer;font-family:inherit}
+.pga{background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.25);border-radius:4px;font-size:10px;font-weight:700;padding:2px 7px}
+.liv{background:rgba(220,38,38,0.15);color:#fca5a5;border:1px solid rgba(220,38,38,0.25);border-radius:4px;font-size:10px;font-weight:700;padding:2px 7px}
+.pr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.pr:last-child{border-bottom:none}
+.pr.in{border-left:2px solid #4ade80}
+.pr.dim{opacity:0.3;cursor:not-allowed;pointer-events:none}
+.fp{padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#6b8c6b;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
+.fp.on{background:#1a6b35;color:#fff;border-color:#1a6b35}
+.tab-row{display:flex;background:rgba(255,255,255,0.04);border-radius:8px;padding:3px;gap:2px}
+.tb{flex:1;padding:7px 0;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b8c6b;font-family:inherit}
+.tb.on{background:#1a6b35;color:#fff}
+.row-sc{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.05)}
+.row-sc:last-child{border-bottom:none}
+.loading{text-align:center;padding:40px;color:#4a6b4a;font-size:14px}
+.lbl-pill{display:inline-block;border-radius:3px;padding:3px 8px;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.stat-b{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:8px;text-align:center}
+.chips-bar{display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 10px;gap:6px}
+.chip{flex:1;padding:8px 4px;text-align:center;border-radius:8px;background:#0d1a0d;border:1px solid #1a3a1a;cursor:pointer;font-size:8px;font-weight:700;color:#4a7a4a;line-height:1.5}
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:flex-end;justify-content:center}
+#rules-modal{z-index:210}
+.modal-bg.open{display:flex}
+.modal{background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-top:1px solid rgba(255,255,255,0.1)}
+.pts-g{background:#0a2a0a;border:1px solid #1a3a1a;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#4ade80}
+.pts-r{background:#2a0a0a;border:1px solid #3a1a1a;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#f87171}
+.pts-0{background:#0a0f0a;border:1px solid #182818;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#fbbf24}
+/* Auth modal */
+.auth-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
+.auth-modal.open{display:flex}
+.auth-box{background:#162016;border-radius:16px;width:100%;max-width:360px;padding:28px;border:1px solid rgba(255,255,255,0.1)}
+.auth-input{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:15px;margin-bottom:12px}
+/* News ticker */
+.news-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.news-item:last-child{border-bottom:none}
+/* Rules modal */
+.rules-slider{display:flex;width:300%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.rules-slide{width:33.33%;flex-shrink:0;padding:20px}
+
 </style>
 </head>
-<body><div id="s-home" class="scr on">
-<div style="padding:36px 24px 28px;text-align:center">
-<div style="width:56px;height:56px;border-radius:14px;background:#1a6b35;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:26px">⛳</div>
-<div style="font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">The Field</div>
-<div style="font-size:12px;color:#4a6b4a;letter-spacing:3px;text-transform:uppercase;margin-bottom:20px">Fantasy Golf</div>
-<p style="font-size:15px;color:#8aaa8a;line-height:1.65;margin-bottom:28px">Pick 7 golfers across PGA and LIV. Score on every hole. £75m budget. Compete all season.</p>
-<button class="btn-g" onclick="nav('s-pick')" style="margin-bottom:10px">Build Your Team</button>
-<button class="btn-ghost" onclick="nav('s-live')">View Live Scores</button>
+<body>
+
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="auth-modal">
+<div class="auth-box">
+  <div style="display:flex;justify-content:flex-end;margin-bottom:-10px">
+    <button onclick="closeAuth()" style="background:rgba(255,255,255,0.08);border:none;color:#f0f4f0;border-radius:6px;padding:5px 10px;font-size:14px;cursor:pointer;font-family:inherit">✕</button>
+  </div>
+  <div style="text-align:center;margin-bottom:20px">
+    <div style="font-size:28px;margin-bottom:8px">⛳</div>
+    <div style="font-size:20px;font-weight:800">The Field</div>
+    <div style="font-size:11px;color:#4a6b4a;letter-spacing:2px;text-transform:uppercase;margin-top:4px">Fantasy Golf</div>
+  </div>
+  <div id="auth-mode-tabs" style="display:flex;background:rgba(255,255,255,0.04);border-radius:8px;padding:3px;gap:2px;margin-bottom:18px">
+    <button class="tb on" id="at-login" onclick="authTab('login')" style="flex:1">Sign In</button>
+    <button class="tb" id="at-reg" onclick="authTab('reg')" style="flex:1">Register</button>
+  </div>
+  <div id="auth-error" style="display:none;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);border-radius:6px;padding:8px 12px;font-size:12px;color:#f87171;margin-bottom:12px"></div>
+  <input class="auth-input" type="email" id="auth-email" placeholder="Email address"/>
+  <input class="auth-input" type="password" id="auth-password" placeholder="Password"/>
+  <div id="auth-name-row" style="display:none"><input class="auth-input" type="text" id="auth-name" placeholder="Your name (optional)"/></div>
+  <button class="btn-g" onclick="doAuth()" id="auth-btn" style="margin-bottom:10px">Sign In</button>
+  <p style="font-size:11px;color:#3d5c3d;text-align:center">Your team and leagues are saved to your account</p>
 </div>
-<div style="padding:0 20px 24px">
-<div class="lbl">Scoring System</div>
-<div class="card">
-<div class="row-sc"><div><div style="font-size:14px">Major win</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">1.5x multiplier applied</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+37 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Tournament win</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Standard PGA event victory</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+25 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Hole in one</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Ace on any par 3</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+15 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Eagle</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">2 under par on any hole</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+8 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Birdie</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">1 under par - bread and butter</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+3 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Par</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Solid play, no reward or penalty</div></div><span style="font-weight:700;color:#fbbf24;font-size:15px">0 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Bogey</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">1 over par - happens to everyone</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-1 pt</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Double bogey</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">2 over par - a bad hole</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-3 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Triple bogey</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">3 over par - round unravelling</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-5 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Blob</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">4+ over par - a disaster hole</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-8 pts</span></div>
-<div class="row-sc"><div><div style="font-size:14px">Missed cut</div><div style="font-size:11px;color:#3d5c3d;margin-top:2px">Did not make weekend - LIV bottom 27</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-10 pts</span></div>
 </div>
 </div>
+
+<!-- HOME -->
+<div id="s-home" class="scr on">
+<!-- Top bar with hamburger -->
+<div style="display:flex;justify-content:space-between;align-items:center;padding:16px 20px 0">
+  <div style="font-size:13px;font-weight:700;color:#4ade80;letter-spacing:1px">THE FIELD</div>
+  <button onclick="openMenu()" style="background:none;border:none;cursor:pointer;padding:4px;display:flex;flex-direction:column;gap:5px">
+    <div style="width:22px;height:2px;background:#f0f4f0;border-radius:1px"></div>
+    <div style="width:22px;height:2px;background:#f0f4f0;border-radius:1px"></div>
+    <div style="width:22px;height:2px;background:#f0f4f0;border-radius:1px"></div>
+  </button>
 </div>
+<div style="padding:24px 20px 20px;text-align:center">
+  <div style="width:56px;height:56px;border-radius:14px;background:#1a6b35;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:26px">⛳</div>
+  <div style="font-size:28px;font-weight:800;letter-spacing:-.5px;margin-bottom:4px">The Field</div>
+  <div style="font-size:12px;color:#4a6b4a;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px">Fantasy Golf</div>
+  <p style="font-size:14px;color:#8aaa8a;line-height:1.65;margin-bottom:22px">Pick 7 golfers across PGA and LIV. Score on every hole. £75m budget. Compete all season.</p>
+  <button class="btn-g" onclick="nav('s-pick')" style="margin-bottom:8px">Build Your Team</button>
+  <button class="btn-ghost" onclick="nav('s-live')">View Live Scores</button>
+  <button onclick="shareApp()" style="margin-top:8px;background:transparent;border:none;color:#3d5c3d;font-size:13px;cursor:pointer;font-family:inherit;text-decoration:underline">📤 Share The Field with friends</button>
+</div>
+
+<!-- Scoring system -->
+<div style="padding:0 16px 16px">
+  <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4a8a5a;margin-bottom:10px">Scoring System</div>
+  <!-- Finish positions -->
+  <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d6a4a;margin-bottom:6px">Finish Positions</div>
+  <div class="card" style="margin-bottom:10px">
+    <div class="row-sc"><div><div style="font-size:14px">Major win</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">1.5x multiplier applied</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+37 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Tournament win</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Standard PGA event victory</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+25 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">2nd place</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Runner up finish</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+15 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">3rd place</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Third place finish</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+12 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Top 5</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Finish 4th to 5th</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+10 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Top 10</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Finish 6th to 10th</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+6 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Top 20</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Finish 11th to 20th</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+3 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">PGA missed cut / LIV bottom 27</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Did not make weekend — LIV bottom 27</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-10 pts</span></div>
+  </div>
+  <!-- Stroke play -->
+  <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d6a4a;margin-bottom:6px">Stroke Play</div>
+  <div class="card">
+    <div class="row-sc"><div><div style="font-size:14px">Hole in one</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Ace on any par 3</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+15 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Eagle</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">2 under par on any hole</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+8 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Birdie</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">1 under par — bread and butter</div></div><span style="font-weight:700;color:#4ade80;font-size:15px">+3 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Par</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">Solid play, no reward or penalty</div></div><span style="font-weight:700;color:#fbbf24;font-size:15px">0 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Bogey</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">1 over par — happens to everyone</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-1 pt</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Double bogey</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">2 over par — a bad hole</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-3 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Triple bogey</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">3 over par — round unravelling</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-5 pts</span></div>
+    <div class="row-sc"><div><div style="font-size:14px">Blob</div><div style="font-size:11px;color:#4a7a5a;margin-top:2px">4+ over par — a disaster hole</div></div><span style="font-weight:700;color:#f87171;font-size:15px">-8 pts</span></div>
+  </div>
+</div>
+
+<!-- Golf news -->
+
+
+<!-- Rules buttons -->
+<div style="padding:0 16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+  <button class="btn-ghost" onclick="openRules(0)" style="font-size:13px;padding:14px">📋 Full Rulebook</button>
+  <button class="btn-ghost" onclick="openRules(1)" style="font-size:13px;padding:14px">🏌️ How To Play</button>
+</div>
+</div>
+
+<!-- TRANSFERS (was Team) -->
 <div id="s-pick" class="scr">
 <div style="padding:14px 16px;background:#0f1a0f;border-bottom:1px solid rgba(255,255,255,0.07);position:sticky;top:0;z-index:10">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
-<div style="font-size:17px;font-weight:700">Pick Your Team</div>
-<div style="text-align:right">
-<div style="font-size:16px;font-weight:700;color:#4ade80" id="bgt">£75.0m</div>
-<div style="font-size:11px;color:#4a6b4a" id="cnt">0 / 7 picked</div>
-</div>
-</div>
-<div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-bottom:10px">
-<div id="bbar" style="height:100%;width:0;background:#1a6b35;border-radius:1px;transition:width .3s"></div>
-</div>
-<div class="tab-row">
-<button class="tb on" id="tb-pl" onclick="pv('pl')">Players</button>
-<button class="tb" id="tb-sq" onclick="pv('sq')">My Squad (0)</button>
-</div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <div style="font-size:17px;font-weight:700">Transfers</div>
+    <div style="text-align:right">
+      <div style="font-size:16px;font-weight:700;color:#4ade80" id="bgt">£75.0m</div>
+      <div style="font-size:11px;color:#4a6b4a" id="cnt">0 / 7 picked</div>
+    </div>
+  </div>
+  <div style="height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-bottom:10px">
+    <div id="bbar" style="height:100%;width:0;background:#1a6b35;border-radius:1px;transition:width .3s"></div>
+  </div>
+  <div class="tab-row">
+    <button class="tb on" id="tb-pl" onclick="pv('pl')">Players</button>
+    <button class="tb" id="tb-sq" onclick="pv('sq')">My Picks (<span id="sq-count">0</span>)</button>
+  </div>
 </div>
 <div id="vpl">
-<div style="padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06)">
-<input type="text" id="srch" placeholder="Search player..." oninput="rpl()" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:14px;margin-bottom:8px"/>
-<div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px">
-<button class="fp on" id="fAll" onclick="sf('All')">All</button>
-<button class="fp" id="fPGA" onclick="sf('PGA')">PGA</button>
-<button class="fp" id="fLIV" onclick="sf('LIV')">LIV</button>
-<button class="fp" id="felite" onclick="sf('elite')">Elite</button>
-<button class="fp" id="fstar" onclick="sf('star')">Star</button>
-<button class="fp" id="fsolid" onclick="sf('solid')">Solid</button>
-<button class="fp" id="fvalue" onclick="sf('value')">Value</button>
-<button class="fp" id="fbudget" onclick="sf('budget')">Budget</button>
-</div>
-</div>
-<div id="plist"><div class="loading">Loading players...</div></div>
+  <div style="padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06)">
+    <input type="text" id="srch" placeholder="Search player..." oninput="rpl()" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:14px;margin-bottom:8px"/>
+    <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px">
+      <button class="fp on" id="fAll" onclick="sf('All')">All</button>
+      <button class="fp" id="fPGA" onclick="sf('PGA')">PGA</button>
+      <button class="fp" id="fLIV" onclick="sf('LIV')">LIV</button>
+      <button class="fp" id="felite" onclick="sf('elite')">Elite</button>
+      <button class="fp" id="fstar" onclick="sf('star')">Star</button>
+      <button class="fp" id="fsolid" onclick="sf('solid')">Solid</button>
+      <button class="fp" id="fvalue" onclick="sf('value')">Value</button>
+      <button class="fp" id="fbudget" onclick="sf('budget')">Budget</button>
+    </div>
+  </div>
+  <div id="plist"><div class="loading">Loading players...</div></div>
 </div>
 <div id="vsq" style="display:none;padding:14px 16px">
-<div class="lbl">Active Players (5)</div>
-<div id="sqact"></div>
-<div class="lbl" style="margin-top:14px">Reserves (2)</div>
-<div id="sqres"></div>
-<div id="sqtip" style="display:none;margin-top:12px;padding:12px 14px;background:rgba(26,107,53,0.15);border:1px solid rgba(26,107,53,0.4);border-radius:10px;font-size:13px;color:#86efac"></div>
-<button id="savebtn" onclick="nav('s-leagues')" style="display:none;margin-top:16px" class="btn-g">Save Team and Join League</button>
+  <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#4a8a5a">
+    Transfers available this week: <span style="color:#4ade80;font-weight:700">2</span> — changes take effect at next gameweek · extra subs cost -10 pts each
+  </div>
+  <div class="lbl-pill" style="background:#0c1e0c;color:#4ade80;margin-bottom:8px">Active Players (5)</div>
+  <div id="sqact"></div>
+  <div class="lbl-pill" style="background:#0a1a0a;color:#2d9a4a;margin-top:12px;margin-bottom:8px">Reserves (2)</div>
+  <div id="sqres"></div>
+  <div id="sqtip" style="display:none;margin-top:10px;padding:10px 14px;background:rgba(26,107,53,0.15);border:1px solid rgba(26,107,53,0.4);border-radius:8px;font-size:12px;color:#86efac"></div>
+  <button onclick="pv('pl')" style="margin-top:10px;width:100%;padding:11px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px dashed #1a4a2a;color:#4a6b4a;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit">+ Browse player pool</button>
+  <button id="savebtn" onclick="requireAuth('s-leagues')" style="display:none;margin-top:8px" class="btn-g">Save Team and Join League</button>
 </div>
 </div>
-<div id="s-live" class="scr">
+
+<!-- LIVE SCORES -->
+<div id="s-live" class="scr" style="padding-bottom:70px">
+<!-- Live/News tabs -->
+<div style="display:flex;background:#050a05;border-bottom:1px solid #1a2a1a">
+  <button id="lv-t0" onclick="lvGo(0)" style="flex:1;padding:10px 0;border:none;border-bottom:2px solid #4ade80;color:#4ade80;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:inherit">📡 Live Scores</button>
+  <button id="lv-t1" onclick="lvGo(1)" style="flex:1;padding:10px 0;border:none;border-bottom:2px solid transparent;color:#2a4a2a;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:inherit">📊 Live Stats</button>
+  <button id="lv-t2" onclick="lvGo(2)" style="flex:1;padding:10px 0;border:none;border-bottom:2px solid transparent;color:#2a4a2a;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:inherit">📰 Live News</button>
+</div>
+<div style="overflow:hidden;width:100%">
+<div style="display:flex;width:300%;transition:transform .38s cubic-bezier(.4,0,.2,1)" id="lv-slider">
+
+<!-- LIVE SCORES SLIDE -->
+<div style="width:33.33%;flex-shrink:0">
 <div style="padding:16px 20px">
-<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">
-<div><div style="font-size:20px;font-weight:700;margin-bottom:3px">Live Scores</div><div style="font-size:12px;color:#4a6b4a">The Players Championship - Round 3</div></div>
-<div style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:5px">
-<div style="width:6px;height:6px;border-radius:50%;background:#4ade80"></div>
-<span style="font-size:11px;color:#4ade80;font-weight:600">LIVE</span>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">
+    <div><div style="font-size:20px;font-weight:700;margin-bottom:3px">Live Scores</div><div style="font-size:12px;color:#4a6b4a" id="live-tournament-info">Loading...</div></div>
+    <div style="background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:20px;padding:5px 12px;display:flex;align-items:center;gap:5px">
+      <div style="width:6px;height:6px;border-radius:50%;background:#4ade80"></div>
+      <span style="font-size:11px;color:#4ade80;font-weight:600">LIVE</span>
+    </div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+    <div class="stat-b"><div style="font-size:22px;font-weight:700;color:#4ade80">-18</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Leader</div></div>
+    <div class="stat-b"><div style="font-size:22px;font-weight:700;color:#4ade80">+247</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">This week</div></div>
+  </div>
+
+  <!-- PGA / LIV tabs -->
+  <div class="tab-row" style="margin-bottom:10px">
+    <button class="tb on" id="lb-pga" onclick="lbTour('pga')">PGA Tour</button>
+    <button class="tb" id="lb-liv" onclick="lbTour('liv')">LIV Golf</button>
+  </div>
+  <div id="lb-tournament-label" style="font-size:11px;color:#3d5c3d;margin-bottom:8px;font-weight:600"></div>
+
+  <!-- Favourites section -->
+  <div id="fav-section" style="display:none;margin-bottom:12px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#fbbf24;margin-bottom:8px">⭐ Favourites</div>
+    <div class="card" id="fav-rows"></div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#3d5c3d;margin-bottom:8px">Leaderboard</div>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:28px 1fr 44px 40px 48px;gap:4px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Pos</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Player</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:center">Score</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:center">Thru</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">Pts</span>
+    </div>
+    <div id="lbrows"></div>
+  </div>
+  <p style="text-align:center;margin-top:12px;font-size:12px;color:#3d5c3d">Updated every 2 minutes during play</p>
 </div>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
-<div class="stat"><div style="font-size:22px;font-weight:700;color:#4ade80">-18</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Leader</div></div>
-<div class="stat"><div style="font-size:22px;font-weight:700;color:#4ade80">+247</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Your pts</div></div>
+
+<!-- LIVE STATS SLIDE -->
+<div style="width:33.33%;flex-shrink:0;background:#080f08">
+<div style="padding:14px 16px 0">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <div style="font-size:16px;font-weight:800">Live Stats</div>
+    <div style="font-size:10px;color:#3d5c3d">2026 Season averages · illustrative data</div>
+  </div>
+  <div style="display:flex;background:rgba(255,255,255,0.04);border-radius:8px;padding:3px;gap:2px;margin-bottom:10px">
+    <button class="tb on" id="ls-all" onclick="lsTour('all')">All</button>
+    <button class="tb" id="ls-pga" onclick="lsTour('pga')">PGA</button>
+    <button class="tb" id="ls-liv" onclick="lsTour('liv')">LIV</button>
+  </div>
+  <div id="ls-cat-row" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:6px"></div>
+  <div id="ls-sub-row" style="display:flex;gap:5px;overflow-x:auto;padding-bottom:8px;margin-bottom:4px"></div>
 </div>
-<div class="card">
-<div style="display:grid;grid-template-columns:28px 1fr 44px 44px 50px;gap:4px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
-<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase">Pos</span>
-<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase">Player</span>
-<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase;text-align:center">Score</span>
-<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase;text-align:center">Thru</span>
-<span style="font-size:10px;font-weight:700;color:#3d5c3d;text-transform:uppercase;text-align:right">Pts</span>
-</div>
-<div id="lbrows"></div>
-</div>
-<p style="text-align:center;margin-top:12px;font-size:12px;color:#3d5c3d">Updated every 2 minutes during play</p>
+<div style="padding:0 16px 16px">
+  <div class="card" id="ls-table"><div class="loading">Loading stats...</div></div>
+  <p style="text-align:center;margin-top:10px;font-size:10px;color:#2a3a2a">Sourced from PGA Tour · DataGolf · Updated after each round</p>
 </div>
 </div>
-<div id="s-my" class="scr">
+
+<!-- NEWS SLIDE -->
+<div style="width:33.33%;flex-shrink:0;background:#080f08">
 <div style="padding:16px 20px">
-<div style="font-size:20px;font-weight:700;margin-bottom:4px">My Squad</div>
-<div style="font-size:12px;color:#4a6b4a;margin-bottom:16px">Season 2026</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
-<div class="stat"><div style="font-size:22px;font-weight:700;color:#4ade80" id="mpts">0</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Total pts</div></div>
-<div class="stat"><div style="font-size:22px;font-weight:700;color:#f0f4f0" id="mbudget">£75m</div><div style="font-size:11px;color:#4a6b4a;margin-top:3px">Remaining</div></div>
-</div>
-<div id="myc"><p style="color:#4a6b4a;font-size:14px;text-align:center;padding:40px 0">No team yet - <span onclick="nav('s-pick')" style="color:#4ade80;cursor:pointer">pick your squad</span></p></div>
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+    <div style="font-size:18px;font-weight:700">Golf News</div>
+    <div style="font-size:10px;color:#3d5c3d">Updated hourly</div>
+  </div>
+  <div class="card" id="news-feed-full"><div class="loading">Loading news...</div></div>
 </div>
 </div>
-<div id="s-leagues" class="scr">
+
+</div>
+</div>
+</div>
+
+<!-- MY SQUAD -->
+<div id="s-mysquad" class="scr" style="padding-bottom:0">
+<div style="display:flex;background:#050a05;border-bottom:1px solid #1a2a1a">
+  <button class="tb on" id="mst0" onclick="msGo(0)" style="flex:1;padding:10px 0;border:none;border-bottom:2px solid #4ade80;color:#4ade80;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:inherit">⛳ Scorecard</button>
+  <button class="tb" id="mst1" onclick="msGo(1)" style="flex:1;padding:10px 0;border:none;border-bottom:2px solid transparent;color:#2a4a2a;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;background:transparent;font-family:inherit">🏌️ Field View</button>
+</div>
+<div style="overflow:hidden;width:100%">
+<div style="display:flex;width:200%;transition:transform .38s cubic-bezier(.4,0,.2,1)" id="ms-slider">
+
+  <!-- SCORECARD SLIDE -->
+  <div style="width:50%;flex-shrink:0;background:#080f08;display:flex;flex-direction:column">
+  <div style="flex:1;padding:11px 12px;display:flex;flex-direction:column;gap:7px;overflow-y:auto">
+
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="font-size:18px;font-weight:800;color:#f0f4f0">My Squad</div>
+        <div style="font-size:9px;color:#2a4a2a;letter-spacing:2px;text-transform:uppercase;margin-top:2px">Season 2026</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:13px;font-weight:700;color:#4ade80" id="ms-teamname">My Team</div>
+        <button onclick="editTeamName()" style="font-size:10px;color:#2a4a2a;background:none;border:none;cursor:pointer;text-decoration:underline;font-family:inherit">edit name</button>
+      </div>
+    </div>
+
+    <!-- Hole map -->
+    <div style="border-radius:8px;overflow:hidden;border:1px solid #182818">
+    <svg width="100%" viewBox="0 0 320 66" style="display:block">
+      <rect width="320" height="66" fill="#162a16"/>
+      <rect width="320" height="10" fill="#1a3a1a"/>
+      <rect y="56" width="320" height="10" fill="#1a3a1a"/>
+      <rect x="0" y="10" width="320" height="46" fill="#2a7035"/>
+      <rect x="0" y="10" width="320" height="14" fill="#267030" opacity="0.35"/>
+      <rect x="0" y="42" width="320" height="14" fill="#267030" opacity="0.35"/>
+      <ellipse cx="36" cy="50" rx="18" ry="8" fill="#3a8ec0"/>
+      <ellipse cx="36" cy="50" rx="12" ry="5" fill="#5aaad8" opacity="0.5"/>
+      <path d="M 25 49 Q 34 46 43 49" stroke="#6abce0" stroke-width="0.7" fill="none"/>
+      <ellipse cx="106" cy="18" rx="15" ry="6" fill="#c8a85a"/>
+      <ellipse cx="106" cy="18" rx="10" ry="4" fill="#d4b870" opacity="0.5"/>
+      <ellipse cx="194" cy="54" rx="13" ry="6" fill="#c8a85a"/>
+      <ellipse cx="194" cy="54" rx="9" ry="4" fill="#d4b870" opacity="0.5"/>
+      <ellipse cx="277" cy="33" rx="33" ry="24" fill="#18a840"/>
+      <ellipse cx="273" cy="31" rx="21" ry="15" fill="#1dba48" opacity="0.22"/>
+      <circle cx="283" cy="29" r="3" fill="#060e06"/>
+      <line x1="283" y1="29" x2="283" y2="10" stroke="#e0e0e0" stroke-width="1.2"/>
+      <path d="M 283 10 L 283 18 L 294 14 Z" fill="#f87171"/>
+      <rect x="4" y="25" width="20" height="14" rx="3" fill="#1a5a1a" stroke="#2a7a2a" stroke-width="1"/>
+      <text x="14" y="35" text-anchor="middle" font-size="6" fill="#4a9a4a" font-family="system-ui" font-weight="700">TEE</text>
+      <text x="160" y="63" text-anchor="middle" font-size="6" fill="#2a5a2a" font-family="system-ui">Tee · · · · · · · · · · · · · · · · · · · · · · Green</text>
+      <!-- Dots: R=reserves, V=vc, C=captain, plain=active -->
+      <circle cx="40" cy="26" r="6" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
+      <text x="40" y="26" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="900">R</text>
+      <circle cx="40" cy="46" r="6" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
+      <text x="40" y="46" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="900">R</text>
+      <circle cx="106" cy="46" r="7" fill="#0d1e0d" stroke="#1a4a2a" stroke-width="1.5"/>
+      <circle cx="152" cy="25" r="7" fill="#0d1e0d" stroke="#1a4a2a" stroke-width="1.5"/>
+      <circle cx="194" cy="38" r="8" fill="#0d1e0d" stroke="#1a5a2a" stroke-width="1.8"/>
+      <circle cx="236" cy="26" r="9" fill="#0d1e0d" stroke="#9ca3af" stroke-width="2"/>
+      <text x="236" y="26" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#d1d5db" font-family="system-ui" font-weight="900">V</text>
+      <circle cx="272" cy="46" r="10" fill="#09160c" stroke="#c8a830" stroke-width="2"/>
+      <text x="272" y="46" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#fde68a" font-family="system-ui" font-weight="900">C</text>
+    </svg>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px">
+      <div class="stat-b" style="border-color:#1a6b35;background:#0c1e0c">
+        <div style="font-size:8px;color:#2d8a4a">This week</div>
+        <div style="font-size:17px;font-weight:800;color:#4ade80;line-height:1.2" id="ms-week">+0</div>
+      </div>
+      <div class="stat-b">
+        <div style="font-size:8px;color:#2a4a2a">Global rank</div>
+        <div style="font-size:17px;font-weight:800;color:#fbbf24;line-height:1.2" id="ms-rank">--</div>
+      </div>
+      <div class="stat-b">
+        <div style="font-size:8px;color:#2a4a2a">Remaining</div>
+        <div style="font-size:17px;font-weight:800;color:#f0f4f0;line-height:1.2" id="ms-budget">£75m</div>
+      </div>
+    </div>
+
+    <div style="height:1px;background:#182818"></div>
+
+    <!-- Captain -->
+    <div>
+      <div class="lbl-pill" style="background:#0c1e0c;color:#4ade80;margin-bottom:6px">On The Green</div>
+      <div id="ms-cap-row" style="background:#09160c;border:1.5px solid #c8a830;border-radius:8px;padding:9px 11px;display:flex;align-items:center;gap:9px">
+        <svg width="26" height="30" viewBox="0 0 26 30" style="flex-shrink:0">
+          <path d="M13 1 L25 6 L25 16 Q25 24 13 29 Q1 24 1 16 L1 6 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="2"/>
+          <text x="13" y="15" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#fde68a" font-family="system-ui" font-weight="900">C</text>
+          <text x="13" y="23" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#fde68a" font-family="system-ui" font-weight="700">2x</text>
+        </svg>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:13px;font-weight:700;color:#f0f4f0" id="ms-cap-name">No captain set</div>
+          <div style="font-size:8px;color:#2d7a4a" id="ms-cap-info">Pick your team first</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div class="pts-g" style="margin-bottom:3px" id="ms-cap-pts">+0 pts</div>
+          <div id="ms-cap-badge"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fairway -->
+    <div>
+      <div class="lbl-pill" style="background:#0a1a0a;color:#2d9a4a;margin-bottom:6px">Fairway</div>
+      <div id="ms-fairway" style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+        <div onclick="goToPlayers()" style="background:#0a140a;border:1px dashed #1a4a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#1a4a2a;line-height:1">+</div><div style="font-size:10px;color:#2a4a2a;margin-top:4px">Add player</div></div>
+        <div onclick="goToPlayers()" style="background:#0a140a;border:1px dashed #1a4a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#1a4a2a;line-height:1">+</div><div style="font-size:10px;color:#2a4a2a;margin-top:4px">Add player</div></div>
+        <div onclick="goToPlayers()" style="background:#0a140a;border:1px dashed #1a4a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#1a4a2a;line-height:1">+</div><div style="font-size:10px;color:#2a4a2a;margin-top:4px">Add player</div></div>
+        <div onclick="goToPlayers()" style="background:#0a140a;border:1px dashed #1a4a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#1a4a2a;line-height:1">+</div><div style="font-size:10px;color:#2a4a2a;margin-top:4px">Add player</div></div>
+      </div>
+    </div>
+
+    <!-- In the bag -->
+    <div>
+      <div style="height:1px;background:#1a2a1a;margin-bottom:7px"></div>
+      <div class="lbl-pill" style="background:#0a140a;border:1px solid #2a4a2a;color:#4a8a5a;margin-bottom:6px">In The Bag — Reserves</div>
+      <div id="ms-reserves" style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+        <div onclick="goToPlayers()" style="background:#080f08;border:1.5px dashed #2a5a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#2a5a2a;line-height:1">+</div><div style="font-size:10px;color:#2a5a2a;margin-top:4px">Reserve 1</div></div>
+        <div onclick="goToPlayers()" style="background:#080f08;border:1.5px dashed #2a5a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#2a5a2a;line-height:1">+</div><div style="font-size:10px;color:#2a5a2a;margin-top:4px">Reserve 2</div></div>
+      </div>
+    </div>
+
+  </div>
+  <!-- Chips bar — row of 4 -->
+  <div style="display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 8px 18px;gap:6px">
+    <div onclick="activateChip('triplecap')" style="flex:1;background:#0d1a0d;border:1px solid #c8a830;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer" id="sc-chip-tc">
+      <svg width="16" height="18" viewBox="0 0 16 18" style="margin:0 auto 2px;display:block">
+        <path d="M8 1 L15 4 L15 10 Q15 17 8 17 Q1 17 1 10 L1 4 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="1.2"/>
+        <text x="8" y="9" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#fde68a" font-family="system-ui" font-weight="900">C</text>
+        <text x="8" y="14" text-anchor="middle" dominant-baseline="central" font-size="5" fill="#fde68a" font-family="system-ui" font-weight="700">3x</text>
+      </svg>
+      <div style="font-size:8px;font-weight:700;color:#fde68a">Triple Cap</div>
+    </div>
+    <div onclick="activateChip('vice')" style="flex:1;background:#0d1a0d;border:1px solid #9ca3af;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer" id="sc-chip-vc">
+      <svg width="16" height="18" viewBox="0 0 16 18" style="margin:0 auto 2px;display:block">
+        <path d="M8 1 L15 4 L15 10 Q15 17 8 17 Q1 17 1 10 L1 4 Z" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.2"/>
+        <text x="8" y="9" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#d1d5db" font-family="system-ui" font-weight="900">V</text>
+        <text x="8" y="14" text-anchor="middle" dominant-baseline="central" font-size="5" fill="#d1d5db" font-family="system-ui" font-weight="700">2x</text>
+      </svg>
+      <div style="font-size:8px;font-weight:700;color:#d1d5db">Vice</div>
+    </div>
+    <div onclick="activateChip('wildcard')" style="flex:1;background:#0d1a0d;border:1px solid #4a7a4a;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer" id="sc-chip-wc">
+      <svg width="16" height="16" viewBox="0 0 16 16" style="margin:0 auto 2px;display:block">
+        <rect x="1" y="1" width="14" height="14" rx="3" fill="#1a2a0a" stroke="#4a7a4a" stroke-width="1"/>
+        <text x="8" y="8" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fbbf24" font-family="system-ui" font-weight="900">W</text>
+      </svg>
+      <div style="font-size:8px;font-weight:700;color:#fbbf24">Wildcard</div>
+    </div>
+    <div onclick="activateChip('benchboost')" style="flex:1;background:#0d1a0d;border:1px solid #4a7a4a;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer" id="sc-chip-bb">
+      <svg width="16" height="16" viewBox="0 0 16 16" style="margin:0 auto 2px;display:block">
+        <rect x="2" y="10" width="12" height="3" rx="1.5" fill="#1a3a1a" stroke="#4a7a4a" stroke-width="0.8"/>
+        <rect x="3" y="7" width="4" height="3" rx="1" fill="#2a5a2a"/>
+        <rect x="9" y="7" width="4" height="3" rx="1" fill="#2a5a2a"/>
+        <path d="M8 1 L11 5 L9 5 L9 7 L7 7 L7 5 L5 5 Z" fill="#4ade80"/>
+      </svg>
+      <div style="font-size:8px;font-weight:700;color:#4ade80">Bench Boost</div>
+    </div>
+  </div>
+
+    <!-- FIELD VIEW SLIDE -->
+  <div style="width:50%;flex-shrink:0;background:#0a140a;display:flex;flex-direction:column;overflow:hidden">
+  <svg width="100%" viewBox="0 0 320 440" style="display:block;flex:1" id="fv-svg">
+    <rect width="320" height="440" fill="#152015"/>
+    <!-- Score bar -->
+    <rect x="0" y="0" width="320" height="52" fill="#060e06" opacity="0.97"/>
+    <text x="160" y="12" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#2a4a2a" font-family="system-ui" font-weight="700" letter-spacing="1">GW3 · THE PLAYERS · R3 OF 4</text>
+    <text x="160" y="32" text-anchor="middle" dominant-baseline="central" font-size="21" fill="#4ade80" font-family="system-ui" font-weight="800">+68 pts</text>
+    <text x="160" y="46" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#1a6b35" font-family="system-ui" font-weight="700" id="fv-teamname">My Team</text>
+    <!-- Water left -->
+    <path d="M 10 148 Q 18 128 44 132 Q 58 138 56 156 Q 50 172 24 170 Q 6 164 10 148 Z" fill="#3a8ec0"/>
+    <path d="M 12 150 Q 20 132 43 136 Q 56 142 54 158 Q 49 170 26 166 Q 10 160 12 150 Z" fill="#5aaad8" opacity="0.5"/>
+    <!-- Water right -->
+    <ellipse cx="284" cy="250" rx="20" ry="12" fill="#3a8ec0"/>
+    <ellipse cx="284" cy="250" rx="15" ry="8" fill="#5aaad8" opacity="0.5"/>
+    <!-- Fairway -->
+    <path d="M 78 438 Q 60 340 76 250 Q 90 178 82 92 L 168 68 Q 204 92 216 182 Q 238 262 252 438 Z" fill="#2a7035"/>
+    <path d="M 94 438 Q 78 342 92 252 Q 104 180 97 96 L 113 76 Q 118 96 116 182 Q 120 264 140 438 Z" fill="#267030" opacity="0.4"/>
+    <path d="M 160 438 Q 172 264 184 184 Q 192 96 200 76 L 216 82 Q 222 100 220 184 Q 228 264 240 438 Z" fill="#267030" opacity="0.4"/>
+    <!-- Bunkers -->
+    <ellipse cx="88" cy="278" rx="17" ry="9" fill="#c8a85a" transform="rotate(-18,88,318)" opacity="0.9"/>
+    <ellipse cx="234" cy="242" rx="13" ry="7" fill="#c8a85a" transform="rotate(12,234,282)" opacity="0.9"/>
+    <ellipse cx="95" cy="106" rx="11" ry="6" fill="#c8a85a" opacity="0.9"/>
+    <ellipse cx="208" cy="100" rx="10" ry="5" fill="#c8a85a" opacity="0.9"/>
+    <!-- Green -->
+    <ellipse cx="154" cy="72" rx="56" ry="42" fill="#18a840"/>
+    <ellipse cx="148" cy="66" rx="40" ry="28" fill="#1dba48" opacity="0.2"/>
+    <!-- Flag -->
+    <circle cx="176" cy="64" r="4" fill="#060e06"/>
+    <line x1="176" y1="64" x2="176" y2="30" stroke="#d8d8d8" stroke-width="1.5"/>
+    <path d="M 176 30 L 196 37 L 176 44 Z" fill="#f87171"/>
+    <!-- Zone labels -->
+    <text x="12" y="114" font-size="7" fill="#4ade80" font-family="system-ui" font-weight="700" opacity="0.7" transform="rotate(-90,12,74)">GREEN</text>
+    <text x="12" y="244" font-size="7" fill="#2a8a3a" font-family="system-ui" font-weight="700" opacity="0.6" transform="rotate(-90,12,204)">FAIRWAY</text>
+    <text x="12" y="394" font-size="7" fill="#2a6a2a" font-family="system-ui" font-weight="700" opacity="0.5" transform="rotate(-90,12,354)">APPROACH</text>
+    <!-- Tee box -->
+    <rect x="120" y="414" width="70" height="16" rx="4" fill="#1a4a1a" stroke="#2a6a2a" stroke-width="1"/>
+    <text x="155" y="422" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#4a9a4a" font-family="system-ui" font-weight="700">TEE BOX</text>
+    <!-- CAPTAIN on green cx=110 cy=100 r=28 gold -->
+    <circle cx="110" cy="100" r="28" fill="#09160c" stroke="#c8a830" stroke-width="2.5" id="fv-cap-circle"/>
+    <circle cx="93" cy="79" r="10" fill="#1a5a25" stroke="#c8a830" stroke-width="1.5" id="fv-cap-badge"/>
+    <text x="93" y="79" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fde68a" font-family="system-ui" font-weight="900" id="fv-cap-badge-text">C</text>
+    <text x="110" y="94" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#f0f4f0" font-family="system-ui" font-weight="700" id="fv-cap-name">Scheffler</text>
+    <text x="110" y="108" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800" id="fv-cap-pts">+32</text>
+    <!-- VC upper-left cx=104 cy=200 r=26 silver -->
+    <circle cx="104" cy="200" r="26" fill="#0d1e0d" stroke="#9ca3af" stroke-width="2" id="fv-vc-circle"/>
+    <circle cx="88" cy="180" r="9" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.5" id="fv-vc-badge"/>
+    <text x="88" y="180" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#d1d5db" font-family="system-ui" font-weight="900" id="fv-vc-badge-text">V</text>
+    <text x="104" y="194" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700" id="fv-vc-name">McIlroy</text>
+    <text x="104" y="208" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800" id="fv-vc-pts">+18</text>
+    <!-- Player 2 upper-right cx=212 cy=192 r=26 -->
+    <circle cx="212" cy="192" r="26" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
+    <text x="212" y="186" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">Fleetwood</text>
+    <text x="212" y="200" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800">+12</text>
+    <!-- Player 3 lower-left cx=108 cy=306 r=26 -->
+    <circle cx="108" cy="306" r="26" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
+    <text x="108" y="300" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">C. Smith</text>
+    <text x="108" y="314" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800">+10</text>
+    <!-- Player 4 lower-right cx=212 cy=294 r=26 -->
+    <circle cx="212" cy="294" r="26" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
+    <text x="212" y="288" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">Hatton</text>
+    <text x="212" y="302" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#f87171" font-family="system-ui" font-weight="800">-4</text>
+    <!-- IN THE BAG bottom-right -->
+    <rect x="216" y="382" width="98" height="50" rx="5" fill="#080f08" stroke="#2a5a2a" stroke-width="1.2"/>
+    <text x="265" y="392" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#3a6a3a" font-family="system-ui" font-weight="700">IN THE BAG</text>
+    <line x1="222" y1="398" x2="308" y2="398" stroke="#1a4a2a" stroke-width="0.6"/>
+    <circle cx="238" cy="418" r="13" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
+    <text x="238" y="413" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="700">Lowry</text>
+    <text x="238" y="424" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#f87171" font-family="system-ui" font-weight="800">-2</text>
+    <circle cx="290" cy="418" r="13" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
+    <text x="290" y="413" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="700">Bland</text>
+    <text x="290" y="424" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fbbf24" font-family="system-ui" font-weight="800">0</text>
+  </svg>
+  <!-- Chips row of 4 -->
+  <div style="display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 8px 18px;gap:6px;flex-shrink:0">
+    <div onclick="activateChip('triplecap')" style="flex:1;background:#0d1a0d;border:1px solid #c8a830;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer">
+      <svg width="16" height="18" viewBox="0 0 16 18" style="margin:0 auto 2px;display:block"><path d="M8 1 L15 4 L15 10 Q15 17 8 17 Q1 17 1 10 L1 4 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="1.2"/><text x="8" y="9" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#fde68a" font-family="system-ui" font-weight="900">C</text><text x="8" y="14" text-anchor="middle" dominant-baseline="central" font-size="5" fill="#fde68a" font-family="system-ui" font-weight="700">3x</text></svg>
+      <div style="font-size:8px;font-weight:700;color:#fde68a">Triple Cap</div>
+    </div>
+    <div onclick="activateChip('vice')" style="flex:1;background:#0d1a0d;border:1px solid #9ca3af;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer">
+      <svg width="16" height="18" viewBox="0 0 16 18" style="margin:0 auto 2px;display:block"><path d="M8 1 L15 4 L15 10 Q15 17 8 17 Q1 17 1 10 L1 4 Z" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.2"/><text x="8" y="9" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#d1d5db" font-family="system-ui" font-weight="900">V</text><text x="8" y="14" text-anchor="middle" dominant-baseline="central" font-size="5" fill="#d1d5db" font-family="system-ui" font-weight="700">2x</text></svg>
+      <div style="font-size:8px;font-weight:700;color:#d1d5db">Vice</div>
+    </div>
+    <div onclick="activateChip('wildcard')" style="flex:1;background:#0d1a0d;border:1px solid #4a7a4a;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer">
+      <svg width="16" height="16" viewBox="0 0 16 16" style="margin:0 auto 2px;display:block"><rect x="1" y="1" width="14" height="14" rx="3" fill="#1a2a0a" stroke="#4a7a4a" stroke-width="1"/><text x="8" y="8" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fbbf24" font-family="system-ui" font-weight="900">W</text></svg>
+      <div style="font-size:8px;font-weight:700;color:#fbbf24">Wildcard</div>
+    </div>
+    <div onclick="activateChip('benchboost')" style="flex:1;background:#0d1a0d;border:1px solid #4a7a4a;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer">
+      <svg width="16" height="16" viewBox="0 0 16 16" style="margin:0 auto 2px;display:block"><rect x="2" y="10" width="12" height="3" rx="1.5" fill="#1a3a1a" stroke="#4a7a4a" stroke-width="0.8"/><rect x="3" y="7" width="4" height="3" rx="1" fill="#2a5a2a"/><rect x="9" y="7" width="4" height="3" rx="1" fill="#2a5a2a"/><path d="M8 1 L11 5 L9 5 L9 7 L7 7 L7 5 L5 5 Z" fill="#4ade80"/></svg>
+      <div style="font-size:8px;font-weight:700;color:#4ade80">Bench Boost</div>
+    </div>
+  </div>
+  </div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- LEAGUES -->
+<div id="s-leagues" class="scr" style="padding-bottom:70px">
 <div style="padding:16px 20px">
-<div style="font-size:20px;font-weight:700;margin-bottom:4px">Leagues</div>
-<p style="color:#4a6b4a;font-size:13px;margin-bottom:18px">Compete with friends or rank globally</p>
-<div class="tab-row" style="margin-bottom:18px">
-<button class="tb on" id="ltj" onclick="lv('j')">Join League</button>
-<button class="tb" id="ltc" onclick="lv('c')">Create League</button>
+  <div style="font-size:20px;font-weight:700;margin-bottom:4px">Leagues</div>
+  <p style="color:#4a6b4a;font-size:13px;margin-bottom:14px">Compete with friends or rank globally</p>
+  <div class="tab-row" style="margin-bottom:16px">
+    <button class="tb on" id="ltj" onclick="lv('j')">Join League</button>
+    <button class="tb" id="ltc" onclick="lv('c')">Create League</button>
+  </div>
+  <div id="lvj">
+    <div class="card" style="padding:14px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-bottom:8px">Enter invite code</div>
+      <input type="text" id="lcode" placeholder="e.g. GLD2026" maxlength="6" oninput="this.value=this.value.toUpperCase();ck()" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:22px;font-weight:700;letter-spacing:6px;text-align:center;margin-bottom:12px"/>
+      <button id="jbtn" class="btn-ghost" disabled style="opacity:0.4">Join League</button>
+    </div>
+    <div class="card" style="padding:14px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-bottom:6px">Season total points</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+        <div class="stat-b"><div style="font-size:18px;font-weight:700;color:#4ade80" id="lg-season">0</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Season pts</div></div>
+        <div class="stat-b"><div style="font-size:18px;font-weight:700;color:#fbbf24">--</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Global rank</div></div>
+        <div class="stat-b"><div style="font-size:18px;font-weight:700">0</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Leagues</div></div>
+      </div>
+      <button class="btn-ghost" onclick="openGlobalRankings()">View Global Rankings</button>
+    </div>
+  </div>
+  <div id="lvc" style="display:none">
+    <div class="card" style="padding:14px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-bottom:6px">League name</div>
+      <input type="text" placeholder="e.g. The Office Open" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:15px;margin-bottom:14px"/>
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-bottom:8px">Format</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+        <button id="ffr" onclick="fmt('free')" style="padding:12px;border-radius:8px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Free</button>
+        <button id="fpd" onclick="fmt('paid')" style="padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Paid — pot to winner</button>
+      </div>
+      <div id="fsec" style="display:none;margin-bottom:14px">
+        <div style="font-size:11px;color:#4a6b4a;margin-bottom:8px">Entry fee per person</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
+          <button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£5</button>
+          <button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£10</button>
+          <button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£20</button>
+          <button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£50</button>
+        </div>
+        <p style="font-size:11px;color:#4a6b4a">Winner receives full pot at season end, paid to card used for entry. Stripe payments — coming soon.</p>
+      </div>
+      <button class="btn-g" onclick="createLeague()">Create League</button>
+    </div>
+  </div>
 </div>
-<div id="lvj">
-<div class="card" style="padding:16px;margin-bottom:12px">
-<div class="lbl">Enter invite code</div>
-<input type="text" id="lcode" placeholder="e.g. GLD2026" maxlength="6" oninput="this.value=this.value.toUpperCase();ck()" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:22px;font-weight:700;letter-spacing:6px;text-align:center;margin-bottom:14px"/>
-<button id="jbtn" class="btn-ghost" disabled style="opacity:0.4">Join League</button>
 </div>
-<div class="card" style="padding:16px">
-<div class="lbl">Global Leaderboard</div>
-<p style="font-size:13px;color:#8aaa8a;line-height:1.6;margin-bottom:12px">Automatically ranked worldwide when you save your team.</p>
-<button class="btn-ghost">View Global Rankings</button>
+
+<!-- PLAYER MODAL -->
+<!-- LEAGUE TABLE PAGE -->
+<div id="s-league-table" class="scr" style="padding-bottom:70px">
+<div style="padding:16px 20px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <button onclick="nav('s-leagues')" style="background:none;border:none;color:#4a6b4a;font-size:20px;cursor:pointer;padding:0">‹</button>
+    <div>
+      <div style="font-size:18px;font-weight:700" id="lt-name">The Office Open</div>
+      <div style="font-size:11px;color:#4a6b4a" id="lt-type">Traditional · 8 managers</div>
+    </div>
+  </div>
+  <div class="tab-row" style="margin-bottom:14px">
+    <button class="tb on" id="lt-season" onclick="ltTab('season')">Season</button>
+    <button class="tb" id="lt-gw" onclick="ltTab('gw')">This Week</button>
+    <button class="tb" id="lt-h2h" onclick="ltTab('h2h')">Head to Head</button>
+  </div>
+  <div id="lt-table">
+    <div class="card">
+      <div style="display:grid;grid-template-columns:32px 1fr 52px 52px;gap:4px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+        <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Pos</span>
+        <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Team</span>
+        <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">GW pts</span>
+        <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">Total</span>
+      </div>
+      <div id="lt-rows"></div>
+    </div>
+    <div style="margin-top:16px;background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:8px;padding:12px;text-align:center">
+      <div style="font-size:11px;color:#4a6b4a;margin-bottom:4px">Your invite code</div>
+      <div style="font-size:22px;font-weight:800;color:#4ade80;letter-spacing:6px" id="lt-code">TFG26</div>
+      <div style="font-size:11px;color:#3d5c3d;margin-top:4px">Share this code with friends to join your league</div>
+      <button onclick="shareLeague()" style="margin-top:10px;width:100%;padding:11px;border-radius:8px;background:#1a6b35;border:none;color:#fff;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px">
+        <span>📤</span> Share League Invite
+      </button>
+    </div>
+  </div>
 </div>
 </div>
-<div id="lvc" style="display:none">
-<div class="card" style="padding:16px">
-<div class="lbl">League name</div>
-<input type="text" placeholder="e.g. The Office Open" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:15px;margin-bottom:16px"/>
-<div class="lbl">Format</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
-<button id="ffr" onclick="fmt('free')" style="padding:12px;border-radius:8px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Free</button>
-<button id="fpd" onclick="fmt('paid')" style="padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Paid - pot to winner</button>
-</div>
-<div id="fsec" style="display:none;margin-bottom:16px">
-<div style="font-size:12px;color:#4a6b4a;margin-bottom:8px">Entry fee per person</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px">
-<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£5</button>
-<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£10</button>
-<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£20</button>
-<button onclick="fa(this)" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#6b8c6b;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit">£50</button>
-</div>
-<p style="font-size:11px;color:#4a6b4a">Winner receives full pot at season end, paid to card used for entry.</p>
-</div>
-<button class="btn-g">Create League</button>
-</div>
-</div>
-</div>
-</div>
+
 <div class="modal-bg" id="pm" onclick="if(event.target===this)cm()">
 <div class="modal" id="pmc"></div>
 </div>
-<div class="bottom-nav">
-<button class="nb on" id="ni-home" onclick="nav('s-home')"><span>⛳</span>Home</button>
-<button class="nb" id="ni-pick" onclick="nav('s-pick')"><span>👤</span>Team</button>
-<button class="nb" id="ni-live" onclick="nav('s-live')"><span>📡</span>Live</button>
-<button class="nb" id="ni-my" onclick="nav('s-my')"><span>📋</span>My Squad</button>
-<button class="nb" id="ni-leagues" onclick="nav('s-leagues')"><span>🏆</span>Leagues</button>
-</div><script>
+
+<!-- RULES MODAL -->
+<div class="modal-bg" id="rules-modal" style="z-index:210" onclick="if(event.target===this)closeRules()">
+<div class="modal" style="max-height:92vh">
+  <div style="padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#162016;z-index:5">
+    <div class="tab-row" style="flex:1;margin-right:12px">
+      <button class="tb on" id="rt0" onclick="rulesGo(0)">📋 Rules</button>
+      <button class="tb" id="rt1" onclick="rulesGo(1)">🏌️ How To Play</button>
+      <button class="tb" id="rt2" onclick="rulesGo(2)">🏆 Prizes</button>
+    </div>
+    <button onclick="closeRules()" style="background:rgba(255,255,255,0.08);border:none;color:#f0f4f0;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer">✕</button>
+  </div>
+  <div style="overflow:hidden">
+  <div class="rules-slider" id="rules-sl">
+    <!-- RULEBOOK -->
+    <div class="rules-slide">
+      <div style="font-size:16px;font-weight:700;margin-bottom:14px;color:#4ade80">Full Rulebook</div>
+      <div style="font-size:13px;color:#8aaa8a;line-height:1.7">
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px">The Season</div>
+        The Field runs across the full 2026 PGA Tour season — approximately 27 gameweeks from January through to the Tour Championship in August. Each gameweek corresponds to one tournament, with your squad scoring across all four rounds of that event.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:4px;margin-top:10px">PGA Tour</div>
+        The PGA Tour runs a 27-event season, played Thursday to Sunday over four rounds of 18 holes (72 holes total). After 36 holes the field is cut — typically to the top 65 players and ties. Any player who misses the cut receives −10 points that gameweek.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:4px;margin-top:10px">LIV Golf</div>
+        LIV Golf runs a 14-event concurrent season. Events are played over three rounds with 54 players and no cut — every player completes the event. However, the bottom 27 finishers in each LIV event receive −10 points in The Field, equivalent to a missed cut on the PGA Tour, ensuring both tours are scored consistently and fairly.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:4px;margin-top:10px">Mixed Squads</div>
+        You may select players from both tours within the same squad. Players not competing in a given gameweek score zero — there is no penalty for inactivity. Timing your transfers around the fixture schedule is a key strategic element of the game.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Your Squad</div>
+        Pick 5 active players + 2 reserves from a £75m budget. Minimum price £4.5m. Both must be set before the gameweek locks.
+        <br><br><span style="color:#f0f4f0;font-weight:600">Captain (2×)</span> — Your captain’s points are doubled every week. This applies to all points — positive and negative. If your captain makes 5 birdies they score +6 not +3. But if they miss the cut they score -20 not -10. Choose wisely.
+        <br><br><span style="color:#f0f4f0;font-weight:600">Vice Captain (1.5×)</span> — Your vice captain’s points are multiplied by 1.5. Again, this applies to both positive and negative points. A bogey costs your VC -1.5, a birdie earns +4.5. If your captain does not play that week and therefore scores 0, your vice captain automatically becomes captain and scores 2×.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Finish Positions</div>
+        Major win +37 · Win +25 · 2nd +15 · 3rd +12 · Top 5 +10 · Top 10 +6 · Top 20 +3 · PGA missed cut / LIV bottom 27 −10. Signature Events 1.25× multiplier · Majors 1.5× multiplier.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Stroke Play</div>
+        Hole in one +15 · Eagle +8 · Birdie +3 · Par 0 · Bogey −1 · Double −3 · Triple −5 · Blob (4+ over par) −8
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Major Bonus</div>
+        If you own the same player across all four major weeks of the season, you earn a bonus based on how many majors they <span style="color:#f0f4f0;font-weight:600">win</span>:
+        <br>· They win 2 of the 4 majors: +75 bonus points
+        <br>· They win 3 of the 4 majors: +200 bonus points
+        <br>· They win all 4 majors: +500 bonus points
+        <br><br>You must own the player in your squad for all four major gameweeks to qualify for this bonus. The bonus is awarded at the end of the season. Note: owning them for fewer than all 4 major weeks earns no bonus, regardless of how many they win.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Transfers</div>
+        1 free transfer per gameweek. Unused transfers carry over — maximum 2 banked. Additional transfers cost −10 points each.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Auto-Substitution</div>
+        If one of your 5 starting field players does not play in a given gameweek, your highest-scoring reserve who did play will automatically substitute in and their points will be added to your weekly total. This substitution happens after the gameweek closes. Bench Boost overrides this and all 7 players score regardless.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Chips — once per season each</div>
+        Each chip may be used once per season and cannot be reversed once activated.
+        <br><br><span style="color:#f0f4f0;font-weight:700">Triple Captain</span> — Your captain scores 3× points for one gameweek instead of the usual 2×. This applies to both positive and negative points. Use it wisely — most managers save it for a Major week.
+        <br><br><span style="color:#f0f4f0;font-weight:700">Vice</span> — Your vice captain scores 2× points for one gameweek instead of the usual 1.5×. This means you have two players on full double points that week. An incredibly powerful chip when timed correctly, and one of the most unique chips in fantasy sport.
+        <br><br><span style="color:#f0f4f0;font-weight:700">Wildcard</span> — Make unlimited free transfers for one gameweek without any point deductions. Your squad is fully rebuilt without penalty. Unused transfers do not carry over from a Wildcard week.
+        <br><br><span style="color:#f0f4f0;font-weight:700">Bench Boost</span> — All 7 players including your 2 reserves score points for one gameweek. Best used in a week where your entire squad is playing and in form.
+        <br><br><span style="color:#f0f4f0;font-weight:600">Chip Deadline</span> — Chips can be activated and reversed freely until 2 hours before the first tee time on Thursday. Once that deadline passes, your chip is locked in for that gameweek — it cannot be reversed.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Points Rounding</div>
+        All points are rounded down to the nearest whole number. If a multiplier produces a fractional score — for example 37.5 points — your score will be recorded as 37. There are no half points in The Field.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Leagues</div>
+        All managers enter the global league automatically. Private leagues use invite codes. Traditional leagues rank by season total. Head to head leagues match you against one opponent each gameweek. Paid prize pot leagues coming soon.
+      </div>
+    </div>
+    <!-- HOW TO PLAY -->
+    <div class="rules-slide">
+      <div style="font-size:16px;font-weight:700;margin-bottom:14px;color:#4ade80">How To Play</div>
+      <div style="font-size:13px;color:#8aaa8a;line-height:1.7">
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:6px">Step 1 — Build Your Team</div>
+        Go to Transfers and pick 7 players within your £75m budget. Think about the week ahead — who is playing, and in what type of event? Majors and Signature Events score more.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:6px;margin-top:12px">Step 2 — Set Captain and Vice Captain</div>
+        In My Squad (Scorecard tab), your captain always sits on the green — they score double. Your vice captain scores 1.5×. Pick your best player for the week.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:6px;margin-top:12px">Step 3 — Watch and Score</div>
+        Head to Live Scores during a tournament weekend. Star players to follow them at the top of the leaderboard every week. Scores update after each round.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:6px;margin-top:12px">Step 4 — Make Transfers</div>
+        After each gameweek you get 1 free transfer. Unused transfers bank up to 2 maximum. Use Wildcard for a full squad overhaul — once per season.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:6px;margin-top:12px">Using Chips</div>
+        Triple Captain: use it in a Major week when your captain is in form. Bench Boost: use it in a week where all 7 of your players are playing and likely to score well. Wildcard: use when your squad needs a full reset — injuries, form changes, or after a bad week.
+        <div style="font-weight:700;color:#f0f4f0;margin-bottom:6px;margin-top:12px">Leagues</div>
+        You are automatically entered into the global league. Create private leagues for friends using a custom code. First to the highest season total wins.
+      </div>
+    </div>
+    <!-- PRIZES SLIDE -->
+    <div class="rules-slide">
+      <div style="font-size:16px;font-weight:700;margin-bottom:14px;color:#4ade80">&#x1F3C6; Season Prizes</div>
+      <div style="font-size:13px;color:#8aaa8a;line-height:1.7;margin-bottom:14px">The top 3 players globally at the end of the 2026 season win real prizes. Your season total points determine your global rank.</div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div style="background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.25);border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+          <div style="font-size:22px;flex-shrink:0">&#x1F947;</div>
+          <div><div style="font-size:13px;font-weight:700;color:#fbbf24;margin-bottom:2px">1st Place</div>
+          <div style="font-size:13px;font-weight:600;color:#f0f4f0;margin-bottom:3px">2 tickets to a Golf Major</div>
+          <div style="font-size:11px;color:#8aaa8a;line-height:1.5">Two hospitality tickets to one of the four majors. Details confirmed before season end.</div></div>
+        </div>
+        <div style="background:rgba(156,163,175,0.08);border:1px solid rgba(156,163,175,0.25);border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+          <div style="font-size:22px;flex-shrink:0">&#x1F948;</div>
+          <div><div style="font-size:13px;font-weight:700;color:#9ca3af;margin-bottom:2px">2nd Place</div>
+          <div style="font-size:13px;font-weight:600;color:#f0f4f0;margin-bottom:3px">Golf Holiday</div>
+          <div style="font-size:11px;color:#8aaa8a;line-height:1.5">A premium golf holiday package donated by our partner. Details to be confirmed.</div></div>
+        </div>
+        <div style="background:rgba(180,119,70,0.08);border:1px solid rgba(180,119,70,0.25);border-radius:10px;padding:12px;display:flex;gap:10px;align-items:flex-start">
+          <div style="font-size:22px;flex-shrink:0">&#x1F949;</div>
+          <div><div style="font-size:13px;font-weight:700;color:#c8a87a;margin-bottom:2px">3rd Place</div>
+          <div style="font-size:13px;font-weight:600;color:#f0f4f0;margin-bottom:3px">Set of Golf Clubs</div>
+          <div style="font-size:11px;color:#8aaa8a;line-height:1.5">A quality set of golf clubs. Brand confirmed before season end.</div></div>
+        </div>
+      </div>
+      <div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:8px;padding:10px;font-size:11px;color:#4a8a5a;line-height:1.6">Prizes awarded to top 3 by season total at end of 2026 PGA Tour season. The Field reserves the right to substitute prizes of equal or greater value.</div>
+    </div>
+  </div>
+  </div>
+</div>
+</div>
+
+<!-- NAV -->
+<!-- HAMBURGER MENU -->
+<div class="modal-bg" id="menu-modal" onclick="if(event.target===this)closeMenu()">
+<div style="background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px;border-top:1px solid rgba(255,255,255,0.1)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="font-size:17px;font-weight:700">Menu</div>
+    <button onclick="closeMenu()" style="background:rgba(255,255,255,0.08);border:none;color:#f0f4f0;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer">✕</button>
+  </div>
+
+  <!-- Account section -->
+  <div id="menu-account-loggedout" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;margin-bottom:12px">
+    <div style="font-size:13px;color:#8aaa8a;margin-bottom:10px">Sign in to save your team and join leagues</div>
+    <button onclick="closeMenu();document.getElementById('auth-modal').classList.add('open')" class="btn-g" style="padding:11px">Sign In / Register</button>
+  </div>
+  <div id="menu-account-loggedin" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;margin-bottom:12px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+      <div style="width:36px;height:36px;border-radius:50%;background:#1a6b35;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0" id="menu-avatar">M</div>
+      <div>
+        <div style="font-size:14px;font-weight:700" id="menu-username">mrj365</div>
+        <div style="font-size:11px;color:#4a6b4a" id="menu-email">mrj365</div>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:13px;color:#c8d8c8">Team name</span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span style="font-size:13px;font-weight:700;color:#4ade80" id="menu-teamname">My Team</span>
+        <button onclick="editTeamName()" style="font-size:11px;color:#4a6b4a;background:none;border:none;cursor:pointer;text-decoration:underline">edit</button>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:13px;color:#c8d8c8">Season points</span>
+      <span style="font-size:13px;font-weight:700;color:#4ade80">247 pts</span>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-top:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:13px;color:#c8d8c8">Global rank</span>
+      <span style="font-size:13px;font-weight:700;color:#fbbf24">#24</span>
+    </div>
+  </div>
+
+  <!-- Menu items -->
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:12px">
+    <div onclick="closeMenu();nav('s-mysquad')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">
+      <span style="font-size:18px">📋</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">My Squad</div><div style="font-size:11px;color:#4a6b4a">Manage your team and chips</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+    <div onclick="closeMenu();nav('s-history')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">
+      <span style="font-size:18px">📊</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">Gameweek History</div><div style="font-size:11px;color:#4a6b4a">Your points round by round</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+    <div onclick="closeMenu();nav('s-fixtures')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">
+      <span style="font-size:18px">🗓️</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">Fixtures</div><div style="font-size:11px;color:#4a6b4a">Full 2026 PGA & LIV schedule</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+    <div onclick="closeMenu();nav('s-live');setTimeout(function(){lvGo(1);},100)" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">
+      <span style="font-size:18px">📰</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">Golf News</div><div style="font-size:11px;color:#4a6b4a">Latest from PGA Tour and LIV</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+    <div onclick="closeMenu();nav('s-stats')" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">
+      <span style="font-size:18px">📊</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">Player Stats</div><div style="font-size:11px;color:#4a6b4a">SG, driving, putting and more</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+    <div onclick="closeMenu();openRules(0)" style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer">
+      <span style="font-size:18px">📋</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">Rules & Scoring</div><div style="font-size:11px;color:#4a6b4a">Full rulebook and how to play</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+    <div onclick="closeMenu();openRules(2)" style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer">
+      <span style="font-size:18px">🏆</span>
+      <div style="flex:1"><div style="font-size:14px;font-weight:600">Prizes</div><div style="font-size:11px;color:#4a6b4a">Season prizes for top 3 globally</div></div>
+      <span style="color:#3d5c3d">›</span>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:12px">
+    <div style="padding:10px 16px;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;border-bottom:1px solid rgba(255,255,255,0.05)">Settings</div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05)">
+      <span style="font-size:14px">Push notifications</span>
+      <div onclick="this.classList.toggle('on');this.style.background=this.classList.contains('on')?'#1a6b35':'rgba(255,255,255,0.1)'" style="width:40px;height:22px;border-radius:11px;background:rgba(255,255,255,0.1);cursor:pointer;transition:background .2s;position:relative"><div style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s"></div></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.05)">
+      <span style="font-size:14px">Score alerts</span>
+      <div onclick="this.classList.toggle('on');this.style.background=this.classList.contains('on')?'#1a6b35':'rgba(255,255,255,0.1)'" style="width:40px;height:22px;border-radius:11px;background:rgba(255,255,255,0.1);cursor:pointer;transition:background .2s;position:relative"><div style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s"></div></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:13px 16px">
+      <span style="font-size:14px">Transfer reminders</span>
+      <div onclick="this.classList.toggle('on');this.style.background=this.classList.contains('on')?'#1a6b35':'rgba(255,255,255,0.1)'" style="width:40px;height:22px;border-radius:11px;background:#1a6b35;cursor:pointer;transition:background .2s;position:relative"><div style="position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:left .2s"></div></div>
+    </div>
+  </div>
+
+  <div id="menu-signout-row" style="display:none">
+    <button onclick="signOut()" style="width:100%;padding:13px;border-radius:10px;border:1px solid rgba(248,113,113,0.2);background:rgba(248,113,113,0.06);color:#f87171;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit">Sign Out</button>
+  </div>
+  <p style="text-align:center;font-size:10px;color:#2a3a2a;margin-top:14px">The Field Fantasy Golf · Season 2026</p>
+</div>
+</div>
+
+<!-- PRIZES NOW IN RULES MODAL -->
+
+</div>
+
+<!-- TEAM NAME EDIT MODAL -->
+<div class="modal-bg" id="teamname-modal" onclick="if(event.target===this)closeTeamName()">
+<div style="background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;padding:20px;border-top:1px solid rgba(255,255,255,0.1)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+    <div style="font-size:17px;font-weight:700">Team Name</div>
+    <button onclick="closeTeamName()" style="background:rgba(255,255,255,0.08);border:none;color:#f0f4f0;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer">✕</button>
+  </div>
+  <p style="font-size:12px;color:#4a6b4a;margin-bottom:16px">This appears in league tables and on your squad page</p>
+  <input type="text" id="teamname-input" maxlength="20" placeholder="e.g. Eagles FC" style="width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:18px;font-weight:700;margin-bottom:4px"/>
+  <div style="font-size:11px;color:#3d5c3d;margin-bottom:14px;text-align:right"><span id="tn-count">0</span>/20</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <button onclick="closeTeamName()" class="btn-ghost">Cancel</button>
+    <button onclick="saveTeamName()" class="btn-g">Save</button>
+  </div>
+</div>
+
+<!-- STATS PAGE -->
+<div id="s-stats" class="scr" style="padding-bottom:70px">
+<div style="padding:16px 20px 0">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <button onclick="nav('s-home')" style="background:none;border:none;color:#4a6b4a;font-size:20px;cursor:pointer;padding:0">‹</button>
+    <div style="font-size:20px;font-weight:700">Player Stats</div>
+    <div style="margin-left:auto;font-size:10px;color:#3d5c3d;text-align:right">2026 Season<br>Updated weekly</div>
+  </div>
+
+  <!-- Tour filter -->
+  <div class="tab-row" style="margin-bottom:12px">
+    <button class="tb on" id="st-all" onclick="stTour('all')">All</button>
+    <button class="tb" id="st-pga" onclick="stTour('pga')">PGA</button>
+    <button class="tb" id="st-liv" onclick="stTour('liv')">LIV</button>
+  </div>
+
+  <!-- Stat category pills -->
+  <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;margin-bottom:12px">
+    <button class="fp on" id="sc-sg" onclick="stCat('sg')">Strokes Gained</button>
+    <button class="fp" id="sc-drive" onclick="stCat('drive')">Driving</button>
+    <button class="fp" id="sc-approach" onclick="stCat('approach')">Approach</button>
+    <button class="fp" id="sc-putting" onclick="stCat('putting')">Putting</button>
+    <button class="fp" id="sc-scoring" onclick="stCat('scoring')">Scoring</button>
+  </div>
+
+  <!-- Stat sub-selector -->
+  <div id="stat-sub-row" style="display:flex;gap:6px;overflow-x:auto;padding-bottom:10px;margin-bottom:4px"></div>
+
+</div>
+
+<!-- Stats table -->
+<div style="padding:0 16px 20px">
+  <div class="card" id="stats-table">
+    <div class="loading">Loading stats...</div>
+  </div>
+  <p style="text-align:center;margin-top:12px;font-size:11px;color:#3d5c3d">Stats sourced from PGA Tour · DataGolf · Updated after each round</p>
+</div>
+</div>
+
+<!-- GAMEWEEK HISTORY -->
+<div id="s-history" class="scr" style="padding-bottom:70px">
+<div style="padding:16px 20px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+    <button onclick="nav('s-home')" style="background:none;border:none;color:#4a6b4a;font-size:20px;cursor:pointer;padding:0">‹</button>
+    <div style="font-size:20px;font-weight:700">Gameweek History</div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px">
+    <div class="stat-b"><div style="font-size:20px;font-weight:700;color:#4ade80">247</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Season total</div></div>
+    <div class="stat-b"><div style="font-size:20px;font-weight:700;color:#fbbf24">#24</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Global rank</div></div>
+    <div class="stat-b"><div style="font-size:20px;font-weight:700">82</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Best week</div></div>
+  </div>
+  <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-bottom:8px">All Gameweeks</div>
+  <div class="card">
+    <div style="display:grid;grid-template-columns:40px 1fr 60px 60px;gap:4px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.06)">
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">GW</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Tournament</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">Pts</span>
+      <span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">Total</span>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr 60px 60px;gap:4px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);align-items:center">
+      <span style="font-size:13px;font-weight:700;color:#3d5c3d">3</span>
+      <div><div style="font-size:13px;font-weight:600">The Players</div><div style="font-size:10px;color:#4a6b4a">Signature · R3</div></div>
+      <span style="font-size:14px;font-weight:700;color:#4ade80;text-align:right">+82</span>
+      <span style="font-size:13px;font-weight:600;text-align:right;color:#8aaa8a">247</span>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr 60px 60px;gap:4px;padding:12px 14px;border-bottom:1px solid rgba(255,255,255,0.05);align-items:center">
+      <span style="font-size:13px;font-weight:700;color:#3d5c3d">2</span>
+      <div><div style="font-size:13px;font-weight:600">Sony Open</div><div style="font-size:10px;color:#4a6b4a">Standard</div></div>
+      <span style="font-size:14px;font-weight:700;color:#4ade80;text-align:right">+91</span>
+      <span style="font-size:13px;font-weight:600;text-align:right;color:#8aaa8a">165</span>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr 60px 60px;gap:4px;padding:12px 14px;align-items:center">
+      <span style="font-size:13px;font-weight:700;color:#3d5c3d">1</span>
+      <div><div style="font-size:13px;font-weight:600">The Sentry</div><div style="font-size:10px;color:#4a6b4a">Standard</div></div>
+      <span style="font-size:14px;font-weight:700;color:#4ade80;text-align:right">+74</span>
+      <span style="font-size:13px;font-weight:600;text-align:right;color:#8aaa8a">74</span>
+    </div>
+  </div>
+  <p style="text-align:center;margin-top:16px;font-size:12px;color:#3d5c3d">Full history updates after each gameweek completes</p>
+</div>
+</div>
+
+<!-- FIXTURES -->
+<div id="s-fixtures" class="scr" style="padding-bottom:70px">
+<div style="padding:16px 20px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+    <button onclick="nav('s-home')" style="background:none;border:none;color:#4a6b4a;font-size:20px;cursor:pointer;padding:0">‹</button>
+    <div style="font-size:20px;font-weight:700">2026 Fixtures</div>
+  </div>
+  <div class="tab-row" style="margin-bottom:14px">
+    <button class="tb on" id="fx-all" onclick="fxTab('all')">All</button>
+    <button class="tb" id="fx-pga" onclick="fxTab('pga')">PGA</button>
+    <button class="tb" id="fx-liv" onclick="fxTab('liv')">LIV</button>
+    <button class="tb" id="fx-major" onclick="fxTab('major')">Majors</button>
+  </div>
+  <div id="fx-list"></div>
+</div>
+
+<div class="bottom-nav" id="main-nav">
+  <button class="nb on" id="ni-home" onclick="nav('s-home')"><span>⛳</span>Home</button>
+  <button class="nb" id="ni-pick" onclick="nav('s-pick')"><span>🔄</span>Transfers</button>
+  <button class="nb" id="ni-live" onclick="nav('s-live')"><span>📡</span>Live</button>
+  <button class="nb" id="ni-mysquad" onclick="nav('s-mysquad')"><span>📋</span>My Squad</button>
+  <button class="nb" id="ni-leagues" onclick="nav('s-leagues')"><span>🏆</span>Leagues</button>
+</div>
+
+<script>
 var SURL='https://peekrbzmaocuportertr.supabase.co';
 var SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBlZWtyYnptYW9jdXBvcnRlcnRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTIzNjgsImV4cCI6MjA5Njc2ODM2OH0.Gimxn5A5UZsgMtwlNi_K7aMTzpvtkilF5g__9JnWoIw';
-var AP=[],squad=[],cap=null,vc=null,filt='All';
+var AP=[],squad=[],cap=null,vc=null,filt='All',favs={},user=null,pendingNav=null,teamName='My Team',gameweekHistory=[];
 var WKS=[
   {gw:3,ev:'The Players',type:'signature',pos:'T4',pts:44,bi:15,ea:1,pa:50,bo:5,db:1,bl:0,fi:12},
   {gw:2,ev:'Sony Open',type:'standard',pos:'Win',pts:72,bi:20,ea:2,pa:44,bo:4,db:0,bl:0,fi:25},
@@ -220,12 +1033,16 @@ var LB=[
   {n:'B. DeChambeau',t:'LIV',p:4,s:-13,th:18,pts:59},
   {n:'T. Fleetwood',t:'PGA',p:5,s:-12,th:16,pts:53},
   {n:'C. Smith',t:'LIV',p:6,s:-11,th:'F',pts:47},
-  {n:'T. Hatton',t:'LIV',p:7,s:-5,th:12,pts:-3}
+  {n:'T. Hatton',t:'LIV',p:7,s:-5,th:12,pts:-3},
+  {n:'L. Aberg',t:'PGA',p:8,s:-4,th:10,pts:28},
+  {n:'P. Cantlay',t:'PGA',p:9,s:-3,th:9,pts:22},
+  {n:'X. Schauffele',t:'PGA',p:10,s:-2,th:11,pts:18}
 ];
+
 async function loadPlayers(){
   try{
-    var res=await fetch(SURL+'/rest/v1/players?is_active=eq.true&order=price.desc',{
-      headers:{'apikey':SKEY,'Authorization':'Bearer '+SKEY}
+    var res=await fetch(SURL+'/rest/v1/players?select=*&is_active=eq.true&order=price.desc',{
+      headers:{'apikey':SKEY,'Authorization':'Bearer '+SKEY,'Accept':'application/json'}
     });
     if(!res.ok)throw new Error('HTTP '+res.status);
     AP=await res.json();
@@ -234,15 +1051,96 @@ async function loadPlayers(){
     document.getElementById('plist').innerHTML='<div class="loading" style="color:#f87171">Failed to load: '+e.message+'</div>';
   }
 }
+
+function loadNews(){
+  var items=[
+    {t:'Scheffler extends lead at The Players Championship heading into the weekend',d:'30 min ago',src:'Golf Channel',u:'https://www.golfchannel.com'},
+    {t:'McIlroy sets sights on US Open after strong TPC Sawgrass showing',d:'1 hr ago',src:'Golf.com',u:'https://www.golf.com/news'},
+    {t:'LIV Golf confirms expanded 2026 schedule including new UK events',d:'2 hrs ago',src:'Golf Channel',u:'https://www.golfchannel.com'},
+    {t:'Rahm fires seven-under 65 to move into contention at Sawgrass',d:'3 hrs ago',src:'Golf.com',u:'https://www.golf.com/news'},
+    {t:'DeChambeau reveals new equipment setup ahead of major season',d:'4 hrs ago',src:'Golf Channel',u:'https://www.golfchannel.com'},
+    {t:'PGA Tour confirms schedule changes for back nine of 2026 season',d:'5 hrs ago',src:'Golf.com',u:'https://www.golf.com/news'},
+    {t:'Fleetwood targeting back-to-back wins after impressive Players showing',d:'6 hrs ago',src:'Golf Channel',u:'https://www.golfchannel.com'}
+  ];
+  var html=items.map(function(i){
+    return '<div class="news-item" data-url="'+i.u+'">'
+      +'<div style="font-size:14px;font-weight:600;color:#c8d8c8;margin-bottom:4px;line-height:1.45">'+i.t+'</div>'
+      +'<div style="font-size:11px;color:#3d5c3d">'+i.src+' · '+i.d+' ↗</div>'
+      +'</div>';
+  }).join('');
+  var el=document.getElementById('news-feed-full');
+  if(el){
+    el.innerHTML=html;
+    el.querySelectorAll('.news-item[data-url]').forEach(function(n){
+      n.addEventListener('click',function(){window.open(this.getAttribute('data-url'),'_blank');});
+    });
+  }
+}
+function requireAuth(dest){
+  if(user){nav(dest);return;}
+  pendingNav=dest;
+  document.getElementById('auth-modal').classList.add('open');
+}
+
+function closeAuth(){
+  document.getElementById('auth-modal').classList.remove('open');
+  if(pendingNav){nav(pendingNav);pendingNav=null;}
+}
+
+function authTab(t){
+  document.getElementById('at-login').classList.toggle('on',t==='login');
+  document.getElementById('at-reg').classList.toggle('on',t==='reg');
+  document.getElementById('auth-btn').textContent=t==='login'?'Sign In':'Create Account';
+  document.getElementById('auth-name-row').style.display=t==='reg'?'block':'none';
+  document.getElementById('auth-error').style.display='none';
+}
+
+async function doAuth(){
+  var email=document.getElementById('auth-email').value.trim();
+  var pass=document.getElementById('auth-password').value;
+  var isReg=document.getElementById('at-reg').classList.contains('on');
+  var errEl=document.getElementById('auth-error');
+  errEl.style.display='none';
+  if(!email||!pass){errEl.style.display='block';errEl.textContent='Please enter email and password.';return;}
+  // Dev bypass
+  if(email==='mrj365'&&pass==='Elvis365'){
+    user={email:'mrj365',name:'The Field Admin',token:'dev'};
+    document.getElementById('auth-modal').classList.remove('open');
+    if(pendingNav){nav(pendingNav);pendingNav=null;}
+    return;
+  }
+  var endpoint=isReg?'/auth/v1/signup':'/auth/v1/token?grant_type=password';
+  try{
+    var res=await fetch(SURL+endpoint,{
+      method:'POST',
+      headers:{'apikey':SKEY,'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,password:pass})
+    });
+    var data=await res.json();
+    if(data.error||data.error_description){
+      errEl.style.display='block';
+      errEl.textContent=data.error_description||data.error||'Authentication failed';
+      return;
+    }
+    user={email:email,token:data.access_token};
+    document.getElementById('auth-modal').classList.remove('open');
+    if(pendingNav){nav(pendingNav);pendingNav=null;}
+  }catch(e){
+    errEl.style.display='block';
+    errEl.textContent='Network error. Please try again.';
+  }
+}
+
 function nav(id){
   document.querySelectorAll('.scr').forEach(function(s){s.classList.remove('on');});
   document.getElementById(id).classList.add('on');
   document.querySelectorAll('.nb').forEach(function(n){n.classList.remove('on');});
-  var m={'s-home':'ni-home','s-pick':'ni-pick','s-live':'ni-live','s-my':'ni-my','s-leagues':'ni-leagues'};
+  var m={'s-home':'ni-home','s-pick':'ni-pick','s-live':'ni-live','s-mysquad':'ni-mysquad','s-leagues':'ni-leagues'};
   if(m[id])document.getElementById(m[id]).classList.add('on');
-  if(id==='s-my')rmy();
-  if(id==='s-live')rlb();
+  if(id==='s-live'){rlb();updateLiveTournamentInfo();}
+  if(id==='s-mysquad')rms();
 }
+
 function sf(f){
   filt=f;
   document.querySelectorAll('.fp').forEach(function(p){p.classList.remove('on');});
@@ -250,7 +1148,11 @@ function sf(f){
   if(el)el.classList.add('on');
   rpl();
 }
-function tourBadge(t){return '<span class="'+(t==='PGA'?'pga':'liv')+'">'+t+'</span>';}
+
+function tourBadge(t){
+  return '<span class="'+(t==='PGA'?'pga':'liv')+'">'+t+'</span>';
+}
+
 function rpl(){
   var srch=document.getElementById('srch')?document.getElementById('srch').value:'';
   var tiers=['elite','star','solid','value','budget'];
@@ -285,81 +1187,85 @@ function rpl(){
   });
   document.getElementById('plist').innerHTML=html;
 }
+
 function opn(id){
   var p=null;AP.forEach(function(x){if(x.id===id)p=x;});if(!p)return;
   var inSq=false;squad.forEach(function(s){if(s.id===id)inSq=true;});
   var spend=0;squad.forEach(function(x){spend+=parseFloat(x.price);});
   var canAdd=!inSq&&squad.length<7&&spend+parseFloat(p.price)<=75;
   var isCap=cap&&cap.id===id;var isVC=vc&&vc.id===id;
-  var html='<div style="padding:20px">';
-  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>';
-  html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px">';
-  html+='<div><div style="font-size:19px;font-weight:700;margin-bottom:5px">'+p.name+'</div>';
-  html+='<div style="display:flex;gap:7px;align-items:center">'+tourBadge(p.tour);
-  html+='<span style="font-size:12px;color:#4a6b4a">Rank #'+p.world_ranking+'</span>';
-  html+='<span style="font-size:12px;color:#3d5c3d">'+(p.nationality||'')+'</span></div></div>';
-  html+='<div style="font-size:20px;font-weight:800;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</div></div>';
-  html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px">';
-  html+='<div class="stat"><div style="font-size:18px;font-weight:700;color:#fbbf24">'+p.majors_won+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:3px">Majors</div></div>';
-  html+='<div class="stat"><div style="font-size:18px;font-weight:700">'+p.tour_wins+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:3px">Tour wins</div></div>';
-  html+='<div class="stat"><div style="font-size:18px;font-weight:700;color:#4ade80">'+p.season_avg_points+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:3px">Avg pts</div></div></div>';
-  html+='<div class="lbl">Weekly Results</div><div class="card" style="margin-bottom:16px">';
+  var html='<div style="padding:18px">';
+  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 14px"></div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px">';
+  html+='<div><div style="font-size:18px;font-weight:700;margin-bottom:4px">'+p.name+'</div>';
+  html+='<div style="display:flex;gap:6px;align-items:center">'+tourBadge(p.tour);
+  html+='<span style="font-size:12px;color:#4a6b4a">Rank #'+p.world_ranking+'</span></div></div>';
+  html+='<div style="font-size:19px;font-weight:800;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</div></div>';
+  html+='<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">';
+  html+='<div class="stat-b"><div style="font-size:17px;font-weight:700;color:#fbbf24">'+p.majors_won+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Majors</div></div>';
+  html+='<div class="stat-b"><div style="font-size:17px;font-weight:700">'+p.tour_wins+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Tour wins</div></div>';
+  html+='<div class="stat-b"><div style="font-size:17px;font-weight:700;color:#4ade80">'+p.season_avg_points+'</div><div style="font-size:10px;color:#4a6b4a;margin-top:2px">Avg pts</div></div></div>';
+  html+='<div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-bottom:8px">Weekly Results</div>';
+  html+='<div class="card" style="margin-bottom:14px">';
   WKS.forEach(function(w,wi){
     var pc=w.pts>0?'#4ade80':w.pts<0?'#f87171':'#fbbf24';
     var pp=w.pts>0?'+'+w.pts:w.pts;
     var tl=w.type==='signature'?'<span style="color:#fbbf24;font-weight:600">Signature</span>':w.type==='major'?'<span style="color:#fbbf24;font-weight:600">Major</span>':'Standard';
     var pl=w.pos==='Win'?'<span style="color:#fbbf24">WINNER</span>':w.pos;
     var bd=wi<WKS.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
-    html+='<div onclick="wb('+wi+')" style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;'+bd+';cursor:pointer">';
-    html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:3px">GW'+w.gw+' - '+w.ev+'</div>';
-    html+='<div style="font-size:11px;color:#4a6b4a">'+tl+' - '+pl+'</div></div>';
-    html+='<div style="text-align:right"><div style="font-size:17px;font-weight:700;color:'+pc+'">'+pp+'</div>';
-    html+='<div style="font-size:10px;color:#4a6b4a;margin-top:2px">pts</div></div></div>';
+    html+='<div onclick="wb('+wi+')" style="display:flex;align-items:center;justify-content:space-between;padding:11px 14px;'+bd+';cursor:pointer">';
+    html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">GW'+w.gw+' — '+w.ev+'</div>';
+    html+='<div style="font-size:11px;color:#4a6b4a">'+tl+' — '+pl+'</div></div>';
+    html+='<div style="text-align:right"><div style="font-size:16px;font-weight:700;color:'+pc+'">'+pp+'</div>';
+    html+='<div style="font-size:10px;color:#4a6b4a;margin-top:1px">pts</div></div></div>';
   });
-  html+='</div><div style="display:flex;gap:8px;flex-wrap:wrap">';
+  html+='</div><div style="display:flex;gap:7px;flex-wrap:wrap">';
   if(canAdd)html+='<button class="btn-g" style="flex:1" onclick="ap(\''+id+'\');cm()">Add to Squad</button>';
-  if(inSq&&!isCap)html+='<button onclick="sc(\''+id+'\');cm()" style="flex:1;padding:14px;border-radius:10px;border:1px solid #1a6b35;background:rgba(26,107,53,.2);color:#4ade80;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Captain</button>';
-  if(inSq&&!isVC&&!isCap)html+='<button onclick="sv(\''+id+'\');cm()" style="flex:1;padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#8aaa8a;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Vice Cap</button>';
-  if(inSq)html+='<button onclick="rp(\''+id+'\');cm()" style="padding:14px 18px;border-radius:10px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:#f87171;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Remove</button>';
+  if(inSq&&!isCap)html+='<button onclick="sc(\''+id+'\');cm()" style="flex:1;padding:13px;border-radius:9px;border:1px solid #1a6b35;background:rgba(26,107,53,.2);color:#4ade80;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Captain</button>';
+  if(inSq&&!isVC&&!isCap)html+='<button onclick="sv(\''+id+'\');cm()" style="flex:1;padding:13px;border-radius:9px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#8aaa8a;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Vice Cap</button>';
+  if(inSq)html+='<button onclick="rp(\''+id+'\');cm()" style="padding:13px 16px;border-radius:9px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:#f87171;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit">Remove</button>';
   html+='</div></div>';
   document.getElementById('pmc').innerHTML=html;
   document.getElementById('pm').classList.add('open');
 }
+
 function wb(wi){
   var w=WKS[wi];
   var mult=w.type==='major'?1.5:w.type==='signature'?1.25:1;
   var ep=w.ea*8,bp=w.bi*3,bog=w.bo*-1,db=w.db*-3,bl=(w.bl||0)*-8;
   var fp=Math.round(w.fi*mult),tot=ep+bp+bog+db+bl+fp;
   var rows=[
-    {l:'Eagles x'+w.ea,p:ep,c:'#fbbf24',s:w.ea>0},
+    {l:'Eagles x'+w.ea,p:ep,c:'#4ade80',s:w.ea>0},
     {l:'Birdies x'+w.bi,p:bp,c:'#4ade80',s:w.bi>0},
-    {l:'Pars x'+w.pa,p:0,c:'#4a6b4a',s:true},
+    {l:'Pars x'+w.pa,p:0,c:'#fbbf24',s:true},
     {l:'Bogeys x'+w.bo,p:bog,c:'#f87171',s:w.bo>0},
     {l:'Doubles x'+w.db,p:db,c:'#f87171',s:w.db>0},
     {l:'Blobs x'+(w.bl||0),p:bl,c:'#f87171',s:(w.bl||0)>0},
-    {l:'Finish ('+w.pos+')'+(mult>1?' x'+mult:''),p:fp,c:'#fbbf24',s:true}
+    {l:'Finish ('+w.pos+')'+(mult>1?' x'+mult:''),p:fp,c:'#4ade80',s:true}
   ];
-  var html='<div style="padding:20px">';
-  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 16px"></div>';
-  html+='<div style="font-size:16px;font-weight:700;margin-bottom:3px">GW'+w.gw+' - '+w.ev+'</div>';
+  var html='<div style="padding:18px">';
+  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 14px"></div>';
+  html+='<div style="font-size:15px;font-weight:700;margin-bottom:2px">GW'+w.gw+' — '+w.ev+'</div>';
   var tl=w.type==='signature'?'Signature Event':w.type==='major'?'Major':'Standard';
-  html+='<div style="font-size:12px;color:#4a6b4a;margin-bottom:16px">'+tl+' - Position: '+w.pos+'</div>';
-  html+='<div class="card" style="margin-bottom:16px">';
+  html+='<div style="font-size:11px;color:#4a6b4a;margin-bottom:14px">'+tl+' — Position: '+w.pos+'</div>';
+  html+='<div class="card" style="margin-bottom:14px">';
   rows.forEach(function(r,ri){
     if(!r.s)return;
     var bd=ri<rows.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
-    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;'+bd+'">';
-    html+='<span style="font-size:14px;color:#c8d8c8">'+r.l+'</span>';
-    html+='<span style="font-size:15px;font-weight:700;color:'+r.c+'">'+(r.p>0?'+':'')+r.p+' pts</span></div>';
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;'+bd+'">';
+    html+='<span style="font-size:13px;color:#c8d8c8">'+r.l+'</span>';
+    html+='<span style="font-size:14px;font-weight:700;color:'+r.c+'">'+(r.p>0?'+':'')+r.p+' pts</span></div>';
   });
   var tc=tot>=0?'#4ade80':'#f87171',tv=tot>=0?'+'+tot:tot;
-  html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:13px 16px;background:rgba(26,107,53,0.15);border-top:1px solid rgba(26,107,53,0.3)">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(26,107,53,0.15);border-top:1px solid rgba(26,107,53,0.3)">';
   html+='<span style="font-size:14px;font-weight:700;color:#4ade80">Total</span>';
-  html+='<span style="font-size:18px;font-weight:800;color:'+tc+'">'+tv+' pts</span></div></div>';
+  html+='<span style="font-size:17px;font-weight:800;color:'+tc+'">'+tv+' pts</span></div></div>';
   html+='<button class="btn-ghost" onclick="cm()">Close</button></div>';
   document.getElementById('pmc').innerHTML=html;
 }
+
 function cm(){document.getElementById('pm').classList.remove('open');}
+
 function ap(id){
   var p=null;AP.forEach(function(x){if(x.id===id)p=x;});if(!p)return;
   var spend=0;squad.forEach(function(x){spend+=parseFloat(x.price);});
@@ -368,17 +1274,20 @@ function ap(id){
   squad.push(p);
   if(!cap)cap=p;else if(!vc&&p.id!==cap.id)vc=p;
   uh();rpl();
-  document.getElementById('tb-sq').textContent='My Squad ('+squad.length+')';
+  document.getElementById('sq-count').textContent=squad.length;
 }
+
 function rp(id){
   squad=squad.filter(function(p){return p.id!==id;});
   if(cap&&cap.id===id)cap=squad.length>0?squad[0]:null;
   if(vc&&vc.id===id){vc=null;squad.forEach(function(p){if(!vc&&cap&&p.id!==cap.id)vc=p;});}
   uh();rpl();rsq();
-  document.getElementById('tb-sq').textContent='My Squad ('+squad.length+')';
+  document.getElementById('sq-count').textContent=squad.length;
 }
+
 function sc(id){AP.forEach(function(x){if(x.id===id)cap=x;});if(vc&&vc.id===id)vc=null;rsq();}
 function sv(id){AP.forEach(function(x){if(x.id===id)vc=x;});if(cap&&cap.id===id)cap=null;rsq();}
+
 function uh(){
   var spend=0;squad.forEach(function(p){spend+=parseFloat(p.price);});
   var left=(75-spend).toFixed(1);
@@ -388,6 +1297,7 @@ function uh(){
   document.getElementById('bbar').style.width=(spend/75*100)+'%';
   document.getElementById('bbar').style.background=parseFloat(left)<8?'#f87171':'#1a6b35';
 }
+
 function pv(v){
   document.getElementById('vpl').style.display=v==='pl'?'block':'none';
   document.getElementById('vsq').style.display=v==='sq'?'block':'none';
@@ -395,95 +1305,416 @@ function pv(v){
   document.getElementById('tb-sq').classList.toggle('on',v==='sq');
   if(v==='sq')rsq();
 }
-function sh(p,lbl,isR){
-  if(!p)return '<div class="sl empty"><span style="font-size:12px;color:#4a6b4a">'+lbl+' - empty</span></div>';
+
+function shCard(p,lbl,isR){
+  if(!p)return '<div onclick="nav(\'s-pick\')" style="background:#0a140a;border:1px dashed #1a4a2a;border-radius:7px;padding:14px;text-align:center;cursor:pointer"><div style="font-size:22px;color:#1a4a2a;line-height:1">+</div><div style="font-size:10px;color:#2a4a2a;margin-top:4px">Add player</div></div>';
   var iC=cap&&cap.id===p.id,iV=vc&&vc.id===p.id;
-  var html='<div class="sl'+(iC?' cap':iV?' vc':'')+'">';
-  html+='<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">';
-  if(iC)html+='<span class="badge bc">CAP 2x</span>';
-  if(iV)html+='<span class="badge bv">VC 1.5x</span>';
-  if(isR)html+='<span class="badge br">RES</span>';
-  html+='<span style="font-size:13px;font-weight:600">'+p.name+'</span></div>';
-  html+='<div style="display:flex;gap:6px">'+tourBadge(p.tour);
-  html+='<span style="font-size:12px;font-weight:700;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</span></div></div>';
-  html+='<div style="display:flex;gap:5px">';
-  if(!iC)html+='<button onclick="sc(\''+p.id+'\')" style="font-size:10px;padding:4px 8px;border-radius:5px;border:1px solid #1a6b35;background:rgba(26,107,53,.15);color:#4ade80;cursor:pointer;font-family:inherit;font-weight:700">C</button>';
-  if(!iV&&!iC)html+='<button onclick="sv(\''+p.id+'\')" style="font-size:10px;padding:4px 8px;border-radius:5px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#6b8c6b;cursor:pointer;font-family:inherit">VC</button>';
-  html+='<button onclick="rp(\''+p.id+'\')" style="font-size:10px;padding:4px 8px;border-radius:5px;border:1px solid rgba(248,113,113,.2);background:rgba(248,113,113,.08);color:#f87171;cursor:pointer;font-family:inherit">x</button>';
-  html+='</div></div>';
+  var border=iC?'#c8a830':iV?'#9ca3af':isR?'#2a5a2a':'#182818';
+  var bg=iC?'#09160c':isR?'#080f08':'#0a140a';
+  var html='<div onclick="openSquadPlayer('+JSON.stringify(p.id)+')" style="background:'+bg+';border:1px solid '+border+';border-radius:7px;padding:8px 10px;display:flex;align-items:center;gap:6px;cursor:pointer">';
+  if(iC){html+='<svg width="20" height="23" viewBox="0 0 20 23" style="flex-shrink:0"><path d="M10 1 L19 5 L19 11 Q19 18 10 22 Q1 18 1 11 L1 5 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="1.8"/><text x="10" y="12" text-anchor="middle" font-size="8" fill="#fde68a" font-family="system-ui" font-weight="900">C</text><text x="10" y="19" text-anchor="middle" font-size="6" fill="#fde68a" font-family="system-ui" font-weight="700">2x</text></svg>';}
+  else if(iV){html+='<svg width="20" height="23" viewBox="0 0 20 23" style="flex-shrink:0"><path d="M10 1 L19 5 L19 11 Q19 18 10 22 Q1 18 1 11 L1 5 Z" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.8"/><text x="10" y="12" text-anchor="middle" font-size="8" fill="#d1d5db" font-family="system-ui" font-weight="900">V</text><text x="10" y="19" text-anchor="middle" font-size="6" fill="#d1d5db" font-family="system-ui" font-weight="700">1.5x</text></svg>';}
+  else{html+='<div style="width:20px;flex-shrink:0"></div>';}
+  html+='<div style="flex:1;min-width:0">';
+  html+='<div style="font-size:11px;font-weight:700;color:'+(iC?'#f0f4f0':iV?'#d1d5db':isR?'#4a8a5a':'#c8d8c8')+'">'+p.name+'</div>';
+  html+='<div style="font-size:8px;color:#2a4a2a;margin-bottom:3px">£'+parseFloat(p.price).toFixed(1)+'m · '+(iC?'Captain 2x':iV?'Vice Cap 1.5x':isR?'Reserve':'Active')+'</div>';
+  html+='<div style="display:flex;gap:3px">'+tourBadge(p.tour)+'</div></div>';
+  html+='<div style="font-size:16px;color:#2a4a2a;padding-left:4px">›</div>';
+  html+='</div>';
   return html;
 }
+
+function openSquadPlayer(id){
+  var p=null;
+  squad.forEach(function(x){if(x.id===id)p=x;});
+  AP.forEach(function(x){if(x.id===id&&!p)p=x;});
+  if(!p)return;
+  var iC=cap&&cap.id===id,iV=vc&&vc.id===id;
+  var sqIdx=squad.findIndex(function(x){return x.id===id;});
+  var isRes=sqIdx>=5;
+  var html='<div style="padding:18px">';
+  html+='<div style="width:32px;height:4px;border-radius:2px;background:rgba(255,255,255,0.15);margin:0 auto 14px"></div>';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">';
+  html+='<div><div style="font-size:17px;font-weight:700">'+p.name+'</div>';
+  html+='<div style="display:flex;gap:6px;margin-top:4px">'+tourBadge(p.tour)+'<span style="font-size:11px;color:#4a6b4a">£'+parseFloat(p.price).toFixed(1)+'m</span></div></div>';
+  if(iC)html+='<div style="background:#09160c;border:1px solid #c8a830;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;color:#fde68a">Captain 2x</div>';
+  else if(iV)html+='<div style="background:#0d1a0d;border:1px solid #9ca3af;border-radius:6px;padding:4px 8px;font-size:11px;font-weight:700;color:#d1d5db">Vice Cap 1.5x</div>';
+  else html+='<div style="font-size:11px;color:#4a6b4a;background:rgba(255,255,255,0.04);padding:4px 8px;border-radius:6px">'+(isRes?'Reserve':'Active')+'</div>';
+  html+='</div>';
+  html+='<div id="sqp-btns" style="display:flex;flex-direction:column;gap:8px"></div>';
+  html+='</div>';
+  document.getElementById('pmc').innerHTML=html;
+  document.getElementById('pm').classList.add('open');
+  var btns=document.getElementById('sqp-btns');
+  if(!iC){
+    var b=document.createElement('button');
+    b.className='';b.style.cssText='width:100%;padding:13px;border-radius:9px;background:#09160c;border:1.5px solid #c8a830;color:#fde68a;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit';
+    b.innerHTML='<svg width="16" height="18" viewBox="0 0 16 18" style="vertical-align:middle;margin-right:8px"><path d="M8 1 L15 4 L15 10 Q15 16 8 17 Q1 16 1 10 L1 4 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="1.5"/><text x="8" y="10" text-anchor="middle" font-size="7" fill="#fde68a" font-family="system-ui" font-weight="900">C</text></svg>Make Captain (2×)';
+    b.onclick=function(){sc(id);rms();cm();};btns.appendChild(b);
+  }
+  if(!iV&&!iC){
+    var b=document.createElement('button');
+    b.style.cssText='width:100%;padding:13px;border-radius:9px;background:#0d1a0d;border:1.5px solid #9ca3af;color:#d1d5db;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit';
+    b.innerHTML='<svg width="16" height="18" viewBox="0 0 16 18" style="vertical-align:middle;margin-right:8px"><path d="M8 1 L15 4 L15 10 Q15 16 8 17 Q1 16 1 10 L1 4 Z" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.5"/><text x="8" y="10" text-anchor="middle" font-size="7" fill="#d1d5db" font-family="system-ui" font-weight="900">V</text></svg>Make Vice Captain (1.5×)';
+    b.onclick=function(){sv(id);rms();cm();};btns.appendChild(b);
+  }
+  var reserves=squad.slice(5,7);var actives=squad.slice(0,5);
+  if(isRes&&actives.length>0){
+    var lbl=document.createElement('div');
+    lbl.style.cssText='font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-top:4px';
+    lbl.textContent='Sub onto the field — swap with:';btns.appendChild(lbl);
+    actives.forEach(function(a){
+      var b=document.createElement('button');
+      b.style.cssText='width:100%;padding:11px 14px;border-radius:8px;background:#0a140a;border:1px solid #1a6b35;color:#c8d8c8;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center';
+      b.innerHTML='<span>'+a.name+'</span><span style="color:#4ade80;font-size:11px;font-weight:700">↑ Sub on</span>';
+      b.onclick=function(){makeSub(id,a.id);cm();};btns.appendChild(b);
+    });
+  }
+  if(!isRes&&reserves.length>0){
+    var lbl=document.createElement('div');
+    lbl.style.cssText='font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#3d5c3d;margin-top:4px';
+    lbl.textContent='Move to reserves — swap with:';btns.appendChild(lbl);
+    reserves.forEach(function(r){
+      var b=document.createElement('button');
+      b.style.cssText='width:100%;padding:11px 14px;border-radius:8px;background:#080f08;border:1px solid #2a5a2a;color:#4a8a5a;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center';
+      b.innerHTML='<span>'+r.name+'</span><span style="color:#4a8a5a;font-size:11px;font-weight:700">↓ To bench</span>';
+      b.onclick=function(){makeSub(r.id,id);cm();};btns.appendChild(b);
+    });
+  }
+  var cb=document.createElement('button');
+  cb.className='btn-ghost';cb.style.marginTop='4px';cb.textContent='Close';
+  cb.onclick=cm;btns.appendChild(cb);
+}
+
+
+function makeSub(reserveId,activeId){
+  var ri=squad.findIndex(function(p){return p.id===reserveId;});
+  var ai=squad.findIndex(function(p){return p.id===activeId;});
+  if(ri<0||ai<0)return;
+  var tmp=squad[ri];squad[ri]=squad[ai];squad[ai]=tmp;
+  if(cap&&cap.id===reserveId&&ri>=5&&ai<5){/* cap moved to field, fine */}
+  if(cap&&cap.id===activeId&&ai>=5){cap=squad.find(function(p,i){return i<5;})||null;}
+  if(vc&&vc.id===activeId&&ai>=5){vc=squad.find(function(p,i){return i<5&&(!cap||p.id!==cap.id);})||null;}
+  rms();rsq();
+}
+
+
 function rsq(){
-  var aH='';for(var i=0;i<5;i++)aH+=sh(squad[i],'Active '+(i+1),false);
-  var rH='';for(var i=0;i<2;i++)rH+=sh(squad[i+5],'Reserve '+(i+1),true);
+  var act=squad.slice(0,5),res=squad.slice(5,7);
+  var aH='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">';
+  for(var i=0;i<5;i++){
+    if(i===0){aH='';aH+='<div style="margin-bottom:5px">'+shCard(act[0],'Active 1',false)+'</div>';aH+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">';}
+    else aH+=shCard(act[i],'Active '+(i+1),false);
+  }
+  aH+='</div>';
+  var rH='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">';
+  for(var i=0;i<2;i++)rH+=shCard(res[i],'Reserve '+(i+1),true);
+  rH+='</div>';
   document.getElementById('sqact').innerHTML=aH;
   document.getElementById('sqres').innerHTML=rH;
   var tip=document.getElementById('sqtip');
-  if(!cap&&squad.length>0){tip.style.display='block';tip.textContent='Tap C on any player to set your captain (2x points)';}
-  else if(cap&&!vc&&squad.length>1){tip.style.display='block';tip.textContent='Tap VC to set your vice captain (1.5x points)';}
+  if(!cap&&squad.length>0){tip.style.display='block';tip.textContent='Tap Captain on any player to set your captain (2x points)';}
+  else if(cap&&!vc&&squad.length>1){tip.style.display='block';tip.textContent='Tap Vice Cap to set your vice captain (1.5x points)';}
   else tip.style.display='none';
   document.getElementById('savebtn').style.display=(squad.length===7&&cap&&vc)?'block':'none';
 }
-function rmy(){
+
+function rms(){
   var spend=0;squad.forEach(function(p){spend+=parseFloat(p.price);});
-  document.getElementById('mbudget').textContent='£'+(75-spend).toFixed(1)+'m';
-  if(!squad.length){
-    document.getElementById('myc').innerHTML='<p style="color:#4a6b4a;font-size:14px;text-align:center;padding:40px 0">No team yet - <span onclick="nav(\'s-pick\')" style="color:#4ade80;cursor:pointer">pick your squad</span></p>';
-    return;
+  document.getElementById('ms-budget').textContent='£'+(75-spend).toFixed(1)+'m';
+  var capRow=document.getElementById('ms-cap-row');
+  if(capRow){
+    if(cap){
+      capRow.style.cursor='pointer';
+      capRow.onclick=function(){openSquadPlayer(cap.id);};
+      capRow.innerHTML='<svg width="26" height="30" viewBox="0 0 26 30" style="flex-shrink:0"><path d="M13 1 L25 6 L25 16 Q25 24 13 29 Q1 24 1 16 L1 6 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="2"/><text x="13" y="15" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#fde68a" font-family="system-ui" font-weight="900">C</text><text x="13" y="23" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#fde68a" font-family="system-ui" font-weight="700">2x</text></svg><div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:700;color:#f0f4f0">'+cap.name+'</div><div style="font-size:8px;color:#2d7a4a">'+((cap.tier||'')+' · '+(cap.tour||''))+'</div></div><div style="text-align:right;flex-shrink:0"><div class="pts-g" style="margin-bottom:3px">+0 pts</div><div>'+tourBadge(cap.tour)+'</div></div>';
+      capRow.style.background='#09160c';
+      capRow.style.border='1.5px solid #c8a830';
+      capRow.style.display='flex';
+      capRow.style.alignItems='center';
+      capRow.style.gap='9px';
+      capRow.style.padding='9px 11px';
+    } else {
+      capRow.onclick=function(){goToPlayers();};
+      capRow.innerHTML='<div style="font-size:22px;color:#c8a830;line-height:1">+</div><div style="font-size:11px;color:#3d6a2a;margin-top:4px">Add captain — 2× points</div>';
+      capRow.style.background='#09160c';
+      capRow.style.border='1.5px dashed #c8a830';
+      capRow.style.display='block';
+      capRow.style.textAlign='center';
+      capRow.style.padding='14px';
+    }
   }
-  var html='<div class="lbl">Your Squad</div>';
-  squad.forEach(function(p,i){
-    var iC=cap&&cap.id===p.id,iV=vc&&vc.id===p.id,isR=i>=5;
-    html+='<div class="sl'+(iC?' cap':iV?' vc':'')+'" onclick="opn(\''+p.id+'\');nav(\'s-pick\')" style="cursor:pointer">';
-    html+='<div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">';
-    if(iC)html+='<span class="badge bc">CAP 2x</span>';
-    if(iV)html+='<span class="badge bv">VC 1.5x</span>';
-    if(isR)html+='<span class="badge br">RESERVE</span>';
-    html+='<span style="font-size:13px;font-weight:600">'+p.name+'</span></div>';
-    html+='<div style="display:flex;gap:6px">'+tourBadge(p.tour);
-    html+='<span style="font-size:12px;font-weight:700;color:#f0f4f0">£'+parseFloat(p.price).toFixed(1)+'m</span></div></div>';
-    html+='<span style="font-size:11px;color:#4a6b4a">View</span></div>';
-  });
-  document.getElementById('myc').innerHTML=html;
+  var fairway=squad.filter(function(p){return !(cap&&cap.id===p.id)&&!(vc&&vc.id===p.id);}).slice(0,4);
+  var reserves=squad.slice(5,7);
+  var fw=document.getElementById('ms-fairway');
+  var rv=document.getElementById('ms-reserves');
+  if(squad.length>0){
+    var fwHtml='';
+    var vcP=vc?[vc]:[];
+    var others=squad.filter(function(p){return !(cap&&cap.id===p.id)&&!(vc&&vc.id===p.id);});
+    var displayFw=vcP.concat(others).slice(0,4);
+    for(var i=0;i<4;i++)fwHtml+=shCard(displayFw[i],'Player '+(i+2),false);
+    fw.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">'+fwHtml+'</div>';
+    var rvHtml='';
+    for(var i=0;i<2;i++)rvHtml+=shCard(squad[5+i],'Reserve '+(i+1),true);
+    rv.innerHTML='<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">'+rvHtml+'</div>';
+  }
 }
+
+function lvGo(n){
+  document.getElementById('lv-slider').style.transform='translateX(-'+(n*33.333)+'%)';
+  [0,1,2].forEach(function(i){
+    var t=document.getElementById('lv-t'+i);
+    if(t){t.style.color=i===n?'#4ade80':'#2a4a2a';t.style.borderBottomColor=i===n?'#4ade80':'transparent';}
+  });
+  if(n===1){initLiveStats();}
+  if(n===2){loadNews();}
+}
+
+// Live stats on slide — mirrors the full stats page
+var lsInited=false;
+var lsTourFilter='all';
+var lsCatFilter='sg';
+var lsSubFilter='total';
+
+function lsTour(t){
+  lsTourFilter=t;
+  ['all','pga','liv'].forEach(function(x){var el=document.getElementById('ls-'+x);if(el)el.classList.toggle('on',x===t);});
+  renderLiveStats();
+}
+
+function initLiveStats(){
+  if(!document.getElementById('ls-cat-row'))return;
+  // Build category pills
+  var cats=[{k:'sg',l:'Strokes Gained'},{k:'drive',l:'Driving'},{k:'approach',l:'Approach'},{k:'putting',l:'Putting'},{k:'scoring',l:'Scoring'}];
+  var catRow=document.getElementById('ls-cat-row');
+  catRow.innerHTML='';
+  cats.forEach(function(c){
+    var b=document.createElement('button');
+    b.className='fp'+(c.k===lsCatFilter?' on':'');
+    b.textContent=c.l;
+    b.onclick=(function(k){return function(){lsCatFilter=k;lsSubFilter=ST_SUBS[k][0].k;initLiveStats();};})(c.k);
+    catRow.appendChild(b);
+  });
+  // Build sub pills
+  var subs=ST_SUBS[lsCatFilter];
+  var subRow=document.getElementById('ls-sub-row');
+  subRow.innerHTML='';
+  subs.forEach(function(s){
+    var b=document.createElement('button');
+    b.className='fp'+(s.k===lsSubFilter?' on':'');
+    b.textContent=s.l;
+    b.style.fontSize='10px';b.style.padding='4px 10px';
+    b.onclick=(function(k){return function(){lsSubFilter=k;renderLiveStats();};})(s.k);
+    subRow.appendChild(b);
+  });
+  renderLiveStats();
+}
+
+function renderLiveStats(){
+  var el=document.getElementById('ls-table');
+  if(!el)return;
+  var catData=STATS_DATA[lsCatFilter];
+  if(!catData)return;
+  var subData=catData[lsSubFilter];
+  if(!subData)return;
+  var rows=subData.data.filter(function(r){
+    if(lsTourFilter==='pga')return r.tour==='PGA';
+    if(lsTourFilter==='liv')return r.tour==='LIV';
+    return true;
+  });
+  var html='<div style="padding:8px 12px;background:rgba(74,222,128,0.04);border-bottom:1px solid rgba(255,255,255,0.06)">';
+  html+='<div style="font-size:12px;font-weight:600;color:#4ade80">'+subData.label+'</div>';
+  html+='<div style="font-size:10px;color:#4a6b4a;margin-top:1px">'+subData.desc+'</div></div>';
+  html+='<div style="display:grid;grid-template-columns:28px 1fr 38px 52px;gap:3px;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.08)">';
+  html+='<span style="font-size:9px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Pos</span>';
+  html+='<span style="font-size:9px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Player</span>';
+  html+='<span style="font-size:9px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:center">Tour</span>';
+  html+='<span style="font-size:9px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">'+subData.label.split(':').pop().trim()+'</span></div>';
+  rows.forEach(function(r,i){
+    var rankColor=i===0?'#fbbf24':i===1?'#9ca3af':i===2?'#c8a87a':'#3d5c3d';
+    var valColor=i===0?'#4ade80':'#f0f4f0';
+    var bd=i<rows.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'';
+    var valStr=typeof r.val==='number'&&r.val%1!==0?r.val.toFixed(subData.unit==='%'||subData.unit===''?2:1):r.val;
+    if(subData.unit==='%')valStr+='%';
+    else if(subData.unit==='yds')valStr+=' yds';
+    else if(subData.unit==='ft')valStr+=' ft';
+    var inSq=squad.some(function(p){return p.name&&r.name&&p.name.indexOf(r.name.split('. ')[1]||r.name)>=0;});
+    html+='<div style="display:grid;grid-template-columns:28px 1fr 38px 52px;gap:3px;padding:9px 12px;'+bd+';align-items:center'+(i<3?';background:rgba(255,255,255,0.01)':'')+'">'; 
+    html+='<span style="font-size:12px;font-weight:700;color:'+rankColor+'">'+(i+1)+'</span>';
+    html+='<div><div style="font-size:12px;font-weight:600">'+r.name+'</div>'+(inSq?'<div style="font-size:9px;color:#4ade80;font-weight:700">In squad</div>':'')+'</div>';
+    html+='<div style="text-align:center">'+tourBadge(r.tour)+'</div>';
+    html+='<span style="text-align:right;font-size:13px;font-weight:700;color:'+valColor+'">'+valStr+'</span></div>';
+  });
+  el.innerHTML=html;
+}
+
+function msGo(n){
+  document.getElementById('ms-slider').style.transform='translateX(-'+(n*50)+'%)';
+  document.getElementById('mst0').classList.toggle('on',n===0);
+  document.getElementById('mst1').classList.toggle('on',n===1);
+  document.getElementById('mst0').style.color=n===0?'#4ade80':'#2a4a2a';
+  document.getElementById('mst1').style.color=n===1?'#4ade80':'#2a4a2a';
+  document.getElementById('mst0').style.borderBottomColor=n===0?'#4ade80':'transparent';
+  document.getElementById('mst1').style.borderBottomColor=n===1?'#4ade80':'transparent';
+}
+
 function rlb(){
-  var html='';
-  LB.forEach(function(r,i){
-    var pc=r.pts>0?'#4ade80':r.pts<0?'#f87171':'#fbbf24';
-    var pv=r.pts>0?'+'+r.pts:r.pts;
-    var bd=i<LB.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
-    html+='<div style="display:grid;grid-template-columns:28px 1fr 44px 44px 50px;gap:4px;padding:11px 14px;'+bd+';align-items:center">';
-    html+='<span style="font-size:13px;font-weight:600;color:#3d5c3d">'+r.p+'</span>';
-    html+='<div><div style="font-size:13px;font-weight:600;margin-bottom:2px">'+r.n+'</div>'+tourBadge(r.t)+'</div>';
-    html+='<span style="text-align:center;font-size:14px;font-weight:700;color:#f0f4f0">'+r.s+'</span>';
-    html+='<span style="text-align:center;font-size:13px;color:#4a6b4a">'+r.th+'</span>';
-    html+='<span style="text-align:right;font-size:13px;font-weight:700;color:'+pc+'">'+pv+'</span>';
-    html+='</div>';
+  var lbEl=document.getElementById('lbrows');
+  // Only show loading if no data yet
+  if(lbEl&&!livePGA.length&&!liveLIV.length)lbEl.innerHTML='<div style="padding:20px;text-align:center;color:#4a6b4a;font-size:13px">Loading live scores...</div>';
+  // Show cached data immediately while fetching
+  if(livePGA.length||liveLIV.length)renderLB(lbTourFilter==='pga'?livePGA:liveLIV);
+  var lbUrl=SURL+'/rest/v1/live_scores?select=player_name,position,total_score,total_points,stroke_points,thru,tournament_name,round,tour,status&order=total_score.asc&limit=120&apikey='+SKEY;
+  fetch(lbUrl,{
+    headers:{'apikey':SKEY,'Accept':'application/json'}
+  }).then(function(res){return res.ok?res.json():Promise.reject('HTTP '+res.status);})
+  .then(function(raw){
+    if(raw&&raw.length>0){
+      liveData=raw;
+      // Split by tour
+      livePGA=raw.filter(function(r){return r.tour==='PGA';});
+      liveLIV=raw.filter(function(r){return r.tour==='LIV';});
+
+      // Sort and assign positions for each tour separately
+      function sortAndRank(arr){
+        arr.sort(function(a,b){
+          var ac=a.status==='cut'||a.status==='bottom27';
+          var bc=b.status==='cut'||b.status==='bottom27';
+          if(ac&&!bc)return 1;
+          if(!ac&&bc)return -1;
+          return (parseInt(a.total_score)||0)-(parseInt(b.total_score)||0);
+        });
+        var rank=1;
+        for(var i=0;i<arr.length;i++){
+          var r=arr[i];
+          var isCut=r.status==='cut'||r.status==='bottom27';
+          if(isCut){r.position='CUT';if(!r.total_points)r.total_points=-10;continue;}
+          if(i>0&&arr[i-1].total_score===r.total_score&&arr[i-1].status!=='cut'){
+            r.position='T'+rank;if(arr[i-1].position!==('T'+rank))arr[i-1].position='T'+rank;
+          } else {rank=i+1;r.position=String(rank);}
+        }
+      }
+      sortAndRank(livePGA);
+      sortAndRank(liveLIV);
+
+      // Update header info
+      var pgaTn=livePGA.length?livePGA[0].tournament_name:'';
+      var livTn=liveLIV.length?liveLIV[0].tournament_name:'';
+      var rnd=raw[0].round||1;
+      var hi=document.getElementById('live-tournament-info');
+      if(hi)hi.textContent=(lbTourFilter==='pga'?pgaTn:livTn)+' — Round '+rnd;
+
+      renderLB(lbTourFilter==='pga'?livePGA:liveLIV);
+    } else {
+      renderLB(null);
+    }
+  }).catch(function(e){
+    console.log('Live scores error:',e);
+    renderLB(null);
   });
-  document.getElementById('lbrows').innerHTML=html;
 }
+
+var liveData=[];var livePGA=[];var liveLIV=[];var lbTourFilter='pga';
+
+function renderLB(data){
+  var rows=data||LB.map(function(r){return{player_name:r.n,position:r.p,total_score:r.s,total_points:r.pts,thru:r.th,tour:r.t};});
+  var lbEl=document.getElementById('lbrows');
+  var frEl=document.getElementById('fav-rows');
+  var favSec=document.getElementById('fav-section');
+  if(!lbEl)return;
+  lbEl.innerHTML='';
+  if(frEl)frEl.innerHTML='';
+  var hasFavs=false;
+
+  rows.forEach(function(r,i){
+    var name=r.player_name||r.n||'Unknown';
+    var pos=String(r.position||r.p||'-');
+    var score=parseInt(r.total_score||r.s)||0;
+    var pts=parseInt(r.total_points||r.pts)||0;
+    var thru=parseInt(r.thru||r.th)||0;
+    var tour=r.tour||r.t||'PGA';
+    var isCut=(pos.toUpperCase()==='CUT'||r.status==='cut'||r.status==='bottom27');
+    var pc=pts>0?'#4ade80':pts<0?'#f87171':'#fbbf24';
+    var pv=(pts>0?'+':'')+pts;
+    var scoreStr=score>0?'+'+score:score===0?'E':String(score);
+    var thruStr=isCut?'CUT':thru>=18?'F':(thru||'-');
+    var starCol=favs[name]?'#fbbf24':'rgba(255,255,255,0.15)';
+    var posCol=i===0?'#fbbf24':i===1?'#9ca3af':i===2?'#c8a87a':'#3d5c3d';
+
+    function makeRow(isLast){
+      var div=document.createElement('div');
+      div.style.cssText='display:grid;grid-template-columns:22px 24px 1fr 40px 36px 46px;gap:3px;padding:10px 12px;align-items:center;'+(isCut?'opacity:0.5;':'')+(isLast?'':'border-bottom:1px solid rgba(255,255,255,0.04)');
+      // Star
+      var star=document.createElement('span');
+      star.innerHTML='&#9733;';
+      star.style.cssText='cursor:pointer;font-size:14px;color:'+starCol;
+      star.onclick=(function(n){return function(){toggleFav(n);};})(name);
+      div.appendChild(star);
+      // Pos
+      var posEl=document.createElement('span');
+      posEl.style.cssText='font-size:11px;font-weight:700;color:'+posCol;
+      posEl.textContent=pos;
+      div.appendChild(posEl);
+      // Name + badge
+      var nameDiv=document.createElement('div');
+      nameDiv.innerHTML='<div style="font-size:13px;font-weight:600;margin-bottom:2px">'+name+'</div>'+tourBadge(tour);
+      div.appendChild(nameDiv);
+      // Score
+      var sc=document.createElement('span');
+      sc.style.cssText='text-align:center;font-size:13px;font-weight:700;color:#f0f4f0';
+      sc.textContent=scoreStr;
+      div.appendChild(sc);
+      // Thru
+      var th=document.createElement('span');
+      th.style.cssText='text-align:center;font-size:12px;color:#6a9a6a;font-weight:600';
+      th.textContent=thruStr;
+      div.appendChild(th);
+      // Pts
+      var pt=document.createElement('span');
+      pt.style.cssText='text-align:right;font-size:13px;font-weight:700;color:'+pc;
+      pt.textContent=pv;
+      div.appendChild(pt);
+      return div;
+    }
+
+    lbEl.appendChild(makeRow(i===rows.length-1));
+    if(favs[name]){
+      if(frEl)frEl.appendChild(makeRow(false));
+      hasFavs=true;
+    }
+  });
+
+  if(!rows.length){
+    var noMsg=lbTourFilter==='liv'?'No active LIV event this week':'No active PGA tournament';
+    lbEl.innerHTML='<div style="padding:30px 20px;text-align:center"><div style="font-size:28px;margin-bottom:8px">⛳</div><div style="color:#4a6b4a;font-size:13px">'+noMsg+'</div></div>';
+  }
+  if(favSec)favSec.style.display=hasFavs?'block':'none';
+}
+function toggleFav(name){
+  if(favs[name])delete favs[name];else favs[name]=true;
+  renderLB(liveData.length?liveData:null);
+}
+
 function lv(v){
   document.getElementById('lvj').style.display=v==='j'?'block':'none';
   document.getElementById('lvc').style.display=v==='c'?'block':'none';
   document.getElementById('ltj').classList.toggle('on',v==='j');
   document.getElementById('ltc').classList.toggle('on',v==='c');
 }
+
 function fmt(t){
   var ip=t==='paid';
   document.getElementById('ffr').style.cssText='padding:12px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;border:1px solid '+(ip?'rgba(255,255,255,.1)':'#1a6b35')+';background:'+(ip?'rgba(255,255,255,.04)':'rgba(26,107,53,.15)')+';color:'+(ip?'#6b8c6b':'#4ade80');
   document.getElementById('fpd').style.cssText='padding:12px;border-radius:8px;font-weight:600;font-size:13px;cursor:pointer;font-family:inherit;border:1px solid '+(ip?'#1a6b35':'rgba(255,255,255,.1)')+';background:'+(ip?'rgba(26,107,53,.15)':'rgba(255,255,255,.04)')+';color:'+(ip?'#4ade80':'#6b8c6b');
   document.getElementById('fsec').style.display=ip?'block':'none';
 }
+
 function fa(btn){
-  document.querySelectorAll('#fsec button').forEach(function(b){
-    b.style.border='1px solid rgba(255,255,255,.1)';
-    b.style.background='rgba(255,255,255,.04)';
-    b.style.color='#6b8c6b';
-  });
-  btn.style.border='1px solid #1a6b35';
-  btn.style.background='rgba(26,107,53,.15)';
-  btn.style.color='#4ade80';
+  document.querySelectorAll('#fsec button').forEach(function(b){b.style.border='1px solid rgba(255,255,255,.1)';b.style.background='rgba(255,255,255,.04)';b.style.color='#6b8c6b';});
+  btn.style.border='1px solid #1a6b35';btn.style.background='rgba(26,107,53,.15)';btn.style.color='#4ade80';
 }
+
 function ck(){
   var v=document.getElementById('lcode')?document.getElementById('lcode').value:'';
   var btn=document.getElementById('jbtn');
@@ -491,8 +1722,723 @@ function ck(){
   if(v.length===6){btn.style.background='#1a6b35';btn.style.color='#fff';btn.style.border='none';}
   else{btn.style.background='rgba(255,255,255,0.06)';btn.style.color='#c8d8c8';btn.style.border='1px solid rgba(255,255,255,0.1)';}
 }
+
+function openRules(n){
+  document.getElementById('rules-modal').classList.add('open');
+  rulesGo(n);
+}
+function closeRules(){document.getElementById('rules-modal').classList.remove('open');}
+function rulesGo(n){
+  document.getElementById('rules-sl').style.transform='translateX(-'+(n*33.333)+'%)';
+  [0,1,2].forEach(function(i){
+    var el=document.getElementById('rt'+i);
+    if(el)el.classList.toggle('on',i===n);
+  });
+}
+
+
+// Menu functions
+function openMenu(){
+  var modal=document.getElementById('menu-modal');
+  modal.classList.add('open');
+  if(user){
+    document.getElementById('menu-account-loggedout').style.display='none';
+    document.getElementById('menu-account-loggedin').style.display='block';
+    document.getElementById('menu-signout-row').style.display='block';
+    document.getElementById('menu-username').textContent=user.name||user.email;
+    document.getElementById('menu-email').textContent=user.email;
+    document.getElementById('menu-avatar').textContent=(user.name||user.email||'?')[0].toUpperCase();
+    document.getElementById('menu-teamname').textContent=teamName;
+  }else{
+    document.getElementById('menu-account-loggedout').style.display='block';
+    document.getElementById('menu-account-loggedin').style.display='none';
+    document.getElementById('menu-signout-row').style.display='none';
+  }
+}
+function closeMenu(){document.getElementById('menu-modal').classList.remove('open');}
+
+function signOut(){
+  user=null;teamName='My Team';squad=[];cap=null;vc=null;
+  closeMenu();nav('s-home');
+}
+
+// Prizes
+function openPrizes(){openRules(2);}
+function closePrizes(){closeRules();}
+
+// Team name
+function editTeamName(){
+  closeMenu();
+  var inp=document.getElementById('teamname-input');
+  inp.value=teamName;
+  document.getElementById('tn-count').textContent=teamName.length;
+  inp.oninput=function(){document.getElementById('tn-count').textContent=this.value.length;};
+  document.getElementById('teamname-modal').classList.add('open');
+  setTimeout(function(){inp.focus();},100);
+}
+function closeTeamName(){document.getElementById('teamname-modal').classList.remove('open');}
+function saveTeamName(){
+  var v=document.getElementById('teamname-input').value.trim();
+  if(v){
+    teamName=v;
+    var el=document.getElementById('ms-teamname');
+    if(el)el.textContent=teamName;
+    var mn=document.getElementById('menu-teamname');
+    if(mn)mn.textContent=teamName;
+  }
+  closeTeamName();
+}
+
+// Fixtures
+var FIXTURES=[
+  {gw:1,name:'The Sentry',tour:'PGA',type:'standard',date:'Jan 2–5',venue:'Kapalua, Hawaii'},
+  {gw:2,name:'Sony Open',tour:'PGA',type:'standard',date:'Jan 9–12',venue:'Honolulu, Hawaii'},
+  {gw:3,name:'The American Express',tour:'PGA',type:'standard',date:'Jan 16–19',venue:'La Quinta, CA'},
+  {gw:4,name:'Farmers Insurance Open',tour:'PGA',type:'standard',date:'Jan 23–26',venue:'Torrey Pines, CA'},
+  {gw:5,name:'LIV Golf Mayakoba',tour:'LIV',type:'standard',date:'Feb 6–8',venue:'Playa del Carmen, Mexico'},
+  {gw:6,name:'AT&T Pebble Beach Pro-Am',tour:'PGA',type:'signature',date:'Feb 6–9',venue:'Pebble Beach, CA'},
+  {gw:7,name:'The Genesis Invitational',tour:'PGA',type:'signature',date:'Feb 13–16',venue:'Riviera CC, CA'},
+  {gw:8,name:'LIV Golf Las Vegas',tour:'LIV',type:'standard',date:'Feb 20–22',venue:'Las Vegas, NV'},
+  {gw:9,name:'The Players Championship',tour:'PGA',type:'signature',date:'Mar 13–16',venue:'TPC Sawgrass, FL'},
+  {gw:10,name:'LIV Golf Hong Kong',tour:'LIV',type:'standard',date:'Mar 7–9',venue:'Hong Kong'},
+  {gw:11,name:'Valspar Championship',tour:'PGA',type:'standard',date:'Mar 20–23',venue:'Innisbrook, FL'},
+  {gw:12,name:'Masters Tournament',tour:'PGA',type:'major',date:'Apr 10–13',venue:'Augusta National, GA'},
+  {gw:13,name:'LIV Golf Tucson',tour:'LIV',type:'standard',date:'Apr 17–19',venue:'Tucson, AZ'},
+  {gw:14,name:'RBC Heritage',tour:'PGA',type:'signature',date:'Apr 17–20',venue:'Hilton Head, SC'},
+  {gw:15,name:'PGA Championship',tour:'PGA',type:'major',date:'May 15–18',venue:'Quail Hollow, NC'},
+  {gw:16,name:'LIV Golf Houston',tour:'LIV',type:'standard',date:'May 2–4',venue:'Houston, TX'},
+  {gw:17,name:'Memorial Tournament',tour:'PGA',type:'signature',date:'May 29–Jun 1',venue:'Muirfield Village, OH'},
+  {gw:18,name:'LIV Golf UK',tour:'LIV',type:'standard',date:'Jun 6–8',venue:'UK (TBC)'},
+  {gw:19,name:'US Open',tour:'PGA',type:'major',date:'Jun 19–22',venue:'Oakmont CC, PA'},
+  {gw:20,name:'Travelers Championship',tour:'PGA',type:'signature',date:'Jun 26–29',venue:'TPC River Highlands, CT'},
+  {gw:21,name:'LIV Golf Andalucia',tour:'LIV',type:'standard',date:'Jul 4–6',venue:'Andalucia, Spain'},
+  {gw:22,name:'The Open Championship',tour:'PGA',type:'major',date:'Jul 17–20',venue:'Royal Portrush, N.Ireland'},
+  {gw:23,name:'LIV Golf Greenbrier',tour:'LIV',type:'standard',date:'Aug 1–3',venue:'White Sulphur Springs, WV'},
+  {gw:24,name:'FedEx St. Jude Championship',tour:'PGA',type:'standard',date:'Aug 7–10',venue:'Memphis, TN'},
+  {gw:25,name:'BMW Championship',tour:'PGA',type:'standard',date:'Aug 21–24',venue:'Castle Pines, CO'},
+  {gw:26,name:'LIV Golf Chicago',tour:'LIV',type:'standard',date:'Aug 22–24',venue:'Chicago, IL'},
+  {gw:27,name:'Tour Championship',tour:'PGA',type:'standard',date:'Aug 28–31',venue:'East Lake GC, Atlanta'}
+];
+
+var fxFilter='all';
+function fxTab(f){
+  fxFilter=f;
+  ['all','pga','liv','major'].forEach(function(x){
+    document.getElementById('fx-'+x).classList.toggle('on',x===f);
+  });
+  renderFixtures();
+}
+
+function renderFixtures(){
+  var filtered=FIXTURES.filter(function(f){
+    if(fxFilter==='pga')return f.tour==='PGA';
+    if(fxFilter==='liv')return f.tour==='LIV';
+    if(fxFilter==='major')return f.type==='major';
+    return true;
+  });
+  var typeCol={'major':'#fbbf24','signature':'#a78bfa','standard':'#4a6b4a'};
+  var typeLbl={'major':'⭐ Major','signature':'Signature','standard':'Standard'};
+  var html='<div class="card">';
+  filtered.forEach(function(f,i){
+    var bd=i<filtered.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
+    var tc=typeCol[f.type]||'#4a6b4a';
+    html+='<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;'+bd+'">';
+    html+='<div style="min-width:28px;text-align:center;font-size:11px;font-weight:700;color:#3d5c3d">'+f.gw+'</div>';
+    html+='<div style="flex:1;min-width:0">';
+    html+='<div style="font-size:13px;font-weight:600;margin-bottom:2px">'+f.name+'</div>';
+    html+='<div style="font-size:11px;color:#4a6b4a">'+f.venue+'</div>';
+    html+='</div>';
+    html+='<div style="text-align:right;flex-shrink:0">';
+    html+='<div style="font-size:11px;font-weight:700;color:'+tc+';margin-bottom:2px">'+typeLbl[f.type]+'</div>';
+    html+='<div style="font-size:10px;color:#3d5c3d">'+f.date+'</div>';
+    html+='</div></div>';
+  });
+  html+='</div>';
+  document.getElementById('fx-list').innerHTML=html;
+}
+
+// League table
+var LT_DATA=[
+  {pos:1,team:'Eagles FC',manager:'J. Smith',gw:94,total:312,h2h:5},
+  {pos:2,team:"Scheffler's Army",manager:'T. Brown',gw:88,total:298,h2h:4},
+  {pos:3,team:'My Team',manager:'mrj365',gw:82,total:247,h2h:3,me:true},
+  {pos:4,team:'Birdie Boys',manager:'S. Wilson',gw:71,total:235,h2h:3},
+  {pos:5,team:'Bogey Free',manager:'R. Jones',gw:65,total:219,h2h:2},
+  {pos:6,team:'Hole in Fun',manager:'M. Davies',gw:58,total:201,h2h:2},
+  {pos:7,team:'The Wedge',manager:'P. Taylor',gw:52,total:188,h2h:1},
+  {pos:8,team:'Fore! FC',manager:'L. Martin',gw:44,total:172,h2h:1}
+];
+var ltMode='season';
+function ltTab(m){
+  ltMode=m;
+  document.getElementById('lt-gw').classList.toggle('on',m==='gw');
+  document.getElementById('lt-season').classList.toggle('on',m==='season');
+  document.getElementById('lt-h2h').classList.toggle('on',m==='h2h');
+  renderLeagueTable();
+}
+
+function renderLeagueTable(){
+  var sorted=LT_DATA.slice().sort(function(a,b){
+    if(ltMode==='gw')return b.gw-a.gw;
+    if(ltMode==='h2h')return b.h2h-a.h2h;
+    return b.total-a.total;
+  });
+  var html='';
+  sorted.forEach(function(r,i){
+    var isMe=r.me;
+    var bg=isMe?'rgba(74,222,128,0.06)':'transparent';
+    var val=ltMode==='gw'?'+'+r.gw:ltMode==='h2h'?r.h2h+' W':'+'+r.total;
+    var val2=ltMode==='gw'?'+'+r.total:ltMode==='h2h'?'+'+r.total:'+'+r.gw;
+    var bd=i<sorted.length-1?'border-bottom:1px solid rgba(255,255,255,0.05)':'';
+    html+='<div style="display:grid;grid-template-columns:32px 1fr 52px 52px;gap:4px;padding:12px 14px;'+bd+';background:'+bg+';align-items:center">';
+    html+='<span style="font-size:13px;font-weight:700;color:'+(isMe?'#4ade80':'#3d5c3d')+'">'+(i+1)+'</span>';
+    html+='<div><div style="font-size:13px;font-weight:'+(isMe?'700':'600')+';color:'+(isMe?'#4ade80':'#f0f4f0')+'">'+r.team+'</div>';
+    html+='<div style="font-size:10px;color:#3d5c3d">'+r.manager+'</div></div>';
+    html+='<span style="font-size:13px;font-weight:700;color:'+(isMe?'#4ade80':'#f0f4f0')+';text-align:right">'+val+'</span>';
+    html+='<span style="font-size:12px;color:#4a6b4a;text-align:right">'+val2+'</span>';
+    html+='</div>';
+  });
+  document.getElementById('lt-rows').innerHTML=html;
+}
+
+function openLeagueTable(name,type){
+  document.getElementById('lt-name').textContent=name||'The Office Open';
+  document.getElementById('lt-type').textContent=(type||'Traditional')+' · 8 managers';
+  nav('s-league-table');
+  renderLeagueTable();
+}
+
+
+function activateChip(chip){
+  var names={'wildcard':'Wildcard','triplecap':'Triple Captain','benchboost':'Bench Boost','vice':'Vice'};
+  var descs={
+    'wildcard':'Make unlimited free transfers this gameweek without any point deductions. Your squad will be reset after the wildcard gameweek.',
+    'triplecap':'Your captain will score 3× points instead of 2× this gameweek only. Applies to both positive and negative points.',
+    'benchboost':'All 7 players including your reserves will score points this gameweek.',
+    'vice':'Your vice captain will score 2× points instead of 1.5× this gameweek. Combined with your captain, you will have two players on double points. One of the most powerful chips in the game.'
+  };
+  var html='<div style="padding:20px">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">';
+  html+='<div style="font-size:18px;font-weight:700">Activate '+names[chip]+'?</div>';
+  html+='<button onclick="cm()" style="background:rgba(255,255,255,0.08);border:none;color:#f0f4f0;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer">✕</button>';
+  html+='</div>';
+  html+='<p style="font-size:13px;color:#8aaa8a;line-height:1.6;margin-bottom:16px">'+descs[chip]+'</p>';
+  html+='<div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.2);border-radius:8px;padding:10px 14px;font-size:12px;color:#f87171;margin-bottom:16px">This chip can only be used once per season and cannot be undone.</div>';
+  html+='<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">';
+  html+='<button onclick="cm()" class="btn-ghost">Cancel</button>';
+  html+='<button id="confirm-chip-btn" class="btn-g">Activate</button>';
+  html+='</div></div>';
+  document.getElementById('pmc').innerHTML=html;
+  document.getElementById('pm').classList.add('open');
+  setTimeout(function(){var b=document.getElementById('confirm-chip-btn');if(b)b.onclick=function(){confirmChip(chip);};},50);
+}
+
+function confirmChip(chip){
+  cm();
+  // Mark chip used — grey out all matching chip buttons
+  // Grey out used chip buttons
+  document.querySelectorAll('.chip,.chip-btn').forEach(function(c){
+    var txt=c.textContent||'';
+    if((chip==='wildcard'&&txt.includes('Wildcard'))||(chip==='triplecap'&&txt.includes('Triple'))||(chip==='benchboost'&&txt.includes('Bench'))||(chip==='vice'&&txt.includes('Vice'))){
+      c.style.opacity='0.35';c.style.pointerEvents='none';
+    }
+  });
+  // Track active chips
+  if(!window.activeChips)window.activeChips={};
+  window.activeChips[chip]=true;
+  // Vice chip — turn VC gold on both slides
+  if(chip==='vice'){
+    // Field view SVG — target by ID
+    var vcCircle=document.getElementById('fv-vc-circle');
+    var vcBadge=document.getElementById('fv-vc-badge');
+    var vcBadgeText=document.getElementById('fv-vc-badge-text');
+    var vcName=document.getElementById('fv-vc-name');
+    var vcPts=document.getElementById('fv-vc-pts');
+    if(vcCircle){vcCircle.setAttribute('stroke','#c8a830');}
+    if(vcBadge){vcBadge.setAttribute('stroke','#c8a830');vcBadge.setAttribute('fill','#1a3a0a');}
+    if(vcBadgeText){vcBadgeText.setAttribute('fill','#fde68a');}
+    // Scorecard hole map VC elements (target by fill/stroke)
+    document.querySelectorAll('svg circle[stroke="#9ca3af"]').forEach(function(c){
+      c.setAttribute('stroke','#c8a830');
+    });
+    document.querySelectorAll('svg path[stroke="#9ca3af"]').forEach(function(p){
+      p.setAttribute('stroke','#c8a830');p.setAttribute('fill','#1a3a0a');
+    });
+    document.querySelectorAll('svg text[fill="#d1d5db"]').forEach(function(t){
+      t.setAttribute('fill','#fde68a');
+    });
+    // Both chip buttons — gold border
+    document.querySelectorAll('[onclick*=\'vice\']').forEach(function(el){
+      el.style.borderColor='#c8a830';
+      el.style.color='#fde68a';
+    });
+  }
+  var msgs={
+    'wildcard':'Wildcard activated! Make your transfers freely this week.',
+    'triplecap':'Triple Captain activated! Your captain scores 3× this week.',
+    'benchboost':'Bench Boost activated! All 7 players score this week.',
+    'vice':'Vice activated! Your vice captain scores 2× this week — you now have two players on double points.'
+  };
+  alert(msgs[chip]||'Chip activated!');
+}
+
+// ═══════════ STATS ENGINE ═══════════
+var STATS_DATA = {
+  sg: {
+    total: {
+      label: 'SG: Total', unit: '', desc: 'Strokes gained vs field average across all aspects',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:4.21,rank:1},{name:'X. Schauffele',tour:'PGA',val:3.18,rank:2},
+        {name:'C. Morikawa',tour:'PGA',val:2.94,rank:3},{name:'R. McIlroy',tour:'PGA',val:2.87,rank:4},
+        {name:'B. DeChambeau',tour:'LIV',val:2.71,rank:5},{name:'T. Fleetwood',tour:'PGA',val:2.58,rank:6},
+        {name:'J. Rahm',tour:'LIV',val:2.44,rank:7},{name:'L. Aberg',tour:'PGA',val:2.31,rank:8},
+        {name:'T. Hatton',tour:'LIV',val:2.18,rank:9},{name:'B. Horschel',tour:'PGA',val:2.02,rank:10},
+        {name:'C. Smith',tour:'LIV',val:1.98,rank:11},{name:'P. Cantlay',tour:'PGA',val:1.87,rank:12},
+        {name:'V. Hovland',tour:'PGA',val:1.74,rank:13},{name:'D. Johnson',tour:'LIV',val:1.61,rank:14},
+        {name:'M. Fitzpatrick',tour:'PGA',val:1.55,rank:15},
+        {name:'W. Zalatoris',tour:'PGA',val:1.42,rank:16},
+        {name:'S. Im',tour:'PGA',val:1.38,rank:17},
+        {name:'K. Bradley',tour:'PGA',val:1.24,rank:18},
+        {name:'R. MacIntyre',tour:'PGA',val:1.18,rank:19},
+        {name:'N. Dunlap',tour:'PGA',val:1.11,rank:20},
+        {name:'A. Ancer',tour:'LIV',val:1.04,rank:21},
+        {name:'P. Harman',tour:'PGA',val:0.97,rank:22},
+        {name:'P. Reed',tour:'LIV',val:0.91,rank:23},
+        {name:'H. Matsuyama',tour:'PGA',val:0.84,rank:24},
+        {name:'S. Lowry',tour:'PGA',val:0.78,rank:25},
+        {name:'J. Niemann',tour:'LIV',val:0.71,rank:26},
+        {name:'S. Burns',tour:'PGA',val:0.64,rank:27},
+        {name:'C. Conners',tour:'PGA',val:0.58,rank:28},
+        {name:'T. Finau',tour:'PGA',val:0.44,rank:29},
+        {name:'T. Pieters',tour:'LIV',val:0.31,rank:30}
+      ]
+    },
+    tee: {
+      label: 'SG: Off the Tee', unit: '', desc: 'Strokes gained with driver and tee shots',
+      data: [
+        {name:'B. DeChambeau',tour:'LIV',val:1.84,rank:1},{name:'R. McIlroy',tour:'PGA',val:1.71,rank:2},
+        {name:'L. Aberg',tour:'PGA',val:1.62,rank:3},{name:'S. Scheffler',tour:'PGA',val:1.48,rank:4},
+        {name:'C. Smith',tour:'LIV',val:1.31,rank:5},{name:'J. Rahm',tour:'LIV',val:1.24,rank:6},
+        {name:'D. Johnson',tour:'LIV',val:1.18,rank:7},{name:'T. Hatton',tour:'LIV',val:1.04,rank:8},
+        {name:'V. Hovland',tour:'PGA',val:0.98,rank:9},{name:'T. Fleetwood',tour:'PGA',val:0.87,rank:10},
+        {name:'X. Schauffele',tour:'PGA',val:0.81,rank:11},{name:'P. Cantlay',tour:'PGA',val:0.74,rank:12},
+        {name:'C. Morikawa',tour:'PGA',val:0.62,rank:13},{name:'B. Horschel',tour:'PGA',val:0.55,rank:14},
+        {name:'M. Fitzpatrick',tour:'PGA',val:0.48,rank:15}
+      ]
+    },
+    approach: {
+      label: 'SG: Approach', unit: '', desc: 'Strokes gained on approach shots to the green',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:1.92,rank:1},{name:'C. Morikawa',tour:'PGA',val:1.78,rank:2},
+        {name:'X. Schauffele',tour:'PGA',val:1.54,rank:3},{name:'T. Fleetwood',tour:'PGA',val:1.41,rank:4},
+        {name:'J. Rahm',tour:'LIV',val:1.28,rank:5},{name:'M. Fitzpatrick',tour:'PGA',val:1.21,rank:6},
+        {name:'B. DeChambeau',tour:'LIV',val:1.14,rank:7},{name:'P. Cantlay',tour:'PGA',val:1.08,rank:8},
+        {name:'R. McIlroy',tour:'PGA',val:0.94,rank:9},{name:'L. Aberg',tour:'PGA',val:0.87,rank:10},
+        {name:'T. Hatton',tour:'LIV',val:0.81,rank:11},{name:'C. Smith',tour:'LIV',val:0.74,rank:12},
+        {name:'V. Hovland',tour:'PGA',val:0.68,rank:13},{name:'D. Johnson',tour:'LIV',val:0.55,rank:14},
+        {name:'B. Horschel',tour:'PGA',val:0.44,rank:15}
+      ]
+    },
+    putting: {
+      label: 'SG: Putting', unit: '', desc: 'Strokes gained on the putting green',
+      data: [
+        {name:'X. Schauffele',tour:'PGA',val:1.24,rank:1},{name:'P. Cantlay',tour:'PGA',val:1.18,rank:2},
+        {name:'S. Scheffler',tour:'PGA',val:1.04,rank:3},{name:'B. Horschel',tour:'PGA',val:0.94,rank:4},
+        {name:'T. Hatton',tour:'LIV',val:0.87,rank:5},{name:'C. Smith',tour:'LIV',val:0.81,rank:6},
+        {name:'T. Fleetwood',tour:'PGA',val:0.74,rank:7},{name:'R. McIlroy',tour:'PGA',val:0.68,rank:8},
+        {name:'V. Hovland',tour:'PGA',val:0.61,rank:9},{name:'J. Rahm',tour:'LIV',val:0.54,rank:10},
+        {name:'M. Fitzpatrick',tour:'PGA',val:0.48,rank:11},{name:'L. Aberg',tour:'PGA',val:0.41,rank:12},
+        {name:'C. Morikawa',tour:'PGA',val:0.34,rank:13},{name:'B. DeChambeau',tour:'LIV',val:0.28,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:0.14,rank:15}
+      ]
+    }
+  },
+  drive: {
+    distance: {
+      label: 'Driving Distance', unit: 'yds', desc: 'Average driving distance in yards',
+      data: [
+        {name:'B. DeChambeau',tour:'LIV',val:327.4,rank:1},{name:'R. McIlroy',tour:'PGA',val:318.2,rank:2},
+        {name:'L. Aberg',tour:'PGA',val:314.8,rank:3},{name:'D. Johnson',tour:'LIV',val:312.1,rank:4},
+        {name:'V. Hovland',tour:'PGA',val:308.7,rank:5},{name:'J. Rahm',tour:'LIV',val:306.4,rank:6},
+        {name:'S. Scheffler',tour:'PGA',val:304.2,rank:7},{name:'C. Smith',tour:'LIV',val:301.8,rank:8},
+        {name:'T. Hatton',tour:'LIV',val:298.5,rank:9},{name:'X. Schauffele',tour:'PGA',val:296.3,rank:10},
+        {name:'T. Fleetwood',tour:'PGA',val:293.1,rank:11},{name:'B. Horschel',tour:'PGA',val:289.7,rank:12},
+        {name:'M. Fitzpatrick',tour:'PGA',val:287.4,rank:13},{name:'C. Morikawa',tour:'PGA',val:284.2,rank:14},
+        {name:'P. Cantlay',tour:'PGA',val:281.8,rank:15}
+      ]
+    },
+    accuracy: {
+      label: 'Driving Accuracy', unit: '%', desc: 'Percentage of fairways hit',
+      data: [
+        {name:'C. Morikawa',tour:'PGA',val:71.4,rank:1},{name:'M. Fitzpatrick',tour:'PGA',val:69.8,rank:2},
+        {name:'P. Cantlay',tour:'PGA',val:68.2,rank:3},{name:'T. Fleetwood',tour:'PGA',val:66.7,rank:4},
+        {name:'B. Horschel',tour:'PGA',val:65.4,rank:5},{name:'X. Schauffele',tour:'PGA',val:64.1,rank:6},
+        {name:'S. Scheffler',tour:'PGA',val:62.8,rank:7},{name:'T. Hatton',tour:'LIV',val:61.4,rank:8},
+        {name:'J. Rahm',tour:'LIV',val:59.8,rank:9},{name:'V. Hovland',tour:'PGA',val:58.4,rank:10},
+        {name:'C. Smith',tour:'LIV',val:57.1,rank:11},{name:'R. McIlroy',tour:'PGA',val:55.8,rank:12},
+        {name:'L. Aberg',tour:'PGA',val:54.2,rank:13},{name:'D. Johnson',tour:'LIV',val:52.7,rank:14},
+        {name:'B. DeChambeau',tour:'LIV',val:51.4,rank:15}
+      ]
+    }
+  },
+  approach: {
+    gir: {
+      label: 'Greens in Regulation', unit: '%', desc: 'Percentage of greens hit in regulation',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:74.8,rank:1},{name:'C. Morikawa',tour:'PGA',val:72.4,rank:2},
+        {name:'T. Fleetwood',tour:'PGA',val:70.1,rank:3},{name:'X. Schauffele',tour:'PGA',val:69.4,rank:4},
+        {name:'J. Rahm',tour:'LIV',val:68.2,rank:5},{name:'M. Fitzpatrick',tour:'PGA',val:67.8,rank:6},
+        {name:'R. McIlroy',tour:'PGA',val:66.4,rank:7},{name:'B. DeChambeau',tour:'LIV',val:65.1,rank:8},
+        {name:'P. Cantlay',tour:'PGA',val:64.7,rank:9},{name:'L. Aberg',tour:'PGA',val:63.4,rank:10},
+        {name:'T. Hatton',tour:'LIV',val:62.1,rank:11},{name:'V. Hovland',tour:'PGA',val:61.8,rank:12},
+        {name:'C. Smith',tour:'LIV',val:60.4,rank:13},{name:'B. Horschel',tour:'PGA',val:59.1,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:57.8,rank:15}
+      ]
+    },
+    prox: {
+      label: 'Proximity to Hole', unit: 'ft', desc: 'Average distance from hole on approach shots',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:21.4,rank:1},{name:'C. Morikawa',tour:'PGA',val:23.8,rank:2},
+        {name:'T. Fleetwood',tour:'PGA',val:25.1,rank:3},{name:'M. Fitzpatrick',tour:'PGA',val:26.4,rank:4},
+        {name:'X. Schauffele',tour:'PGA',val:27.8,rank:5},{name:'J. Rahm',tour:'LIV',val:29.2,rank:6},
+        {name:'P. Cantlay',tour:'PGA',val:30.4,rank:7},{name:'R. McIlroy',tour:'PGA',val:31.8,rank:8},
+        {name:'B. DeChambeau',tour:'LIV',val:33.1,rank:9},{name:'T. Hatton',tour:'LIV',val:34.4,rank:10},
+        {name:'L. Aberg',tour:'PGA',val:35.7,rank:11},{name:'C. Smith',tour:'LIV',val:37.1,rank:12},
+        {name:'V. Hovland',tour:'PGA',val:38.4,rank:13},{name:'B. Horschel',tour:'PGA',val:39.8,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:41.2,rank:15}
+      ]
+    },
+    scrambling: {
+      label: 'Scrambling', unit: '%', desc: 'Percentage of pars made after missing the green in regulation',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:68.4,rank:1},{name:'P. Cantlay',tour:'PGA',val:65.8,rank:2},
+        {name:'T. Hatton',tour:'LIV',val:63.2,rank:3},{name:'X. Schauffele',tour:'PGA',val:61.7,rank:4},
+        {name:'B. Horschel',tour:'PGA',val:60.4,rank:5},{name:'J. Rahm',tour:'LIV',val:59.1,rank:6},
+        {name:'R. McIlroy',tour:'PGA',val:57.8,rank:7},{name:'C. Smith',tour:'LIV',val:56.4,rank:8},
+        {name:'T. Fleetwood',tour:'PGA',val:55.1,rank:9},{name:'M. Fitzpatrick',tour:'PGA',val:53.8,rank:10},
+        {name:'B. DeChambeau',tour:'LIV',val:52.4,rank:11},{name:'V. Hovland',tour:'PGA',val:51.1,rank:12},
+        {name:'C. Morikawa',tour:'PGA',val:49.8,rank:13},{name:'L. Aberg',tour:'PGA',val:48.4,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:47.1,rank:15}
+      ]
+    }
+  },
+  putting: {
+    ppr: {
+      label: 'Putts per Round', unit: '', desc: 'Average number of putts per round',
+      data: [
+        {name:'X. Schauffele',tour:'PGA',val:27.4,rank:1},{name:'P. Cantlay',tour:'PGA',val:27.8,rank:2},
+        {name:'S. Scheffler',tour:'PGA',val:28.1,rank:3},{name:'T. Hatton',tour:'LIV',val:28.4,rank:4},
+        {name:'B. Horschel',tour:'PGA',val:28.7,rank:5},{name:'C. Smith',tour:'LIV',val:29.1,rank:6},
+        {name:'T. Fleetwood',tour:'PGA',val:29.4,rank:7},{name:'R. McIlroy',tour:'PGA',val:29.7,rank:8},
+        {name:'V. Hovland',tour:'PGA',val:30.1,rank:9},{name:'J. Rahm',tour:'LIV',val:30.4,rank:10},
+        {name:'M. Fitzpatrick',tour:'PGA',val:30.7,rank:11},{name:'L. Aberg',tour:'PGA',val:31.1,rank:12},
+        {name:'C. Morikawa',tour:'PGA',val:31.4,rank:13},{name:'B. DeChambeau',tour:'LIV',val:31.8,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:32.1,rank:15}
+      ]
+    },
+    onep: {
+      label: 'One-Putt %', unit: '%', desc: 'Percentage of holes with just one putt',
+      data: [
+        {name:'X. Schauffele',tour:'PGA',val:44.8,rank:1},{name:'P. Cantlay',tour:'PGA',val:43.2,rank:2},
+        {name:'S. Scheffler',tour:'PGA',val:41.7,rank:3},{name:'B. Horschel',tour:'PGA',val:40.4,rank:4},
+        {name:'T. Hatton',tour:'LIV',val:39.1,rank:5},{name:'C. Smith',tour:'LIV',val:38.4,rank:6},
+        {name:'R. McIlroy',tour:'PGA',val:37.8,rank:7},{name:'T. Fleetwood',tour:'PGA',val:36.4,rank:8},
+        {name:'J. Rahm',tour:'LIV',val:35.1,rank:9},{name:'V. Hovland',tour:'PGA',val:34.4,rank:10},
+        {name:'M. Fitzpatrick',tour:'PGA',val:33.8,rank:11},{name:'L. Aberg',tour:'PGA',val:32.4,rank:12},
+        {name:'C. Morikawa',tour:'PGA',val:31.8,rank:13},{name:'B. DeChambeau',tour:'LIV',val:30.4,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:29.1,rank:15}
+      ]
+    }
+  },
+  scoring: {
+    avg: {
+      label: 'Scoring Average', unit: '', desc: 'Average score per round adjusted for course difficulty',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:68.42,rank:1},{name:'X. Schauffele',tour:'PGA',val:68.91,rank:2},
+        {name:'R. McIlroy',tour:'PGA',val:69.14,rank:3},{name:'C. Morikawa',tour:'PGA',val:69.38,rank:4},
+        {name:'T. Fleetwood',tour:'PGA',val:69.62,rank:5},{name:'J. Rahm',tour:'LIV',val:69.81,rank:6},
+        {name:'B. DeChambeau',tour:'LIV',val:70.04,rank:7},{name:'P. Cantlay',tour:'PGA',val:70.18,rank:8},
+        {name:'L. Aberg',tour:'PGA',val:70.34,rank:9},{name:'T. Hatton',tour:'LIV',val:70.51,rank:10},
+        {name:'C. Smith',tour:'LIV',val:70.68,rank:11},{name:'V. Hovland',tour:'PGA',val:70.84,rank:12},
+        {name:'M. Fitzpatrick',tour:'PGA',val:71.01,rank:13},{name:'B. Horschel',tour:'PGA',val:71.18,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:71.34,rank:15}
+      ]
+    },
+    birdies: {
+      label: 'Birdie Average', unit: '', desc: 'Average birdies per round',
+      data: [
+        {name:'R. McIlroy',tour:'PGA',val:5.84,rank:1},{name:'B. DeChambeau',tour:'LIV',val:5.61,rank:2},
+        {name:'S. Scheffler',tour:'PGA',val:5.48,rank:3},{name:'X. Schauffele',tour:'PGA',val:5.31,rank:4},
+        {name:'J. Rahm',tour:'LIV',val:5.14,rank:5},{name:'T. Fleetwood',tour:'PGA',val:4.98,rank:6},
+        {name:'L. Aberg',tour:'PGA',val:4.81,rank:7},{name:'C. Smith',tour:'LIV',val:4.68,rank:8},
+        {name:'V. Hovland',tour:'PGA',val:4.54,rank:9},{name:'T. Hatton',tour:'LIV',val:4.41,rank:10},
+        {name:'C. Morikawa',tour:'PGA',val:4.28,rank:11},{name:'P. Cantlay',tour:'PGA',val:4.14,rank:12},
+        {name:'M. Fitzpatrick',tour:'PGA',val:4.01,rank:13},{name:'D. Johnson',tour:'LIV',val:3.88,rank:14},
+        {name:'B. Horschel',tour:'PGA',val:3.74,rank:15}
+      ]
+    },
+    eagles: {
+      label: 'Eagles', unit: '', desc: 'Total eagles made this season',
+      data: [
+        {name:'B. DeChambeau',tour:'LIV',val:8,rank:1},{name:'R. McIlroy',tour:'PGA',val:7,rank:2},
+        {name:'D. Johnson',tour:'LIV',val:6,rank:3},{name:'L. Aberg',tour:'PGA',val:6,rank:4},
+        {name:'S. Scheffler',tour:'PGA',val:5,rank:5},{name:'J. Rahm',tour:'LIV',val:5,rank:6},
+        {name:'C. Smith',tour:'LIV',val:4,rank:7},{name:'V. Hovland',tour:'PGA',val:4,rank:8},
+        {name:'X. Schauffele',tour:'PGA',val:4,rank:9},{name:'T. Hatton',tour:'LIV',val:3,rank:10},
+        {name:'T. Fleetwood',tour:'PGA',val:3,rank:11},{name:'C. Morikawa',tour:'PGA',val:3,rank:12},
+        {name:'P. Cantlay',tour:'PGA',val:2,rank:13},{name:'M. Fitzpatrick',tour:'PGA',val:2,rank:14},
+        {name:'B. Horschel',tour:'PGA',val:2,rank:15}
+      ]
+    },
+    cuts: {
+      label: 'Consecutive Cuts', unit: '', desc: 'Number of consecutive cuts made (current streak)',
+      data: [
+        {name:'S. Scheffler',tour:'PGA',val:24,rank:1},{name:'C. Morikawa',tour:'PGA',val:19,rank:2},
+        {name:'X. Schauffele',tour:'PGA',val:17,rank:3},{name:'M. Fitzpatrick',tour:'PGA',val:14,rank:4},
+        {name:'T. Fleetwood',tour:'PGA',val:12,rank:5},{name:'P. Cantlay',tour:'PGA',val:11,rank:6},
+        {name:'R. McIlroy',tour:'PGA',val:9,rank:7},{name:'B. Horschel',tour:'PGA',val:8,rank:8},
+        {name:'V. Hovland',tour:'PGA',val:7,rank:9},{name:'L. Aberg',tour:'PGA',val:6,rank:10},
+        {name:'J. Rahm',tour:'LIV',val:14,rank:11},{name:'C. Smith',tour:'LIV',val:11,rank:12},
+        {name:'T. Hatton',tour:'LIV',val:9,rank:13},{name:'B. DeChambeau',tour:'LIV',val:7,rank:14},
+        {name:'D. Johnson',tour:'LIV',val:6,rank:15},
+        {name:'W. Zalatoris',tour:'PGA',val:3.61,rank:16},
+        {name:'S. Im',tour:'PGA',val:3.48,rank:17},
+        {name:'H. Matsuyama',tour:'PGA',val:3.34,rank:18},
+        {name:'N. Dunlap',tour:'PGA',val:3.21,rank:19},
+        {name:'K. Bradley',tour:'PGA',val:3.08,rank:20},
+        {name:'R. MacIntyre',tour:'PGA',val:2.94,rank:21},
+        {name:'A. Ancer',tour:'LIV',val:2.81,rank:22},
+        {name:'J. Niemann',tour:'LIV',val:2.68,rank:23},
+        {name:'P. Reed',tour:'LIV',val:2.54,rank:24},
+        {name:'S. Lowry',tour:'PGA',val:2.41,rank:25},
+        {name:'S. Burns',tour:'PGA',val:2.28,rank:26},
+        {name:'C. Conners',tour:'PGA',val:2.14,rank:27},
+        {name:'T. Finau',tour:'PGA',val:2.01,rank:28},
+        {name:'T. Pieters',tour:'LIV',val:1.88,rank:29},
+        {name:'P. Mickelson',tour:'LIV',val:1.74,rank:30}
+      ]
+    }
+  }
+};
+
+var stTourFilter='all';
+var stCatFilter='sg';
+var stSubFilter='total';
+
+var ST_SUBS = {
+  sg: [{k:'total',l:'Total'},{k:'tee',l:'Off Tee'},{k:'approach',l:'Approach'},{k:'putting',l:'Putting'}],
+  drive: [{k:'distance',l:'Distance'},{k:'accuracy',l:'Accuracy'}],
+  approach: [{k:'gir',l:'GIR %'},{k:'prox',l:'Proximity'},{k:'scrambling',l:'Scrambling'}],
+  putting: [{k:'ppr',l:'Putts/Rnd'},{k:'onep',l:'One-Putt %'}],
+  scoring: [{k:'avg',l:'Avg Score'},{k:'birdies',l:'Birdies'},{k:'eagles',l:'Eagles'},{k:'cuts',l:'Cut Streak'}]
+};
+
+function stTour(t){
+  stTourFilter=t;
+  ['all','pga','liv'].forEach(function(x){document.getElementById('st-'+x).classList.toggle('on',x===t);});
+  renderStats();
+}
+
+function stCat(c){
+  stCatFilter=c;
+  ['sg','drive','approach','putting','scoring'].forEach(function(x){document.getElementById('sc-'+x).classList.toggle('on',x===c);});
+  // Set default sub
+  stSubFilter=ST_SUBS[c][0].k;
+  renderSubRow();
+  renderStats();
+}
+
+function renderSubRow(){
+  var subs=ST_SUBS[stCatFilter];
+  var container=document.getElementById('stat-sub-row');
+  if(!container)return;
+  container.innerHTML='';
+  subs.forEach(function(s){
+    var b=document.createElement('button');
+    b.className='fp'+(s.k===stSubFilter?' on':'');
+    b.textContent=s.l;
+    b.onclick=(function(k){return function(){stSub(k);};})(s.k);
+    container.appendChild(b);
+  });
+}
+
+function stSub(k){
+  stSubFilter=k;
+  renderSubRow();
+  renderStats();
+}
+
+function renderStats(){
+  var el=document.getElementById('stats-table');
+  if(!el)return;
+  var catData=STATS_DATA[stCatFilter];
+  if(!catData)return;
+  var subData=catData[stSubFilter];
+  if(!subData)return;
+  var rows=subData.data.filter(function(r){
+    if(stTourFilter==='pga')return r.tour==='PGA';
+    if(stTourFilter==='liv')return r.tour==='LIV';
+    return true;
+  });
+  // Re-rank after filter
+  var html='';
+  // Header
+  html+='<div style="display:grid;grid-template-columns:32px 1fr 44px 60px;gap:4px;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,0.08)">';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Pos</span>';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Player</span>';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:center">Tour</span>';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">'+subData.label.split(':').pop().trim()+'</span>';
+  html+='</div>';
+  // Stat info bar
+  html+='<div style="padding:8px 14px;background:rgba(74,222,128,0.04);border-bottom:1px solid rgba(255,255,255,0.05)">';
+  html+='<div style="font-size:12px;font-weight:600;color:#4ade80;margin-bottom:2px">'+subData.label+'</div>';
+  html+='<div style="font-size:11px;color:#4a6b4a">'+subData.desc+'</div>';
+  html+='</div>';
+  rows.forEach(function(r,i){
+    var isTop3=i<3;
+    var rankColor=i===0?'#fbbf24':i===1?'#9ca3af':i===2?'#c8a87a':'#3d5c3d';
+    var valColor=i===0?'#4ade80':'#f0f4f0';
+    var bd=i<rows.length-1?'border-bottom:1px solid rgba(255,255,255,0.04)':'';
+    var valStr=typeof r.val==='number'&&r.val%1!==0?r.val.toFixed(subData.unit==='%'||subData.unit===''?2:1):r.val;
+    if(subData.unit)valStr=valStr+(subData.unit==='%'?'%':subData.unit==='yds'?' yds':subData.unit==='ft'?' ft':'');
+    html+='<div style="display:grid;grid-template-columns:32px 1fr 44px 60px;gap:4px;padding:11px 14px;'+bd+';align-items:center'+(isTop3?';background:rgba(255,255,255,0.01)':'')+'">'; 
+    html+='<span style="font-size:13px;font-weight:700;color:'+rankColor+'">'+(i+1)+'</span>';
+    html+='<div><div style="font-size:13px;font-weight:600;color:#f0f4f0">'+r.name+'</div>';
+    // Show if in squad
+    var inSq=false;squad.forEach(function(p){if(p.name&&p.name.includes(r.name.split('.')[1]&&r.name.split('.')[1].trim()))inSq=true;});
+    if(inSq)html+='<div style="font-size:10px;color:#4ade80;font-weight:700">In your squad</div>';
+    html+='</div>';
+    html+='<span style="text-align:center">'+tourBadge(r.tour)+'</span>';
+    html+='<span style="text-align:right;font-size:14px;font-weight:700;color:'+valColor+'">'+valStr+'</span>';
+    html+='</div>';
+  });
+  el.innerHTML=html;
+}
+
+function goToPlayers(){
+  nav('s-pick');
+  pv('pl');
+}
+
+function openGlobalRankings(){
+  // Build mock global table from Supabase in future
+  // For now show a modal with top managers
+  var GLOBAL=[
+    {pos:1,team:'The Eagle Has Landed',manager:'T. Watson',pts:1842,gw:94},
+    {pos:2,team:'Scheffler\'s Army',manager:'J. Smith',pts:1798,gw:88},
+    {pos:3,team:'Bogey Free',manager:'S. Wilson',pts:1754,gw:82},
+    {pos:4,team:'Iron Mike',manager:'M. Jones',pts:1711,gw:76},
+    {pos:5,team:'Fairway to Heaven',manager:'R. Brown',pts:1668,gw:71},
+    {pos:6,team:'The Long Game',manager:'P. Davis',pts:1624,gw:65},
+    {pos:7,team:'Chip \'n Run',manager:'L. Taylor',pts:1581,gw:59},
+    {pos:8,team:'Hole in Fun',manager:'C. Evans',pts:1538,gw:54},
+    {pos:9,team:'Under Par Excellence',manager:'D. Clark',pts:1494,gw:48},
+    {pos:10,team:'The Back Nine',manager:'H. Lewis',pts:1451,gw:43},
+    {pos:24,team:teamName,manager:user?user.email:'You',pts:1247,gw:82,me:true}
+  ];
+  var html='<div style="padding:18px">';
+  html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">';
+  html+='<div><div style="font-size:17px;font-weight:700">Global Rankings</div>';
+  html+='<div style="font-size:11px;color:#4a6b4a">Season 2026 · '+GLOBAL.length+' managers shown</div></div>';
+  html+='<button onclick="cm()" style="background:rgba(255,255,255,0.08);border:none;color:#f0f4f0;border-radius:6px;padding:6px 10px;font-size:13px;cursor:pointer">✕</button></div>';
+  html+='<div style="background:rgba(74,222,128,0.06);border:1px solid rgba(74,222,128,0.15);border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#4a8a5a">Your global rank: <span style="font-size:16px;font-weight:800;color:#fbbf24">#24</span> of all registered managers</div>';
+  html+='<div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;overflow:hidden">';
+  html+='<div style="display:grid;grid-template-columns:36px 1fr 60px;gap:4px;padding:9px 14px;border-bottom:1px solid rgba(255,255,255,0.08)">';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Pos</span>';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase">Team</span>';
+  html+='<span style="font-size:10px;font-weight:700;color:#4a7a5a;text-transform:uppercase;text-align:right">Pts</span></div>';
+  var shown=GLOBAL.slice(0,10);
+  shown.push(GLOBAL[GLOBAL.length-1]);
+  shown.forEach(function(r,i){
+    var isMe=r.me;
+    var bg=isMe?'rgba(74,222,128,0.06)':'transparent';
+    var rankCol=r.pos===1?'#fbbf24':r.pos===2?'#9ca3af':r.pos===3?'#c8a87a':isMe?'#4ade80':'#3d5c3d';
+    var sep=i===9?'border-top:2px dashed rgba(255,255,255,0.08);':'border-bottom:1px solid rgba(255,255,255,0.04);';
+    html+='<div style="display:grid;grid-template-columns:36px 1fr 60px;gap:4px;padding:10px 14px;background:'+bg+';'+sep+'align-items:center">';
+    html+='<span style="font-size:13px;font-weight:700;color:'+rankCol+'">'+r.pos+'</span>';
+    html+='<div><div style="font-size:13px;font-weight:'+(isMe?'700':'600')+';color:'+(isMe?'#4ade80':'#f0f4f0')+'">'+r.team+'</div>';
+    html+='<div style="font-size:10px;color:#3d5c3d">'+r.manager+'</div></div>';
+    html+='<span style="text-align:right;font-size:13px;font-weight:700;color:'+(isMe?'#4ade80':'#f0f4f0')+'">'+r.pts+'</span></div>';
+  });
+  html+='</div>';
+  html+='<p style="text-align:center;font-size:11px;color:#2a3a2a;margin-top:12px">Global rankings update after each gameweek completes</p>';
+  html+='</div>';
+  document.getElementById('pmc').innerHTML=html;
+  document.getElementById('pm').classList.add('open');
+}
+
+function shareApp(){
+  var text='I\'m playing The Field — the ultimate fantasy golf game. PGA Tour and LIV players, real scoring, season-long prizes. Join me! ⛳';
+  var url='https://the-field.netlify.app';
+  if(navigator.share){navigator.share({title:'The Field Fantasy Golf',text:text,url:url});}
+  else{
+    var ta=document.createElement('textarea');ta.value=url;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    alert('Link copied! Share it with your friends.');
+  }
+}
+
+function shareLeague(){
+  var code=document.getElementById('lt-code')?document.getElementById('lt-code').textContent:'';
+  var name=document.getElementById('lt-name')?document.getElementById('lt-name').textContent:'My League';
+  var text='Join my league “'+name+'” on The Field Fantasy Golf! Use code: '+code+' at https://the-field.netlify.app ⛳';
+  if(navigator.share){navigator.share({title:'Join '+name+' on The Field',text:text,url:'https://the-field.netlify.app'});}
+  else{
+    var ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    alert('Invite message copied! Paste it into WhatsApp, Instagram or wherever.');
+  }
+}
+
+function updateLiveTournamentInfo(){
+  if(liveData&&liveData.length>0){
+    var el=document.getElementById('live-tournament-info');
+    if(el){
+      var tn=liveData[0].tournament_name||'Live Tournament';
+      var rnd=liveData[0].round||1;
+      el.textContent=tn+' — Round '+rnd;
+    }
+  }
+}
+
+function lbTour(t){
+  lbTourFilter=t;
+  document.getElementById('lb-pga').classList.toggle('on',t==='pga');
+  document.getElementById('lb-liv').classList.toggle('on',t==='liv');
+  var data=t==='pga'?livePGA:liveLIV;
+  var tn=data.length?data[0].tournament_name:'No active event';
+  var rnd=data.length?data[0].round||1:'-';
+  var hi=document.getElementById('live-tournament-info');
+  if(hi)hi.textContent=data.length?(tn+' — Round '+rnd):'No active '+t.toUpperCase()+' event this week';
+  var favSec=document.getElementById('fav-section');
+  if(favSec)favSec.style.display='none';
+  renderLB(data.length?data:null);
+}
+
+function createLeague(){
+  var nameEl=document.querySelector('#lvc input[type="text"]');
+  var lname=nameEl&&nameEl.value.trim()?nameEl.value.trim():'My League';
+  var code=Math.random().toString(36).substring(2,8).toUpperCase();
+  document.getElementById('lt-name').textContent=lname;
+  document.getElementById('lt-type').textContent='Free League · 1 manager';
+  document.getElementById('lt-code').textContent=code;
+  LT_DATA=[{pos:1,team:teamName,manager:user?user.email:'You',gw:0,total:0,h2h:0,me:true}];
+  nav('s-league-table');
+  renderLeagueTable();
+}
+
 loadPlayers();
+loadNews();
 rlb();
+renderFixtures();
+renderSubRow();
+renderStats();
+// Auto-refresh live scores every 5 minutes
+setInterval(function(){
+  var liveScreen=document.getElementById('s-live');
+  if(liveScreen&&liveScreen.classList.contains('on')){
+    rlb();
+  }
+},5*60*1000);
 </script>
 </body>
 </html>
+
