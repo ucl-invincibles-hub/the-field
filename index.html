@@ -7,11 +7,11 @@
 <style>
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;min-height:100vh}
 button{cursor:pointer;font-family:inherit}
 input{font-family:inherit;outline:none}
-.scr{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}.scr.on{display:block}
-.bottom-nav{display:flex;background:#111d11;border-top:2px solid #2a5a2a;flex-shrink:0;z-index:100}
+.scr{display:none;padding-bottom:70px}.scr.on{display:block}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0d150d;border-top:1px solid rgba(255,255,255,0.07);display:flex;z-index:100}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a8a5a;font-size:10px;font-weight:700;letter-spacing:0.3px}
 .nb.on{color:#4ade80}
 .nb span:first-child{font-size:20px}
@@ -57,11 +57,11 @@ input{font-family:inherit;outline:none}
 
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;min-height:100vh}
 button{cursor:pointer;font-family:inherit}
 input{font-family:inherit;outline:none}
-.scr{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}.scr.on{display:block}
-.bottom-nav{display:flex;background:#111d11;border-top:2px solid #2a5a2a;flex-shrink:0;z-index:100}
+.scr{display:none;padding-bottom:70px}.scr.on{display:block}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0d150d;border-top:1px solid rgba(255,255,255,0.07);display:flex;z-index:100}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a8a5a;font-size:10px;font-weight:700;letter-spacing:0.3px}
 .nb.on{color:#4ade80}
 .nb span:first-child{font-size:20px}
@@ -736,6 +736,11 @@ input{font-family:inherit;outline:none}
         <br><br><span style="color:#f0f4f0;font-weight:600">Chip Deadline</span> — Chips can be activated and reversed freely until 2 hours before the first tee time on Thursday. Once that deadline passes, your chip is locked in for that gameweek — it cannot be reversed.
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Points Rounding</div>
         All points are rounded down to the nearest whole number. If a multiplier produces a fractional score — for example 37.5 points — your score will be recorded as 37. There are no half points in The Field.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">In The Bag — Mid-Tournament Substitution</div>
+        Your two reserves sit <span style="color:#f0f4f0;font-weight:600">In The Bag</span> and score zero while inactive. After Round 2 finishes, a <span style="color:#f0f4f0;font-weight:600">Saturday Morning Window</span> opens before the first Round 3 tee time. During this window you may:
+        <br><br>&#8226; Make <span style="color:#f0f4f0;font-weight:600">one substitution</span> — bring a reserve onto the field, send an active player to the bag. The incoming player scores from Round 3 onwards only. The outgoing player banks their R1/R2 points and goes silent.
+        <br>&#8226; Change your <span style="color:#f0f4f0;font-weight:600">captain or vice captain</span> once.
+        <br><br>Players who have missed the cut or finished in the LIV bottom 27 are <span style="color:#f87171;font-weight:600">locked</span> — they cannot be subbed on or off. The window closes 2 hours before the first Saturday tee time and cannot be reopened.
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Leagues</div>
         All managers enter the global league automatically. Private leagues use invite codes. Traditional leagues rank by season total. Head to head leagues match you against one opponent each gameweek. Paid prize pot leagues coming soon.
       </div>
