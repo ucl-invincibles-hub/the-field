@@ -7,11 +7,11 @@
 <style>
 
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;min-height:100vh}
 button{cursor:pointer;font-family:inherit}
 input{font-family:inherit;outline:none}
-.scr{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}.scr.on{display:block}
-.bottom-nav{display:flex;background:#111d11;border-top:2px solid #2a5a2a;flex-shrink:0;z-index:100}
+.scr{display:none;padding-bottom:70px}.scr.on{display:block}
+.bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#0d150d;border-top:1px solid rgba(255,255,255,0.07);display:flex;z-index:100}
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a8a5a;font-size:10px;font-weight:700;letter-spacing:0.3px}
 .nb.on{color:#4ade80}
 .nb span:first-child{font-size:20px}
@@ -54,57 +54,6 @@ input{font-family:inherit;outline:none}
 /* Rules modal */
 .rules-slider{display:flex;width:300%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
 .rules-slide{width:33.33%;flex-shrink:0;padding:20px}
-
-
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#0f1a0f;color:#f0f4f0;max-width:480px;margin:0 auto;height:100vh;display:flex;flex-direction:column;overflow:hidden}
-button{cursor:pointer;font-family:inherit}
-input{font-family:inherit;outline:none}
-.scr{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:20px}.scr.on{display:block}
-.bottom-nav{display:flex;background:#111d11;border-top:2px solid #2a5a2a;flex-shrink:0;z-index:100}
-.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a8a5a;font-size:10px;font-weight:700;letter-spacing:0.3px}
-.nb.on{color:#4ade80}
-.nb span:first-child{font-size:20px}
-.card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:12px;overflow:hidden}
-.btn-g{background:#1a6b35;color:#fff;border:none;border-radius:10px;font-weight:600;padding:15px;font-size:16px;width:100%;cursor:pointer;font-family:inherit}
-.btn-ghost{background:rgba(255,255,255,0.06);color:#c8d8c8;border:1px solid rgba(255,255,255,0.1);border-radius:10px;font-weight:500;padding:13px;font-size:15px;width:100%;cursor:pointer;font-family:inherit}
-.pga{background:rgba(59,130,246,0.15);color:#93c5fd;border:1px solid rgba(59,130,246,0.25);border-radius:4px;font-size:10px;font-weight:700;padding:2px 7px}
-.liv{background:rgba(220,38,38,0.15);color:#fca5a5;border:1px solid rgba(220,38,38,0.25);border-radius:4px;font-size:10px;font-weight:700;padding:2px 7px}
-.pr{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
-.pr:last-child{border-bottom:none}
-.pr.in{border-left:2px solid #4ade80}
-.pr.dim{opacity:0.3;cursor:not-allowed;pointer-events:none}
-.fp{padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#6b8c6b;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:inherit}
-.fp.on{background:#1a6b35;color:#fff;border-color:#1a6b35}
-.tab-row{display:flex;background:rgba(255,255,255,0.04);border-radius:8px;padding:3px;gap:2px}
-.tb{flex:1;padding:7px 0;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;background:transparent;color:#6b8c6b;font-family:inherit}
-.tb.on{background:#1a6b35;color:#fff}
-.row-sc{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,0.05)}
-.row-sc:last-child{border-bottom:none}
-.loading{text-align:center;padding:40px;color:#4a6b4a;font-size:14px}
-.lbl-pill{display:inline-block;border-radius:3px;padding:3px 8px;font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.stat-b{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:7px;padding:8px;text-align:center}
-.chips-bar{display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 10px;gap:6px}
-.chip{flex:1;padding:8px 4px;text-align:center;border-radius:8px;background:#0d1a0d;border:1px solid #1a3a1a;cursor:pointer;font-size:8px;font-weight:700;color:#4a7a4a;line-height:1.5}
-.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:200;display:none;align-items:flex-end;justify-content:center}
-#rules-modal{z-index:210}
-.modal-bg.open{display:flex}
-.modal{background:#162016;border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:88vh;overflow-y:auto;border-top:1px solid rgba(255,255,255,0.1)}
-.pts-g{background:#0a2a0a;border:1px solid #1a3a1a;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#4ade80}
-.pts-r{background:#2a0a0a;border:1px solid #3a1a1a;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#f87171}
-.pts-0{background:#0a0f0a;border:1px solid #182818;border-radius:3px;padding:2px 5px;font-size:9px;font-weight:700;color:#fbbf24}
-/* Auth modal */
-.auth-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;display:none;align-items:center;justify-content:center;padding:20px}
-.auth-modal.open{display:flex}
-.auth-box{background:#162016;border-radius:16px;width:100%;max-width:360px;padding:28px;border:1px solid rgba(255,255,255,0.1)}
-.auth-input{width:100%;padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.06);color:#f0f4f0;font-size:15px;margin-bottom:12px}
-/* News ticker */
-.news-item{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
-.news-item:last-child{border-bottom:none}
-/* Rules modal */
-.rules-slider{display:flex;width:300%;transition:transform .35s cubic-bezier(.4,0,.2,1)}
-.rules-slide{width:33.33%;flex-shrink:0;padding:20px}
-
 </style>
 </head>
 <body>
@@ -131,7 +80,6 @@ input{font-family:inherit;outline:none}
   <div id="auth-name-row" style="display:none"><input class="auth-input" type="text" id="auth-name" placeholder="Your name (optional)"/></div>
   <button class="btn-g" onclick="doAuth()" id="auth-btn" style="margin-bottom:10px">Sign In</button>
   <p style="font-size:11px;color:#3d5c3d;text-align:center">Your team and leagues are saved to your account</p>
-</div>
 </div>
 </div>
 
@@ -736,6 +684,11 @@ input{font-family:inherit;outline:none}
         <br><br><span style="color:#f0f4f0;font-weight:600">Chip Deadline</span> — Chips can be activated and reversed freely until 2 hours before the first tee time on Thursday. Once that deadline passes, your chip is locked in for that gameweek — it cannot be reversed.
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Points Rounding</div>
         All points are rounded down to the nearest whole number. If a multiplier produces a fractional score — for example 37.5 points — your score will be recorded as 37. There are no half points in The Field.
+        <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">In The Bag — Mid-Tournament Substitution</div>
+        Your two reserves sit <span style="color:#f0f4f0;font-weight:600">In The Bag</span> and score zero while inactive. After Round 2 finishes, a <span style="color:#f0f4f0;font-weight:600">Saturday Morning Window</span> opens before the first Round 3 tee time. During this window you may:
+        <br><br>&#8226; Make <span style="color:#f0f4f0;font-weight:600">one substitution</span> — bring a reserve onto the field, send an active player to the bag. The incoming player scores from Round 3 onwards only. The outgoing player banks their R1/R2 points and goes silent.
+        <br>&#8226; Change your <span style="color:#f0f4f0;font-weight:600">captain or vice captain</span> once.
+        <br><br>Players who have missed the cut or finished in the LIV bottom 27 are <span style="color:#f87171;font-weight:600">locked</span> — they cannot be subbed on or off. The window closes 2 hours before the first Saturday tee time and cannot be reopened.
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Leagues</div>
         All managers enter the global league automatically. Private leagues use invite codes. Traditional leagues rank by season total. Head to head leagues match you against one opponent each gameweek. Paid prize pot leagues coming soon.
       </div>
@@ -1008,13 +961,14 @@ input{font-family:inherit;outline:none}
   </div>
   <div id="fx-list"></div>
 </div>
+</div>
 
-<div class="bottom-nav" id="main-nav">
-  <button class="nb on" id="ni-home" onclick="nav('s-home')"><span>⛳</span>Home</button>
-  <button class="nb" id="ni-pick" onclick="nav('s-pick')"><span>🔄</span>Transfers</button>
-  <button class="nb" id="ni-live" onclick="nav('s-live')"><span>📡</span>Live</button>
-  <button class="nb" id="ni-mysquad" onclick="nav('s-mysquad')"><span>📋</span>My Squad</button>
-  <button class="nb" id="ni-leagues" onclick="nav('s-leagues')"><span>🏆</span>Leagues</button>
+<div id="main-nav" style="position:fixed!important;bottom:0!important;left:0!important;right:0!important;width:100%!important;background:#0d150d!important;border-top:1px solid rgba(255,255,255,0.07)!important;display:flex!important;z-index:99999!important;padding-bottom:env(safe-area-inset-bottom,0)">
+  <button class="nb on" id="ni-home" onclick="nav('s-home')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4ade80;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit"><span style="font-size:20px">⛳</span>Home</button>
+  <button class="nb" id="ni-pick" onclick="nav('s-pick')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a6b4a;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit"><span style="font-size:20px">🔄</span>Transfers</button>
+  <button class="nb" id="ni-live" onclick="nav('s-live')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a6b4a;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit"><span style="font-size:20px">📡</span>Live</button>
+  <button class="nb" id="ni-mysquad" onclick="nav('s-mysquad')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a6b4a;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit"><span style="font-size:20px">📋</span>My Squad</button>
+  <button class="nb" id="ni-leagues" onclick="nav('s-leagues')" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 0 8px;background:transparent;border:none;color:#4a6b4a;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit"><span style="font-size:20px">🏆</span>Leagues</button>
 </div>
 
 <script>
