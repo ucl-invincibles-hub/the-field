@@ -407,7 +407,7 @@ input{font-family:inherit;outline:none}
 
   </div>
   <!-- Chips bar — row of 4 -->
-  <div style="display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 8px 18px;gap:6px">
+  <div style="display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:10px 8px;gap:6px">
     <div onclick="activateChip('triplecap')" style="flex:1;background:#0d1a0d;border:1px solid #c8a830;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer" id="sc-chip-tc">
       <svg width="16" height="18" viewBox="0 0 16 18" style="margin:0 auto 2px;display:block">
         <path d="M8 1 L15 4 L15 10 Q15 17 8 17 Q1 17 1 10 L1 4 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="1.2"/>
@@ -445,79 +445,79 @@ input{font-family:inherit;outline:none}
 
   <!-- FIELD VIEW SLIDE -->
   <div style="width:50%;flex-shrink:0;background:#0a140a;display:flex;flex-direction:column;overflow:hidden">
-  <svg width="100%" viewBox="0 0 320 440" style="display:block;flex:1" id="fv-svg">
-    <rect width="320" height="440" fill="#152015"/>
+  <svg width="100%" viewBox="0 0 320 460" style="display:block;flex:1" id="fv-svg">
+    <rect width="320" height="460" fill="#152015"/>
     <!-- Score bar -->
-    <rect x="0" y="0" width="320" height="52" fill="#060e06" opacity="0.97"/>
-    <text x="160" y="12" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#2a4a2a" font-family="system-ui" font-weight="700" letter-spacing="1">GW3 · THE PLAYERS · R3 OF 4</text>
-    <text x="160" y="32" text-anchor="middle" dominant-baseline="central" font-size="21" fill="#4ade80" font-family="system-ui" font-weight="800">+68 pts</text>
-    <text x="160" y="46" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#1a6b35" font-family="system-ui" font-weight="700" id="fv-teamname">My Team</text>
+    <rect x="0" y="0" width="320" height="56" fill="#060e06" opacity="0.97"/>
+    <text x="160" y="14" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#2a4a2a" font-family="system-ui" font-weight="700" letter-spacing="1">GW3 · THE PLAYERS · R3 OF 4</text>
+    <text x="160" y="34" text-anchor="middle" dominant-baseline="central" font-size="21" fill="#4ade80" font-family="system-ui" font-weight="800">+68 pts</text>
+    <text x="160" y="49" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#1a6b35" font-family="system-ui" font-weight="700" id="fv-teamname">My Team</text>
     <!-- Water left -->
-    <path d="M 10 148 Q 18 128 44 132 Q 58 138 56 156 Q 50 172 24 170 Q 6 164 10 148 Z" fill="#3a8ec0"/>
-    <path d="M 12 150 Q 20 132 43 136 Q 56 142 54 158 Q 49 170 26 166 Q 10 160 12 150 Z" fill="#5aaad8" opacity="0.5"/>
+    <path d="M 10 158 Q 18 138 44 142 Q 58 148 56 166 Q 50 182 24 180 Q 6 174 10 158 Z" fill="#3a8ec0"/>
+    <path d="M 12 160 Q 20 142 43 146 Q 56 152 54 168 Q 49 180 26 176 Q 10 170 12 160 Z" fill="#5aaad8" opacity="0.5"/>
     <!-- Water right -->
-    <ellipse cx="284" cy="250" rx="20" ry="12" fill="#3a8ec0"/>
-    <ellipse cx="284" cy="250" rx="15" ry="8" fill="#5aaad8" opacity="0.5"/>
+    <ellipse cx="284" cy="262" rx="20" ry="12" fill="#3a8ec0"/>
+    <ellipse cx="284" cy="262" rx="15" ry="8" fill="#5aaad8" opacity="0.5"/>
     <!-- Fairway -->
-    <path d="M 78 438 Q 60 340 76 250 Q 90 178 82 92 L 168 68 Q 204 92 216 182 Q 238 262 252 438 Z" fill="#2a7035"/>
-    <path d="M 94 438 Q 78 342 92 252 Q 104 180 97 96 L 113 76 Q 118 96 116 182 Q 120 264 140 438 Z" fill="#267030" opacity="0.4"/>
-    <path d="M 160 438 Q 172 264 184 184 Q 192 96 200 76 L 216 82 Q 222 100 220 184 Q 228 264 240 438 Z" fill="#267030" opacity="0.4"/>
+    <path d="M 78 458 Q 60 358 76 264 Q 90 190 82 100 L 168 76 Q 204 100 216 192 Q 238 274 252 458 Z" fill="#2a7035"/>
+    <path d="M 94 458 Q 78 360 92 266 Q 104 192 97 104 L 113 84 Q 118 104 116 192 Q 120 276 140 458 Z" fill="#267030" opacity="0.4"/>
+    <path d="M 160 458 Q 172 276 184 194 Q 192 104 200 84 L 216 90 Q 222 108 220 194 Q 228 276 240 458 Z" fill="#267030" opacity="0.4"/>
     <!-- Bunkers -->
-    <ellipse cx="88" cy="278" rx="17" ry="9" fill="#c8a85a" transform="rotate(-18,88,318)" opacity="0.9"/>
-    <ellipse cx="234" cy="242" rx="13" ry="7" fill="#c8a85a" transform="rotate(12,234,282)" opacity="0.9"/>
-    <ellipse cx="95" cy="106" rx="11" ry="6" fill="#c8a85a" opacity="0.9"/>
-    <ellipse cx="208" cy="100" rx="10" ry="5" fill="#c8a85a" opacity="0.9"/>
+    <ellipse cx="88" cy="290" rx="17" ry="9" fill="#c8a85a" transform="rotate(-18,88,330)" opacity="0.9"/>
+    <ellipse cx="234" cy="254" rx="13" ry="7" fill="#c8a85a" transform="rotate(12,234,294)" opacity="0.9"/>
+    <ellipse cx="95" cy="114" rx="11" ry="6" fill="#c8a85a" opacity="0.9"/>
+    <ellipse cx="208" cy="108" rx="10" ry="5" fill="#c8a85a" opacity="0.9"/>
     <!-- Green -->
-    <ellipse cx="154" cy="72" rx="56" ry="42" fill="#18a840"/>
-    <ellipse cx="148" cy="66" rx="40" ry="28" fill="#1dba48" opacity="0.2"/>
+    <ellipse cx="154" cy="86" rx="54" ry="38" fill="#18a840"/>
+    <ellipse cx="148" cy="80" rx="38" ry="26" fill="#1dba48" opacity="0.2"/>
     <!-- Flag -->
-    <circle cx="176" cy="64" r="4" fill="#060e06"/>
-    <line x1="176" y1="64" x2="176" y2="30" stroke="#d8d8d8" stroke-width="1.5"/>
-    <path d="M 176 30 L 196 37 L 176 44 Z" fill="#f87171"/>
+    <circle cx="174" cy="78" r="4" fill="#060e06"/>
+    <line x1="174" y1="78" x2="174" y2="46" stroke="#d8d8d8" stroke-width="1.5"/>
+    <path d="M 174 46 L 194 53 L 174 60 Z" fill="#f87171"/>
     <!-- Zone labels -->
-    <text x="12" y="114" font-size="7" fill="#4ade80" font-family="system-ui" font-weight="700" opacity="0.7" transform="rotate(-90,12,74)">GREEN</text>
-    <text x="12" y="244" font-size="7" fill="#2a8a3a" font-family="system-ui" font-weight="700" opacity="0.6" transform="rotate(-90,12,204)">FAIRWAY</text>
-    <text x="12" y="394" font-size="7" fill="#2a6a2a" font-family="system-ui" font-weight="700" opacity="0.5" transform="rotate(-90,12,354)">APPROACH</text>
+    <text x="12" y="128" font-size="7" fill="#4ade80" font-family="system-ui" font-weight="700" opacity="0.7" transform="rotate(-90,12,88)">GREEN</text>
+    <text x="12" y="258" font-size="7" fill="#2a8a3a" font-family="system-ui" font-weight="700" opacity="0.6" transform="rotate(-90,12,218)">FAIRWAY</text>
+    <text x="12" y="408" font-size="7" fill="#2a6a2a" font-family="system-ui" font-weight="700" opacity="0.5" transform="rotate(-90,12,368)">APPROACH</text>
     <!-- Tee box -->
-    <rect x="120" y="414" width="70" height="16" rx="4" fill="#1a4a1a" stroke="#2a6a2a" stroke-width="1"/>
-    <text x="155" y="422" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#4a9a4a" font-family="system-ui" font-weight="700">TEE BOX</text>
-    <!-- CAPTAIN on green cx=110 cy=100 r=28 gold -->
-    <circle cx="110" cy="100" r="28" fill="#09160c" stroke="#c8a830" stroke-width="2.5" id="fv-cap-circle"/>
-    <circle cx="93" cy="79" r="10" fill="#1a5a25" stroke="#c8a830" stroke-width="1.5" id="fv-cap-badge"/>
-    <text x="93" y="79" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fde68a" font-family="system-ui" font-weight="900" id="fv-cap-badge-text">C</text>
-    <text x="110" y="94" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#f0f4f0" font-family="system-ui" font-weight="700" id="fv-cap-name">Scheffler</text>
-    <text x="110" y="108" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800" id="fv-cap-pts">+32</text>
-    <!-- VC upper-left cx=104 cy=200 r=26 silver -->
-    <circle cx="104" cy="200" r="26" fill="#0d1e0d" stroke="#9ca3af" stroke-width="2" id="fv-vc-circle"/>
-    <circle cx="88" cy="180" r="9" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.5" id="fv-vc-badge"/>
-    <text x="88" y="180" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#d1d5db" font-family="system-ui" font-weight="900" id="fv-vc-badge-text">V</text>
-    <text x="104" y="194" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700" id="fv-vc-name">McIlroy</text>
-    <text x="104" y="208" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800" id="fv-vc-pts">+18</text>
-    <!-- Player 2 upper-right cx=212 cy=192 r=26 -->
-    <circle cx="212" cy="192" r="26" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
-    <text x="212" y="186" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">Fleetwood</text>
-    <text x="212" y="200" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800">+12</text>
-    <!-- Player 3 lower-left cx=108 cy=306 r=26 -->
-    <circle cx="108" cy="306" r="26" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
-    <text x="108" y="300" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">C. Smith</text>
-    <text x="108" y="314" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800">+10</text>
-    <!-- Player 4 lower-right cx=212 cy=294 r=26 -->
-    <circle cx="212" cy="294" r="26" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
-    <text x="212" y="288" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">Hatton</text>
-    <text x="212" y="302" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#f87171" font-family="system-ui" font-weight="800">-4</text>
-    <!-- IN THE BAG bottom-right -->
-    <rect x="216" y="382" width="98" height="50" rx="5" fill="#080f08" stroke="#2a5a2a" stroke-width="1.2"/>
-    <text x="265" y="392" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#3a6a3a" font-family="system-ui" font-weight="700">IN THE BAG</text>
-    <line x1="222" y1="398" x2="308" y2="398" stroke="#1a4a2a" stroke-width="0.6"/>
-    <circle cx="238" cy="418" r="13" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
-    <text x="238" y="413" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="700">Lowry</text>
-    <text x="238" y="424" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#f87171" font-family="system-ui" font-weight="800">-2</text>
-    <circle cx="290" cy="418" r="13" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
-    <text x="290" y="413" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="700">Bland</text>
-    <text x="290" y="424" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fbbf24" font-family="system-ui" font-weight="800">0</text>
+    <rect x="118" y="430" width="74" height="17" rx="4" fill="#1a4a1a" stroke="#2a6a2a" stroke-width="1"/>
+    <text x="155" y="439" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#4a9a4a" font-family="system-ui" font-weight="700">TEE BOX</text>
+    <!-- CAPTAIN on green cx=108 cy=112 r=27 gold -->
+    <circle cx="108" cy="104" r="27" fill="#09160c" stroke="#c8a830" stroke-width="2.5" id="fv-cap-circle"/>
+    <circle cx="91" cy="84" r="10" fill="#1a5a25" stroke="#c8a830" stroke-width="1.5" id="fv-cap-badge"/>
+    <text x="91" y="84" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fde68a" font-family="system-ui" font-weight="900" id="fv-cap-badge-text">C</text>
+    <text x="108" y="98" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#f0f4f0" font-family="system-ui" font-weight="700" id="fv-cap-name">Scheffler</text>
+    <text x="108" y="112" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800" id="fv-cap-pts">+32</text>
+    <!-- VC upper-left cx=98 cy=216 r=25 silver -->
+    <circle cx="98" cy="202" r="25" fill="#0d1e0d" stroke="#9ca3af" stroke-width="2" id="fv-vc-circle"/>
+    <circle cx="82" cy="183" r="9" fill="#1a2a1a" stroke="#9ca3af" stroke-width="1.5" id="fv-vc-badge"/>
+    <text x="82" y="183" text-anchor="middle" dominant-baseline="central" font-size="8" fill="#d1d5db" font-family="system-ui" font-weight="900" id="fv-vc-badge-text">V</text>
+    <text x="98" y="196" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700" id="fv-vc-name">McIlroy</text>
+    <text x="98" y="210" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800" id="fv-vc-pts">+18</text>
+    <!-- Player 2 upper-right cx=214 cy=206 r=25 -->
+    <circle cx="214" cy="206" r="25" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
+    <text x="214" y="200" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">Fleetwood</text>
+    <text x="214" y="214" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800">+12</text>
+    <!-- Player 3 lower-left cx=102 cy=324 r=25 -->
+    <circle cx="102" cy="324" r="25" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
+    <text x="102" y="318" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">C. Smith</text>
+    <text x="102" y="332" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#4ade80" font-family="system-ui" font-weight="800">+10</text>
+    <!-- Player 4 lower-right cx=210 cy=310 r=25 -->
+    <circle cx="210" cy="310" r="25" fill="#0d1e0d" stroke="#2a6a2a" stroke-width="1.8"/>
+    <text x="210" y="304" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#c8d8c8" font-family="system-ui" font-weight="700">Hatton</text>
+    <text x="210" y="318" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#f87171" font-family="system-ui" font-weight="800">-4</text>
+    <!-- IN THE BAG bottom-right corner -->
+    <rect x="222" y="394" width="92" height="58" rx="6" fill="#080f08" stroke="#2a5a2a" stroke-width="1.2"/>
+    <text x="268" y="405" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#3a6a3a" font-family="system-ui" font-weight="700" letter-spacing="0.5">IN THE BAG</text>
+    <line x1="228" y1="413" x2="308" y2="413" stroke="#1a4a2a" stroke-width="0.6"/>
+    <circle cx="245" cy="434" r="13" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
+    <text x="245" y="429" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="700">Lowry</text>
+    <text x="245" y="440" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#f87171" font-family="system-ui" font-weight="800">-2</text>
+    <circle cx="291" cy="434" r="13" fill="#0d180d" stroke="#2a5a2a" stroke-width="1.5"/>
+    <text x="291" y="429" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#4a8a5a" font-family="system-ui" font-weight="700">Bland</text>
+    <text x="291" y="440" text-anchor="middle" dominant-baseline="central" font-size="9" fill="#fbbf24" font-family="system-ui" font-weight="800">0</text>
   </svg>
   <!-- Chips row of 4 -->
-  <div style="display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:8px 8px 18px;gap:6px;flex-shrink:0">
+  <div style="display:flex;background:#050a05;border-top:1px solid #1a2a1a;padding:10px 8px;gap:6px;flex-shrink:0">
     <div onclick="activateChip('triplecap')" style="flex:1;background:#0d1a0d;border:1px solid #c8a830;border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer">
       <svg width="16" height="18" viewBox="0 0 16 18" style="margin:0 auto 2px;display:block"><path d="M8 1 L15 4 L15 10 Q15 17 8 17 Q1 17 1 10 L1 4 Z" fill="#1a5a25" stroke="#c8a830" stroke-width="1.2"/><text x="8" y="9" text-anchor="middle" dominant-baseline="central" font-size="7" fill="#fde68a" font-family="system-ui" font-weight="900">C</text><text x="8" y="14" text-anchor="middle" dominant-baseline="central" font-size="5" fill="#fde68a" font-family="system-ui" font-weight="700">3x</text></svg>
       <div style="font-size:8px;font-weight:700;color:#fde68a">Triple Cap</div>
