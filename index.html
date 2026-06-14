@@ -662,7 +662,7 @@ input{font-family:inherit;outline:none}
         <br><br><span style="color:#f0f4f0;font-weight:600">Captain (2×)</span> — Your captain’s points are doubled every week. This applies to all points — positive and negative. If your captain makes 5 birdies they score +6 not +3. But if they miss the cut they score -20 not -10. Choose wisely.
         <br><br><span style="color:#f0f4f0;font-weight:600">Vice Captain (1.5×)</span> — Your vice captain’s points are multiplied by 1.5. Again, this applies to both positive and negative points. A bogey costs your VC -1.5, a birdie earns +4.5. If your captain does not play that week and therefore scores 0, your vice captain automatically becomes captain and scores 2×.
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Finish Positions</div>
-        Major win +37 · Win +25 · 2nd +15 · 3rd +12 · Top 5 +10 · Top 10 +6 · Top 20 +3 · PGA missed cut / LIV bottom 27 −10. Signature Events 1.25× multiplier · Majors 1.5× multiplier.
+        Major win +37 · Win +25 · 2nd +15 · 3rd +12 · Top 5 +10 · Top 10 +6 · Top 20 +3 · PGA missed cut / LIV bottom 27 −10. Majors 1.5× multiplier.
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Stroke Play</div>
         Hole in one +15 · Eagle +8 · Birdie +3 · Par 0 · Bogey −1 · Double −3 · Triple −5 · Blob (4+ over par) −8
         <div style="font-weight:700;color:#4ade80;margin-bottom:4px;margin-top:10px">Major Bonus</div>
@@ -1186,7 +1186,7 @@ function opn(id){
 
 function wb(wi){
   var w=WKS[wi];
-  var mult=w.type==='major'?1.5:w.type==='signature'?1.25:1;
+  var mult=w.type==='major'?1.5:1;
   var ep=w.ea*8,bp=w.bi*3,bog=w.bo*-1,db=w.db*-3,bl=(w.bl||0)*-8;
   var fp=Math.round(w.fi*mult),tot=ep+bp+bog+db+bl+fp;
   var rows=[
